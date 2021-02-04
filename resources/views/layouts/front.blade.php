@@ -38,14 +38,29 @@
     <div class="logo-wrap"><a href=""><img src="images/logo.png" alt=""></a></div>
     <div class="head-right d-flex align-items-center">
       <div class="user-wrap d-flex align-items-center">
-        <p>John Doe</p>
-        <img src="images/dp.png" alt="">
+        <p>{{Auth::user()->name}}</p>
+        <img src="{{ asset('images/dp.png') }}" alt="">
       </div>
-      <div class="actions-wrp">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+
+      <!-- <div class="dropdown show"> -->
+              <button type="button" class="btn btn-primary dropdown-toggle actions-wrp" data-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                @if(count(config('panel.available_languages', [])) > 1)
+                    @foreach(config('panel.available_languages') as $langLocale => $langName)
+                        <a class="dropdown-item" href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
+                    @endforeach
+                @endif
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                    {{ trans('global.logout') }}
+                </a>
+              </div>
+              
+            <!-- </div> -->
     </div>
   </div>
 </header>
@@ -57,8 +72,9 @@
 </form>
 
 <script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
 <script src="{{ asset('js/coreui.min.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>

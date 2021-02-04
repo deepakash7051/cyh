@@ -33,6 +33,12 @@
 
     @yield('styles')
 
+<!--       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
 </head>
 
 <body class="">
@@ -43,19 +49,25 @@
         </div>
         <div class="head-right d-flex align-items-center">
             <div class="user-wrap d-flex align-items-center">
-                <p>John Doe</p>
+                <p>{{Auth::user()->name}}</p>
                 <img src="{{ asset('images/dp.png') }}" alt="">
             </div>
-            <button type="button" class="btn btn-primary dropdown-toggle actions-wrp" data-toggle="dropdown">
-                <span></span>
-                <span></span>
-                <span></span>
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-          </div>
+
+            <!-- <div class="dropdown show"> -->
+              <button type="button" class="btn btn-primary dropdown-toggle actions-wrp" data-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                @if(count(config('panel.available_languages', [])) > 1)
+                    @foreach(config('panel.available_languages') as $langLocale => $langName)
+                        <a class="dropdown-item" href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
+                    @endforeach
+                @endif
+              </div>
+              
+            <!-- </div> -->
         </div>
     </div>
 </header>
@@ -80,8 +92,9 @@
 
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    
     <script src="{{ asset('js/coreui.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>

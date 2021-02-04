@@ -327,6 +327,14 @@ return [
     'team-management'                      => 'Teams',
     'team-management-singular'             => 'Team',
     'site_title'                           => 'SWA LMS',
+    'pages' => [
+        'frontend'  => [
+            'home' => [
+                'title' => 'Choice favourite course from top category',
+                'category_button' => 'See all Categories',
+            ],
+        ],
+    ],
     'userManagement'                       => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
