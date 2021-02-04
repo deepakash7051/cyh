@@ -36,7 +36,7 @@
                           
                             @foreach($languages as $langKey => $langValue)
                             <th>
-                              {{$langKey.'_name'}}
+                              {{'Name ('.$langValue.')'}}
                               </th>
                             @endforeach
 

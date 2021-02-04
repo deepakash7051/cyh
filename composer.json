@@ -43,7 +43,6 @@
             "database/factories"
         ],
         "files": [
-         "uploads/CountryCodes.json"
         ]
     },
     "autoload-dev": {

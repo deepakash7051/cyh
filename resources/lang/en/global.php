@@ -113,6 +113,8 @@ return [
             'email_helper'             => '',
             'phone'                    => 'Phone',
             'phone_helper'             => '',
+            'isd_code'                    => 'Country code',
+            'isd_code_helper'             => '',
             'gender'                    => 'Gender',
             'gender_helper'             => '',
             'email_verified_at'        => 'Email verified at',

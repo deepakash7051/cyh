@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 @section('content')
+<?php 
+    $CountryCodesJson = file_get_contents(base_path('uploads/CountryCodes.json'));
+    $CountryCodes = json_decode($CountryCodesJson);
+?>
 	<div class="dash-main">
 		<div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
@@ -34,18 +38,43 @@
 	                    {{ trans('global.user.fields.email_helper') }}
 	                </p>
 				</div>
-				<div class="form-group mb-2 {{ $errors->has('phone') ? 'has-error' : '' }}">
-					<label>{{ trans('global.user.fields.phone') }}*</label>
-					<input class="frm-field" type="text" id="phone" name="phone" value="{{ old('phone', isset($user) ? $user->phone : '') }}">
-					@if($errors->has('phone'))
-                    <em class="invalid-feedback">
-	                        {{ $errors->first('phone') }}
-	                    </em>
-	                @endif
-	                <p class="helper-block">
-	                    {{ trans('global.user.fields.phone_helper') }}
-	                </p>
-				</div>
+				<div class="form-group mb-2">
+                    <div class="row">
+                        <div class="col-md-3 {{ $errors->has('isd_code') ? ' is-invalid' : '' }}">
+                        	<label>{{ trans('global.user.fields.isd_code') }}*</label>
+                            <select class="frm-field selct2option" name="isd_code" id="isd_code" >
+                                <option value="">Select</option>
+                                @foreach($CountryCodes as $CountryCode)
+                                    <option value="{{$CountryCode->dial_code}}">
+                                        {{$CountryCode->dial_code.' ('.$CountryCode->code.')'}}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @if($errors->has('isd_code'))
+		                    <em class="invalid-feedback">
+			                        {{ $errors->first('isd_code') }}
+			                    </em>
+			                @endif
+			                <p class="helper-block">
+			                    {{ trans('global.user.fields.isd_code_helper') }}
+			                </p>
+                        </div>
+                        <div class="col-md-9 {{ $errors->has('phone') ? ' is-invalid' : '' }}">
+                        	<label>{{ trans('global.user.fields.phone') }}*</label>
+                            <input class="frm-field" type="text" id="phone" name="phone" value="{{ old('phone', isset($user) ? $user->phone : '') }}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'');">
+
+                            @if($errors->has('phone'))
+		                    <em class="invalid-feedback">
+			                        {{ $errors->first('phone') }}
+			                    </em>
+			                @endif
+			                <p class="helper-block">
+			                    {{ trans('global.user.fields.phone_helper') }}
+			                </p>
+                        </div>
+                    </div> 
+                </div>
 				<div class="form-group mb-2 {{ $errors->has('password') ? 'has-error' : '' }}">
 					<label>{{ trans('global.user.fields.password') }}*</label>
 					<input class="frm-field" type="password" id="password" name="password" value="{{ old('password', isset($user) ? $user->password : '') }}">
@@ -87,8 +116,13 @@
 		</div>
 		
 	</div>
-@endsection
 @section('scripts')
 @parent
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#isd_code').select2();
+    });
+</script>
+@endsection
 
 @endsection

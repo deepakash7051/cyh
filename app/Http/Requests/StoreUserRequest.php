@@ -18,6 +18,9 @@ class StoreUserRequest extends FormRequest
             'name'     => [
                 'required',
             ],
+            'isd_code'     => [
+                'required',
+            ],
             'email'    => [
                 'required',
                 'string',

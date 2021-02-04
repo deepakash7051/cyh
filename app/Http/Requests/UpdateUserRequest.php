@@ -18,8 +18,17 @@ class UpdateUserRequest extends FormRequest
             'name'    => [
                 'required',
             ],
+            'isd_code'     => [
+                'required',
+            ],
             'email'   => [
                 'required',
+            ],
+            'phone'    => [
+                'required',
+                'integer',
+                'min:10',
+                'unique:users',
             ],
             'roles.*' => [
                 'integer',
