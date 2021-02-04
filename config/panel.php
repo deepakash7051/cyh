@@ -7,7 +7,7 @@ return [
     'available_languages' => [
         'en' => 'English',
         'bn' => 'Bengali',
-        'zh-TW' => 'Mandarin',
+        'zh' => 'Mandarin',
         'ta' => 'Tamil',
     ],
 ];

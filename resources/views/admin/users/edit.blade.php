@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-md-3 {{ $errors->has('isd_code') ? ' is-invalid' : '' }}">
                         	<label>{{ trans('global.user.fields.isd_code') }}*</label>
-                            <select class="frm-field selct2option" name="isd_code" id="isd_code" >
+                            <select class="frm-field select2" name="isd_code" id="isd_code" >
                                 <option value="">Select</option>
                                 @foreach($CountryCodes as $CountryCode)
                                     <option value="{{$CountryCode->dial_code}}">
@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-md-9 {{ $errors->has('phone') ? ' is-invalid' : '' }}">
                         	<label>{{ trans('global.user.fields.phone') }}*</label>
-                            <input class="frm-field" type="text" id="phone" name="phone" value="{{ old('phone', isset($user) ? $user->phone : '') }}" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'');">
+                            <input class="frm-field onlynumeric" type="text" id="phone" name="phone" value="{{ old('phone', isset($user) ? $user->phone : '') }}" >
 
                             @if($errors->has('phone'))
 		                    <em class="invalid-feedback">
@@ -118,11 +118,6 @@
 	</div>
 @section('scripts')
 @parent
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#isd_code').select2();
-    });
-</script>
 @endsection
 
 @endsection

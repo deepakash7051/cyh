@@ -23,10 +23,11 @@ class Category extends Model
         'en_description',
         'bn_name',
         'bn_description',
-        'zh-TW_name',
-        'zh-TW_description',
+        'zh_name',
+        'zh_description',
         'ta_name',
         'ta_description',
+        'status',
     ];
 
     protected $dates = [
@@ -38,5 +39,9 @@ class Category extends Model
     public static function laratablesCustomAction($category)
     {
         return view('admin.categories.action', compact('category'))->render();
+    }
+
+    public function courses(){
+        return $this->hasMany('App\Course');
     }
 }

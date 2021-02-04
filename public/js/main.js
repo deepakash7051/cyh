@@ -47,3 +47,46 @@ $(document).ready(function () {
     }
   })
 })
+
+$(function () {
+    $('.decimalp3').on('input', function(e) {
+        if (/^(\d+(\.\d{0,3})?)?$/.test($(this).val())) {
+            // Input is OK. Remember this value
+            $(this).data('prevValue', $(this).val());
+        } else {
+            // Input is not OK. Restore previous value
+            $(this).val($(this).data('prevValue') || '');
+        }
+    }).trigger('input'); // Initialise the `prevValue` data properties
+
+    $('.decimalp2').on('input', function(e) {
+        if (/^(\d+(\.\d{0,2})?)?$/.test($(this).val())) {
+            // Input is OK. Remember this value
+            $(this).data('prevValue', $(this).val());
+        } else {
+            // Input is not OK. Restore previous value
+            $(this).val($(this).data('prevValue') || '');
+        }
+    }).trigger('input'); // Initialise the `prevValue` data properties
+
+    $('.onlynumeric').on('input', function(e) {
+        if (/^\d*$/.test($(this).val())) {
+            // Input is OK. Remember this value
+            $(this).data('prevValue', $(this).val());
+        } else {
+            // Input is not OK. Restore previous value
+            $(this).val($(this).data('prevValue') || '');
+        }
+    }).trigger('input'); // Initialise the `prevValue` data properties
+
+    $('.numericspace').on('input', function(e) {
+        if (/^[0-9\s]*$/.test($(this).val())) {
+            // Input is OK. Remember this value
+            $(this).data('prevValue', $(this).val());
+        } else {
+            // Input is not OK. Restore previous value
+            $(this).val($(this).data('prevValue') || '');
+        }
+    }).trigger('input'); // Initialise the `prevValue` data properties
+
+});

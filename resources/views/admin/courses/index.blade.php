@@ -2,23 +2,16 @@
 @section('content')
 <?php 
   $languages = config('panel.available_languages');
-  /*$columns = [['name' => 'id']];
-  if(count($languages) > 0){
-    foreach($languages as $langKey => $langValue){
-      array_push($columns, ['name' => $langKey.'_name']);
-    }
-  }
-  array_push($columns, ['name' => 'action', 'orderable' => false, 'searchable' => false]);*/
 ?>
 
 	<div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.category.title_singular') }} {{ trans('global.list') }}
+                {{ trans('global.course.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
-                <a href="{{ route('admin.categories.create') }}" class="btnn btnn-s">
-                    {{ trans('global.add') }} {{ trans('global.category.title_singular') }}
+                <a href="{{ route('admin.courses.create') }}" class="btnn btnn-s">
+                    {{ trans('global.add') }} {{ trans('global.course.title_singular') }}
                 </a>
             </div>
         </div>
@@ -26,21 +19,37 @@
 			<div class="d-flex justify-content-between"></div>
 		</div>
 		<div class="table-responsive table-responsive-md">
-			<table class="table table-hover table-custom datatable" id="category_table">
+			<table class="table table-hover table-custom datatable" id="course_table">
 				<thead>
                     <tr>
                         <th>
-                            ID
+                            {{ trans('global.course.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('global.category.title_singular') }}
+                        </th>
+                        <th>
+                            {{ trans('global.course.fields.ref_code') }}
                         </th>
                           @if(count($languages) > 0)
                           
                             @foreach($languages as $langKey => $langValue)
                             <th>
-                              {{'Name ('.$langValue.')'}}
+                              {{'Title ('.$langValue.')'}}
                               </th>
                             @endforeach
 
                           @endif
+
+                        <th>
+                            {{ trans('global.course.fields.price') }}
+                        </th>
+                        <th>
+                            {{ trans('global.course.fields.duration') }}
+                        </th>
+                        <th>
+                            {{ trans('global.course.fields.seats') }}
+                        </th>
                         <th>
                             &nbsp;
                         </th>
@@ -93,17 +102,22 @@
 <script>
 
 
-        $('#category_table').DataTable({
+        $('#course_table').DataTable({
             serverSide: true,
             processing: true,
             responsive: true,
-            ajax: "{{ route('admin.categories.list') }}",
+            ajax: "{{ route('admin.courses.list') }}",
             columns: [
               { name: 'id' },
-              { name: 'en_name' },
-              { name: 'bn_name' },
-              { name: 'zh_name' },
-              { name: 'ta_name' },
+              { name: 'category_id' },
+              { name: 'ref_code' },
+              { name: 'en_title' },
+              { name: 'bn_title' },
+              { name: 'zh_title' },
+              { name: 'ta_title' },
+              { name: 'price' },
+              { name: 'duration' },
+              { name: 'seats' },
               { name: 'action', orderable: false, searchable: false }
             ],
             dom: 'Bfrtip',

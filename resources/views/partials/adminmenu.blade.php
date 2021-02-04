@@ -14,6 +14,9 @@
     <li class="{{ request()->is('admin/categories') || request()->is('admin/categories/*') ? 'active' : '' }}">
         <a href="{{ route('admin.categories.index') }}"><i class="fas fa-tag"></i> {{ trans('global.category.title') }}</a>
     </li>
+    <li class="{{ request()->is('admin/courses') || request()->is('admin/courses/*') ? 'active' : '' }}">
+        <a href="{{ route('admin.courses.index') }}"><i class="fas fa-tag"></i> {{ trans('global.course.title') }}</a>
+    </li>
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
             <i class="fas fas fa-sign-out-alt"></i> {{ trans('global.logout') }}
