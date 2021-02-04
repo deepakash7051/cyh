@@ -322,7 +322,7 @@ return [
     'deselect_all'                         => 'Deselect all',
     'team-management'                      => 'Teams',
     'team-management-singular'             => 'Team',
-    'site_title'                           => 'SWA',
+    'site_title'                           => 'SWA LMS',
     'userManagement'                       => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
