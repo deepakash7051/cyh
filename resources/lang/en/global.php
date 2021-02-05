@@ -407,6 +407,29 @@ return [
         ],
     ],
 
+    'video'                              => [
+        'title'          => 'Videos',
+        'title_singular' => 'Video',
+        'fields'         => [
+            'id'                 => 'ID',
+            'id_helper'          => '',
+            'course_id'                 => 'Course ID',
+            'course_id_helper'          => '',
+            'place'        => 'Place',
+            'place_helper' => '',
+            'attachment'        => 'Attachment',
+            'attachment_helper' => '',
+            'status'              => 'Status',
+            'status_helper'       => '',
+            'created_at'         => 'Created At',
+            'created_at_helper'  => '',
+            'updated_at'         => 'Updated At',
+            'updated_at_helper'  => '',
+            'deleted_at'         => 'Deleted at',
+            'deleted_at_helper'  => '',
+        ],
+    ],
+
     'course'                              => [
         'title'          => 'Courses',
         'title_singular' => 'Course',

@@ -2,6 +2,7 @@
 @section('content')
 
 <?php 
+  $categoryname = config('app.locale').'_name';  
   $languages = config('panel.available_languages');
 ?>
 
@@ -23,7 +24,7 @@
                             {{ trans('global.course.title_singular') }}
                         </td>
                         <td>
-                            {{ $course->category->en_name }}
+                            {{ $course->category->$categoryname }}
                         </td>
                     </tr>
 

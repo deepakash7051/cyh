@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::get('/permissions/list', 'PermissionsController@list')->name('permissions.list');
 	    Route::get('/categories/list', 'CategoriesController@list')->name('categories.list');
 	    Route::get('/courses/list', 'CoursesController@list')->name('courses.list');
+	    Route::get('/videos/list', 'CourseVideosController@list')->name('videos.list');
 
 	    Route::resource('permissions', 'PermissionsController');
 	    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -42,6 +43,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::delete('categories/destroy', 'CategoriesController@massDestroy')->name('categories.massDestroy');
 
 	    Route::resource('courses', 'CoursesController');
+	    Route::resource('videos', 'CourseVideosController');
     });
 });
 
