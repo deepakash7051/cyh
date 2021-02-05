@@ -327,11 +327,20 @@ return [
     'team-management'                      => 'Teams',
     'team-management-singular'             => 'Team',
     'site_title'                           => 'SWA LMS',
+    'active'    => 'Active',
+    'inactive'  => 'Inactive',
     'pages' => [
         'frontend'  => [
             'home' => [
                 'title' => 'Choice favourite course from top category',
                 'category_button' => 'See all Categories',
+            ],
+            'login' =>  [
+                'hello' => 'Hello!',
+                'welcome_back' => 'Welcome Back',
+                'login_account' => 'Login to your account',
+                'resend'    => 'Resend',
+                'continue'  =>  'Continue',
             ],
         ],
     ],

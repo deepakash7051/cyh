@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 <?php 
+  
+  $locale = config('app.locale');
   $languages = config('panel.available_languages');
 ?>
 
@@ -34,9 +36,11 @@
                           @if(count($languages) > 0)
                           
                             @foreach($languages as $langKey => $langValue)
-                            <th>
-                              {{'Title ('.$langValue.')'}}
+                              @if($langKey==$locale)
+                              <th>
+                                {{'Title'}}
                               </th>
+                              @endif
                             @endforeach
 
                           @endif
@@ -104,7 +108,6 @@
 </script>
 <script>
 
-
         $('#course_table').DataTable({
             serverSide: true,
             processing: true,
@@ -112,12 +115,9 @@
             ajax: "{{ route('admin.courses.list') }}",
             columns: [
               { name: 'id' },
-              { name: 'category_id' },
+              { name: 'category.{{$locale."_name"}}' },
               { name: 'ref_code' },
-              { name: 'en_title' },
-              { name: 'bn_title' },
-              { name: 'zh_title' },
-              { name: 'ta_title' },
+              { name: '{{$locale."_title"}}' },
               { name: 'price' },
               { name: 'duration' },
               { name: 'seats' },

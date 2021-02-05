@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <?php 
+	$categoryname = config('app.locale').'_name';
     $languages = config('panel.available_languages');
 ?>
 	<div class="dash-main">
@@ -17,13 +18,13 @@
 					<label>{{ trans('global.category.title_singular') }}*</label>
 
 					<select class="frm-field select2" name="category_id" id="category_id" >
-                        <option value="">Select</option>
+                        <option value="">{{ trans('global.pleaseSelect') }}</option>
 	                    @if(count($categories) > 0)
 	                        @foreach($categories as $category)
 	                            <option value="{{$category->id}}" 
 	                            		{{ old('category_id') == $category->id ? 'selected="selected"' : '' }}
 	                            	>
-	                                {{$category->en_name}}
+	                                {{$category->$categoryname}}
 	                            </option>
 	                        @endforeach
 	                    @endif
@@ -129,7 +130,7 @@
 				<div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
 					<label>{{ trans('global.course.fields.status') }}</label>
 					@php 
-						$status = ['1' => 'Active', '0' => 'Inactive'];
+						$status = ['1' => trans('global.active'), '0' => trans('global.inactive') ];
 					@endphp
 					<select class="frm-field " name="status" id="status" >
                         @foreach($status as $stkey => $stvalue)

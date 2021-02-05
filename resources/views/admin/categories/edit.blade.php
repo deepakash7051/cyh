@@ -51,7 +51,7 @@
 	            <div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
 					<label>{{ trans('global.category.fields.status') }}</label>
 					@php 
-						$status = ['1' => 'Active', '0' => 'Inactive'];
+						$status = ['1' => trans('global.active'), '0' => trans('global.inactive') ];
 					@endphp
 					<select class="frm-field " name="status" id="status" >
                         @foreach($status as $stkey => $stvalue)

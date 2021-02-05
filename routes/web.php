@@ -48,6 +48,11 @@ Auth::routes(['register' => false]);
 
 //Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/sendcode', 'HomeController@sendcode')->name('sendcode');
+Route::group(['middleware' => ['auth']], function () {
+	Route::get('/home', 'HomeController@index')->name('home');
+});
+
+
 
 

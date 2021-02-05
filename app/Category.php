@@ -43,7 +43,7 @@ class Category extends Model
 
     public static function laratablesStatus($category)
     {
-        return $category->status == 1 ? 'Active' : 'Inactive';
+        return $category->status == 1 ? trans('global.active') : trans('global.inactive');
     }
 
     public function courses(){

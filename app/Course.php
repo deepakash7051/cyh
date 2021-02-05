@@ -52,7 +52,7 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
 
     public static function laratablesStatus($course)
     {
-        return $course->status == 1 ? 'Active' : 'Inactive';
+        return $course->status == 1 ? trans('global.active') : trans('global.inactive');
     }
 
     public function category()
