@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], function () {
     Route::get('/login', 'AuthController@getLogin');
     Route::post('/login', 'AuthController@Login')->name('login');
+    Route::get('/', 'AuthController@Login');
     Route::middleware(['auth'])->group(function () {
     	Route::get('/', 'HomeController@index')->name('home');
     	Route::get('/users/list', 'UsersController@list')->name('users.list');
