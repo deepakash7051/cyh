@@ -30,7 +30,7 @@
 				<thead>
                     <tr>
                         <th>
-                            ID
+                            {{ trans('global.category.fields.id') }}
                         </th>
                           @if(count($languages) > 0)
                           
@@ -41,6 +41,9 @@
                             @endforeach
 
                           @endif
+                        <th>
+                            {{ trans('global.category.fields.status') }}
+                        </th>
                         <th>
                             &nbsp;
                         </th>
@@ -104,6 +107,7 @@
               { name: 'bn_name' },
               { name: 'zh_name' },
               { name: 'ta_name' },
+              { name: 'status' },
               { name: 'action', orderable: false, searchable: false }
             ],
             dom: 'Bfrtip',

@@ -51,6 +51,9 @@
                             {{ trans('global.course.fields.seats') }}
                         </th>
                         <th>
+                            {{ trans('global.course.fields.status') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -118,6 +121,7 @@
               { name: 'price' },
               { name: 'duration' },
               { name: 'seats' },
+              { name: 'status' },
               { name: 'action', orderable: false, searchable: false }
             ],
             dom: 'Bfrtip',

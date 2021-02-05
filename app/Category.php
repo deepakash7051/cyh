@@ -41,6 +41,11 @@ class Category extends Model
         return view('admin.categories.action', compact('category'))->render();
     }
 
+    public static function laratablesStatus($category)
+    {
+        return $category->status == 1 ? 'Active' : 'Inactive';
+    }
+
     public function courses(){
         return $this->hasMany('App\Course');
     }

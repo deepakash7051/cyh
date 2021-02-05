@@ -48,6 +48,29 @@
 	                @endforeach
 	            @endif
 
+	            <div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
+					<label>{{ trans('global.category.fields.status') }}</label>
+					@php 
+						$status = ['1' => 'Active', '0' => 'Inactive'];
+					@endphp
+					<select class="frm-field " name="status" id="status" >
+                        @foreach($status as $stkey => $stvalue)
+                        	<option value="{{$stkey}}" 
+                        		{{ old('status') == $stkey ? 'selected="selected"' : '' }}
+                        	>{{$stvalue}}</option>
+                        @endforeach
+                    </select>
+
+					@if($errors->has('status'))
+                    <em class="invalid-feedback">
+	                        {{ $errors->first('status') }}
+	                    </em>
+	                @endif
+	                <p class="helper-block">
+	                    {{ trans('global.category.fields.status_helper') }}
+	                </p>
+				</div>
+
 	            <div>
 	                <input class="btnn btnn-s" type="submit" value="{{ trans('global.save') }}">
 	            </div>

@@ -15,7 +15,7 @@
         <a href="{{ route('admin.categories.index') }}"><i class="fas fa-tag"></i> {{ trans('global.category.title') }}</a>
     </li>
     <li class="{{ request()->is('admin/courses') || request()->is('admin/courses/*') ? 'active' : '' }}">
-        <a href="{{ route('admin.courses.index') }}"><i class="fas fa-tag"></i> {{ trans('global.course.title') }}</a>
+        <a href="{{ route('admin.courses.index') }}"><i class="fas fa-certificate"></i> {{ trans('global.course.title') }}</a>
     </li>
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">

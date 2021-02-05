@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class UpdateUserRequest extends FormRequest
         return \Gate::allows('user_edit');
     }
 
-    public function rules()
+    public function rules(User $user)
     {
         return [
             'name'    => [
@@ -21,14 +22,16 @@ class UpdateUserRequest extends FormRequest
             'isd_code'     => [
                 'required',
             ],
-            'email'   => [
+            'email' => [
                 'required',
+                'string',
+                'email',
+                'max:255', 
             ],
             'phone'    => [
                 'required',
                 'integer',
                 'min:10',
-                'unique:users',
             ],
             'roles.*' => [
                 'integer',

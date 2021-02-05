@@ -50,6 +50,11 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         return view('admin.courses.action', compact('course'))->render();
     }
 
+    public static function laratablesStatus($course)
+    {
+        return $course->status == 1 ? 'Active' : 'Inactive';
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Category');
