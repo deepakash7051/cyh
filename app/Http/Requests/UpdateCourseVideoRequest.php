@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\CourseVideo;
 
 class UpdateCourseVideoRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateCourseVideoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return \Gate::allows('video_edit');
     }
 
     /**
@@ -24,7 +25,12 @@ class UpdateCourseVideoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'attachment'         => [
+                'required',
+            ],
+            'course_id'         => [
+                'required',
+            ],
         ];
     }
 }

@@ -50,8 +50,10 @@ class CourseVideosController extends Controller
     public function store(StoreCourseVideoRequest $request)
     {
         abort_unless(\Gate::allows('video_create'), 403);
-
-        $coursevideo = CourseVideo::create($request->all());
+        $params = $request->all();
+        $videocount = CourseVideo::where('course_id', $request->course_id)->count();
+        $params['place'] = $videocount+1;
+        $coursevideo = CourseVideo::create($params);
 
         return redirect()->route('admin.videos.index');
     }
@@ -79,8 +81,9 @@ class CourseVideosController extends Controller
     public function edit($id)
     {
         abort_unless(\Gate::allows('video_edit'), 403);
+        $courses = Course::where('status', '1')->get();
         $coursevideo = CourseVideo::find($id);
-        return view('admin.videos.edit', compact('coursevideo'));
+        return view('admin.videos.edit', compact('coursevideo','courses'));
     }
 
     /**

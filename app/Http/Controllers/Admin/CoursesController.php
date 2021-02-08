@@ -94,7 +94,7 @@ class CoursesController extends Controller
      */
     public function update(UpdateCourseRequest $request, $id)
     {
-        abort_unless(\Gate::allows('category_edit'), 403);
+        abort_unless(\Gate::allows('course_edit'), 403);
 
         $course = Course::find($id);
         $course->update($request->all());
