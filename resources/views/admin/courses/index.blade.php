@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 <?php 
-  
   $locale = config('app.locale');
+  $coursename = config('app.locale').'_title';
   $languages = config('panel.available_languages');
 ?>
 
@@ -28,23 +28,14 @@
                             {{ trans('global.course.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('global.course.fields.title') }}
+                        </th>
+                        <th>
                             {{ trans('global.category.title_singular') }}
                         </th>
                         <th>
                             {{ trans('global.course.fields.ref_code') }}
                         </th>
-                          @if(count($languages) > 0)
-                          
-                            @foreach($languages as $langKey => $langValue)
-                              @if($langKey==$locale)
-                              <th>
-                                {{'Title'}}
-                              </th>
-                              @endif
-                            @endforeach
-
-                          @endif
-
                         <th>
                             {{ trans('global.course.fields.price') }}
                         </th>
@@ -115,9 +106,9 @@
             ajax: "{{ route('admin.courses.list') }}",
             columns: [
               { name: 'id' },
-              { name: 'category.{{$locale."_name"}}' },
-              { name: 'ref_code' },
               { name: '{{$locale."_title"}}' },
+              { name: 'category.{{$locale."_name"}}', orderable : false },
+              { name: 'ref_code' },
               { name: 'price' },
               { name: 'duration' },
               { name: 'seats' },

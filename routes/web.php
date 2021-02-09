@@ -28,7 +28,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::get('/permissions/list', 'PermissionsController@list')->name('permissions.list');
 	    Route::get('/categories/list', 'CategoriesController@list')->name('categories.list');
 	    Route::get('/courses/list', 'CoursesController@list')->name('courses.list');
+	    Route::get('/courses/{id}/videos', 'CoursesController@videos')->name('courses.videos');
+	    Route::get('/courses/{id}/slides', 'CoursesController@slides')->name('courses.slides');
+	    Route::get('/courses/{id}/quizzes', 'CoursesController@quizzes')->name('courses.quizzes');
+	    Route::get('/quizzes/{id}/questions', 'QuizzesController@questions')->name('quizzes.questions');
 	    Route::get('/videos/list', 'CourseVideosController@list')->name('videos.list');
+	    Route::post('/arrangevideos', 'CourseVideosController@arrange')->name('videos.arrange');
+	    Route::get('/slides/list', 'CourseSlidesController@list')->name('slides.list');
+	    Route::post('/arrangeslides', 'CourseSlidesController@arrange')->name('slides.arrange');
+	    Route::get('/quizzes/list', 'QuizzesController@list')->name('quizzes.list');
+	    Route::post('/arrangequizzes', 'QuizzesController@arrange')->name('quizzes.arrange');
+	    Route::post('/arrangequestions', 'QuestionsController@arrange')->name('questions.arrange');
 
 	    Route::resource('permissions', 'PermissionsController');
 	    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -44,6 +54,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
 	    Route::resource('courses', 'CoursesController');
 	    Route::resource('videos', 'CourseVideosController');
+	    Route::resource('slides', 'CourseSlidesController');
+	    Route::resource('quizzes', 'QuizzesController');
+	    Route::resource('questions', 'QuestionsController');
     });
 });
 

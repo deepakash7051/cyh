@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CourseVideo extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
+class CourseSlide extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
 {
     use SoftDeletes;
 	use \Czim\Paperclip\Model\PaperclipTrait;
@@ -56,14 +56,14 @@ class CourseVideo extends Model implements \Czim\Paperclip\Contracts\AttachableI
         return $this->ta_attachment->url();
     }
 
-    public static function laratablesCustomAction($video)
+    public static function laratablesCustomAction($slide)
     {
-        return view('admin.videos.action', compact('video'))->render();
+        return view('admin.slides.action', compact('slide'))->render();
     }
 
-    public static function laratablesStatus($video)
+    public static function laratablesStatus($slide)
     {
-        return $video->status == 1 ? trans('global.active') : trans('global.inactive');
+        return $slide->status == 1 ? trans('global.active') : trans('global.inactive');
     }
 
     public function course()

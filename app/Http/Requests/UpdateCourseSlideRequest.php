@@ -4,10 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
-use App\CourseVideo;
+use App\CourseSlide;
 use Validator;
 
-class UpdateCourseVideoRequest extends FormRequest
+class UpdateCourseSlideRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class UpdateCourseVideoRequest extends FormRequest
      */
     public function authorize()
     {
-        return \Gate::allows('video_edit');
+        return \Gate::allows('slide_edit');
     }
 
     /**

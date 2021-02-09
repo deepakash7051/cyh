@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseVideosTable extends Migration
+class CreateQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateCourseVideosTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_videos', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
             $table->integer('course_id')->nullable();
+            $table->integer('quiz_id')->nullable();
             $table->integer('place')->nullable();
+            $table->string('type')->nullable();
             $languages = config('panel.available_languages');
             if(count($languages) > 0){
                 foreach($languages as $key => $value){
@@ -42,6 +44,6 @@ class CreateCourseVideosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_videos');
+        Schema::dropIfExists('questions');
     }
 }

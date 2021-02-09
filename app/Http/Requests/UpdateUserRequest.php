@@ -13,8 +13,10 @@ class UpdateUserRequest extends FormRequest
         return \Gate::allows('user_edit');
     }
 
-    public function rules(User $user)
+    public function rules()
     {
+        $user = User::find($this->route('user'));
+        
         return [
             'name'    => [
                 'required',

@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreCourseVideoRequest;
-use App\Http\Requests\UpdateCourseVideoRequest;
+use App\Http\Requests\StoreCourseSlideRequest;
+use App\Http\Requests\UpdateCourseSlideRequest;
 use Freshbitsweb\Laratables\Laratables;
 use Validator;
 use App\Course;
-use App\CourseVideo;
+use App\CourseSlide;
 
-class CourseVideosController extends Controller
+class CourseSlidesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,21 +20,21 @@ class CourseVideosController extends Controller
      */
     public function index()
     {
-        abort_unless(\Gate::allows('video_access'), 403);
+        abort_unless(\Gate::allows('slide_access'), 403);
 
-        return view('admin.videos.index');
+        return view('admin.slides.index');
     }
 
     public function list()
     {
-        return Laratables::recordsOf(CourseVideo::class);
+        return Laratables::recordsOf(CourseSlide::class);
     }
 
     public  function arrange(Request $request){
         
-        $videoplaces = $request->videoplaces;
-        foreach($videoplaces as $key => $value){
-            CourseVideo::where('id', $value)->update(['place'=>$key+1]);
+        $slideplaces = $request->slideplaces;
+        foreach($slideplaces as $key => $value){
+            CourseSlide::where('id', $value)->update(['place'=>$key+1]);
         }
     }
 
@@ -45,9 +45,9 @@ class CourseVideosController extends Controller
      */
     public function create()
     {
-        abort_unless(\Gate::allows('video_create'), 403);
+        abort_unless(\Gate::allows('slide_create'), 403);
         $courses = Course::where('status', '1')->get();
-        return view('admin.videos.create', compact('courses'));
+        return view('admin.slides.create', compact('courses'));
     }
 
     /**
@@ -56,21 +56,21 @@ class CourseVideosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCourseVideoRequest $request)
+    public function store(StoreCourseSlideRequest $request)
     {
-        abort_unless(\Gate::allows('video_create'), 403);
+        abort_unless(\Gate::allows('slide_create'), 403);
         $params = $request->all();
         if($request->same_for_all=='1'){
             $params['bn_attachment'] = $request->en_attachment;
             $params['zh_attachment'] = $request->en_attachment;
             $params['ta_attachment'] = $request->en_attachment;
         }
-        $videocount = CourseVideo::where('course_id', $request->course_id)->count();
-        $params['place'] = $videocount+1;
-        $coursevideo = CourseVideo::create($params);
+        $slidecount = CourseSlide::where('course_id', $request->course_id)->count();
+        $params['place'] = $slidecount+1;
+        $courseslide = CourseSlide::create($params);
 
-        //return redirect()->route('admin.videos.index');
-        return redirect()->route('admin.courses.videos', ['id' => $request->course_id]);
+        //return redirect()->route('admin.slides.index');
+        return redirect()->route('admin.courses.slides', ['id' => $request->course_id]);
     }
 
     /**
@@ -81,10 +81,10 @@ class CourseVideosController extends Controller
      */
     public function show($id)
     {
-        abort_unless(\Gate::allows('video_show'), 403);
+        abort_unless(\Gate::allows('slide_show'), 403);
 
-        $coursevideo = CourseVideo::find($id);
-        return view('admin.videos.show', compact('coursevideo'));
+        $courseslide = CourseSlide::find($id);
+        return view('admin.slides.show', compact('courseslide'));
     }
 
     /**
@@ -95,10 +95,10 @@ class CourseVideosController extends Controller
      */
     public function edit($id)
     {
-        abort_unless(\Gate::allows('video_edit'), 403);
+        abort_unless(\Gate::allows('slide_edit'), 403);
         $courses = Course::where('status', '1')->get();
-        $coursevideo = CourseVideo::find($id);
-        return view('admin.videos.edit', compact('coursevideo','courses'));
+        $courseslide = CourseSlide::find($id);
+        return view('admin.slides.edit', compact('courseslide','courses'));
     }
 
     /**
@@ -108,21 +108,21 @@ class CourseVideosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCourseVideoRequest $request, $id)
+    public function update(UpdateCourseSlideRequest $request, $id)
     {
-        abort_unless(\Gate::allows('video_edit'), 403);
+        abort_unless(\Gate::allows('slide_edit'), 403);
 
-        $coursevideo = CourseVideo::find($id);
+        $courseslide = CourseSlide::find($id);
         $params = $request->all();
         if($request->same_for_all=='1'){
             $params['bn_attachment'] = $request->en_attachment;
             $params['zh_attachment'] = $request->en_attachment;
             $params['ta_attachment'] = $request->en_attachment;
         }
-        $coursevideo->update($params);
+        $courseslide->update($params);
 
-        //return redirect()->route('admin.videos.index');
-        return redirect()->route('admin.courses.videos', ['id' => $request->course_id]);
+        //return redirect()->route('admin.slides.index');
+        return redirect()->route('admin.courses.slides', ['id' => $request->course_id]);
     }
 
     /**
@@ -133,10 +133,10 @@ class CourseVideosController extends Controller
      */
     public function destroy($id)
     {
-        abort_unless(\Gate::allows('video_delete'), 403);
+        abort_unless(\Gate::allows('slide_delete'), 403);
 
-        $coursevideo = CourseVideo::find($id);
-        $coursevideo->delete();
+        $courseslide = CourseSlide::find($id);
+        $courseslide->delete();
 
         return back();
     }

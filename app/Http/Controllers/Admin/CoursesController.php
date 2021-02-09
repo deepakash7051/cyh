@@ -8,7 +8,10 @@ use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use Freshbitsweb\Laratables\Laratables;
 use App\Course;
+use App\CourseVideo;
+use App\CourseSlide;
 use App\Category;
+use App\Quiz;
 
 class CoursesController extends Controller
 {
@@ -27,6 +30,36 @@ class CoursesController extends Controller
     public function list()
     {
         return Laratables::recordsOf(Course::class);
+    }
+
+    public function videos(Request $resquest, $id)
+    {
+        abort_unless(\Gate::allows('video_access'), 403);
+        abort_unless(\Gate::allows('video_edit'), 403);
+
+        $course = Course::find($id);
+        $coursevideos =  CourseVideo::where('course_id', $id)->where('status', '1')->orderBy('place')->get();
+        return view('admin.courses.videos', compact('coursevideos', 'course'));
+    }
+
+    public function slides(Request $resquest, $id)
+    {
+        abort_unless(\Gate::allows('slide_access'), 403);
+        abort_unless(\Gate::allows('slide_edit'), 403);
+
+        $course = Course::find($id);
+        $courseslides =  CourseSlide::where('course_id', $id)->where('status', '1')->orderBy('place')->get();
+        return view('admin.courses.slides', compact('courseslides', 'course'));
+    }
+
+    public function quizzes(Request $resquest, $id)
+    {
+        abort_unless(\Gate::allows('slide_access'), 403);
+        abort_unless(\Gate::allows('slide_edit'), 403);
+
+        $course = Course::find($id);
+        $quizzes =  Quiz::where('course_id', $id)->where('status', '1')->orderBy('place')->get();
+        return view('admin.courses.quizzes', compact('quizzes', 'course'));
     }
 
     /**

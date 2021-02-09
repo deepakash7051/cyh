@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseVideosTable extends Migration
+class CreateCourseSlidesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCourseVideosTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_videos', function (Blueprint $table) {
+        Schema::create('course_slides', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
             $table->id();
@@ -42,6 +42,6 @@ class CreateCourseVideosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_videos');
+        Schema::dropIfExists('course_slides');
     }
 }

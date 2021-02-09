@@ -118,4 +118,13 @@ class User extends Authenticatable
             return 'false';
         }
     }
+
+    /*public static function laratablesQueryConditions($query)
+    {
+        return $query->with(['role_user' => function($query){
+            $query->where('role_user.role_id', '>', '2');
+        }]);
+        return $query->where('id', '3');
+    }*/
+
 }

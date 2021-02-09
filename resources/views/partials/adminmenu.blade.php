@@ -17,9 +17,15 @@
     <li class="{{ request()->is('admin/courses') || request()->is('admin/courses/*') ? 'active' : '' }}">
         <a href="{{ route('admin.courses.index') }}"><i class="fas fa-certificate"></i> {{ trans('global.course.title') }}</a>
     </li>
-    <li class="{{ request()->is('admin/videos') || request()->is('admin/videos/*') ? 'active' : '' }}">
-        <a href="{{ route('admin.videos.index') }}"><i class="fas fa-file-video-o"></i> {{ trans('global.video.title') }}</a>
+    <!-- <li class="{{ request()->is('admin/videos') || request()->is('admin/videos/*') ? 'active' : '' }}">
+        <a href="{{ route('admin.videos.index') }}"><i class="fas fa-video"></i> {{ trans('global.video.title') }}</a>
     </li>
+    <li class="{{ request()->is('admin/slides') || request()->is('admin/slides/*') ? 'active' : '' }}">
+        <a href="{{ route('admin.slides.index') }}"><i class="fab fa-slideshare"></i> {{ trans('global.slide.title') }}</a>
+    </li>
+    <li class="{{ request()->is('admin/quizzes') || request()->is('admin/quizzes/*') ? 'active' : '' }}">
+        <a href="{{ route('admin.quizzes.index') }}"><i class="fab fa-quinscape"></i> {{ trans('global.quiz.title') }}</a>
+    </li> -->
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
             <i class="fas fas fa-sign-out-alt"></i> {{ trans('global.logout') }}

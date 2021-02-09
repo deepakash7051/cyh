@@ -417,7 +417,23 @@ table.table-custom{
 .invalid-feedback {
     display: block !important;
 }
-
+.ui-sortable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.ui-sortable li {
+    margin: 0 0 6px;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background: #f2f2f2;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: row-resize;
+}
+.pull-right:{
+	float: right;
+}
 /*==== Dashboard ====*/
 
 /*--Responsive style--*/

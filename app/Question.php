@@ -5,13 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CourseVideo extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
+class Question extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
 {
     use SoftDeletes;
 	use \Czim\Paperclip\Model\PaperclipTrait;
 
 	protected $fillable = [  
         'course_id',
+        'quiz_id',
+        'type',
         'en_title',
         'bn_title',
         'zh_title',
@@ -56,18 +58,23 @@ class CourseVideo extends Model implements \Czim\Paperclip\Contracts\AttachableI
         return $this->ta_attachment->url();
     }
 
-    public static function laratablesCustomAction($video)
+    public static function laratablesCustomAction($question)
     {
-        return view('admin.videos.action', compact('video'))->render();
+        return view('admin.questions.action', compact('question'))->render();
     }
 
-    public static function laratablesStatus($video)
+    public static function laratablesStatus($question)
     {
-        return $video->status == 1 ? trans('global.active') : trans('global.inactive');
+        return $question->status == 1 ? trans('global.active') : trans('global.inactive');
     }
 
     public function course()
     {
         return $this->belongsTo('App\Course');
+    }
+
+    public function quiz()
+    {
+        return $this->belongsTo('App\Quiz');
     }
 }

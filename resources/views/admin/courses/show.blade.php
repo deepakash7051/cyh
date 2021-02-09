@@ -9,7 +9,7 @@
 <div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.show') }} {{ trans('global.course.title') }}
+                {{ trans('global.show') }} {{ trans('global.course.title_singular') }}
             </h2>
         </div>
         <div class="search-wrp">

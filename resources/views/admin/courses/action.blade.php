@@ -1,3 +1,18 @@
+@can('video_access')
+    <a class="btn btn-xs btn-primary" href="{{ route('admin.courses.videos', $course->id) }}">
+        {{ trans('global.video.title') }}
+    </a>
+@endcan
+@can('slide_access')
+    <a class="btn btn-xs btn-info" href="{{ route('admin.courses.slides', $course->id) }}">
+        {{ trans('global.slide.title') }}
+    </a>
+@endcan
+@can('quiz_access')
+    <a class="btn btn-xs btn-success" href="{{ route('admin.courses.quizzes', $course->id) }}">
+        {{ trans('global.quiz.title') }}
+    </a>
+@endcan
 @can('course_show')
     <a class="btn btn-xs btn-primary" href="{{ route('admin.courses.show', $course->id) }}">
         {{ trans('global.view') }}
@@ -15,3 +30,4 @@
         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
     </form>
 @endcan
+

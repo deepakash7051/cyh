@@ -24,7 +24,15 @@ class UsersController extends Controller
     public function list()
     {
         abort_unless(\Gate::allows('user_access'), 403);
+
+        /*$users = User::with(['role_user' => function ($query){
+            $query->where('role_user.role_id', '>', '2');
+        }]);
+
+        echo '<pre>';
+        print($users->first()->role_user()->first()->role_id);*/
         return Laratables::recordsOf(User::class);
+
     }
 
     public function create()

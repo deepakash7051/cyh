@@ -2,8 +2,7 @@
 @section('content')
 
 <?php 
-  $coursetitle = config('app.locale').'_title';
-  $videotitle = config('app.locale').'_title';
+  $title = config('app.locale').'_title';
   $attachment_url = config('app.locale').'_attachment_url';
   $languages = config('panel.available_languages');
 ?>
@@ -11,7 +10,7 @@
 <div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.show') }} {{ trans('global.video.title_singular') }}
+                {{ trans('global.show') }} {{ trans('global.question.title_singular') }}
             </h2>
         </div>
         <div class="search-wrp">
@@ -26,25 +25,47 @@
                             {{ trans('global.course.title_singular') }}
                         </td>
                         <td>
-                            {{ $coursevideo->course->$coursetitle }}
+                            {{ $question->course->$title }}
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            {{ trans('global.video.fields.title') }}
+                            {{ trans('global.quiz.title_singular') }}
                         </td>
                         <td>
-                            {{ $coursevideo->$videotitle }}
+                            {{ $question->quiz->$title }}
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            {{ trans('global.video.fields.place') }}
+                            {{ trans('global.question.fields.title') }}
                         </td>
                         <td>
-                            {{ $coursevideo->place }}
+                            {{ $question->$title }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            {{ trans('global.question.fields.type') }}
+                        </td>
+                        <td>
+                            @if($question->type=='1')
+                                {{ trans('global.mcq') }} 
+                            @else
+                                {{ trans('global.short_question') }}
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            {{ trans('global.question.fields.place') }}
+                        </td>
+                        <td>
+                            {{ $question->place }}
                         </td>
                     </tr>
                     
@@ -53,10 +74,8 @@
                             {{ trans('global.video.fields.attachment') }}
                         </td>
                         <td>
-                            <video width="320" height="240" controls>
-                              <source src="{{ $coursevideo->$attachment_url }}" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
+                            <img src="{{ $question->$attachment_url }}">
+
                         </td>
                     </tr>
 

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ trans('global.site_title') }}</title>
 
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" />
@@ -15,7 +16,7 @@
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> -->
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" /> -->
     <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
    <!--  <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" /> -->
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -42,6 +43,7 @@
 </head>
 
 <body class="">
+  <input type="hidden" value="{{url('/')}}" id="base_url">
 <header class="header-type2">
     <div class="d-flex align-items-center justify-content-between">
         <div class="logo-wrap"><a href="">

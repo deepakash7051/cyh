@@ -33,7 +33,7 @@ $(document).ready(function () {
     $select2.trigger('change')
   })
 
-  $('.select2').select2()
+  $('.select2').select2();
 
   $('.treeview').each(function () {
     var shouldExpand = false
@@ -45,7 +45,16 @@ $(document).ready(function () {
     if (shouldExpand) {
       $(this).addClass('active')
     }
-  })
+  });
+
+    $('#same_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlang').hide();
+        } else {
+            $('.otherlang').show();
+        }
+    });
+
 })
 
 $(function () {
@@ -88,5 +97,158 @@ $(function () {
             $(this).val($(this).data('prevValue') || '');
         }
     }).trigger('input'); // Initialise the `prevValue` data properties
+
+    //$( "#sortable" ).sortable();
+    $( "#videosortable" ).disableSelection();
+    $('#videosortable').sortable({
+        start: function(event, ui) {
+            var start_pos = ui.item.index();
+            ui.item.data('start_pos', start_pos);
+        },
+        change: function(event, ui) {
+            var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();
+            if (start_pos < index) {
+                $('#videosortable li:nth-child(' + index + ')').addClass('highlights');
+            } else {
+                $('#videosortable li:eq(' + (index + 1) + ')').addClass('highlights');
+            }
+        },
+        update: function(event, ui) {
+            $('#videosortable li').removeClass('highlights');
+        },
+        stop: function(event, ui) {  
+            //var total = $('#videosortable li').length;
+            //console.log(total);
+            var videoplaces = [];
+            $('#videosortable li').each(function (index, key) {
+                videoplaces.push(key.dataset.val);
+            });
+            $.ajax(
+            {
+                type:'post',
+                url: $("#base_url").val() +"/admin/arrangevideos",
+                data: {_token: _token, 'videoplaces' : videoplaces},
+                success:function(result)
+                {
+                    console.log(result);
+                }
+            });
+        }
+    });
+
+    $( "#slidesortable" ).disableSelection();
+    $('#slidesortable').sortable({
+        start: function(event, ui) {
+            var start_pos = ui.item.index();
+            ui.item.data('start_pos', start_pos);
+        },
+        change: function(event, ui) {
+            var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();
+            if (start_pos < index) {
+                $('#slidesortable li:nth-child(' + index + ')').addClass('highlights');
+            } else {
+                $('#slidesortable li:eq(' + (index + 1) + ')').addClass('highlights');
+            }
+        },
+        update: function(event, ui) {
+            $('#slidesortable li').removeClass('highlights');
+        },
+        stop: function(event, ui) {  
+            //var total = $('#videosortable li').length;
+            //console.log(total);
+            var slideplaces = [];
+            $('#slidesortable li').each(function (index, key) {
+                slideplaces.push(key.dataset.val);
+            });
+            $.ajax(
+            {
+                type:'post',
+                url: $("#base_url").val() +"/admin/arrangeslides",
+                data: {_token: _token, 'slideplaces' : slideplaces},
+                success:function(result)
+                {
+                    console.log(result);
+                }
+            });
+        }
+    });
+
+    $( "#quizsortable" ).disableSelection();
+    $('#quizsortable').sortable({
+        start: function(event, ui) {
+            var start_pos = ui.item.index();
+            ui.item.data('start_pos', start_pos);
+        },
+        change: function(event, ui) {
+            var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();
+            if (start_pos < index) {
+                $('#quizsortable li:nth-child(' + index + ')').addClass('highlights');
+            } else {
+                $('#quizsortable li:eq(' + (index + 1) + ')').addClass('highlights');
+            }
+        },
+        update: function(event, ui) {
+            $('#quizsortable li').removeClass('highlights');
+        },
+        stop: function(event, ui) {  
+            //var total = $('#videosortable li').length;
+            //console.log(total);
+            var quizplaces = [];
+            $('#quizsortable li').each(function (index, key) {
+                quizplaces.push(key.dataset.val);
+            });
+            $.ajax(
+            {
+                type:'post',
+                url: $("#base_url").val() +"/admin/arrangequizzes",
+                data: {_token: _token, 'quizplaces' : quizplaces},
+                success:function(result)
+                {
+                    console.log(result);
+                }
+            });
+        }
+    });
+
+    $( "#questionsortable" ).disableSelection();
+    $('#questionsortable').sortable({
+        start: function(event, ui) {
+            var start_pos = ui.item.index();
+            ui.item.data('start_pos', start_pos);
+        },
+        change: function(event, ui) {
+            var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();
+            if (start_pos < index) {
+                $('#questionsortable li:nth-child(' + index + ')').addClass('highlights');
+            } else {
+                $('#questionsortable li:eq(' + (index + 1) + ')').addClass('highlights');
+            }
+        },
+        update: function(event, ui) {
+            $('#questionsortable li').removeClass('highlights');
+        },
+        stop: function(event, ui) {  
+            //var total = $('#videosortable li').length;
+            //console.log(total);
+            var questionplaces = [];
+            $('#questionsortable li').each(function (index, key) {
+                questionplaces.push(key.dataset.val);
+            });
+            $.ajax(
+            {
+                type:'post',
+                url: $("#base_url").val() +"/admin/arrangequestions",
+                data: {_token: _token, 'questionplaces' : questionplaces},
+                success:function(result)
+                {
+                    console.log(result);
+                }
+            });
+        }
+    });
 
 });

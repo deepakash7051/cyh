@@ -8,11 +8,11 @@
 	<div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.video.title_singular') }} {{ trans('global.list') }}
+                {{ trans('global.quiz.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
-                <a href="{{ route('admin.videos.create') }}" class="btnn btnn-s">
-                    {{ trans('global.add') }} {{ trans('global.video.title_singular') }}
+                <a href="{{ route('admin.quizzes.create') }}" class="btnn btnn-s">
+                    {{ trans('global.add') }} {{ trans('global.quiz.title_singular') }}
                 </a>
             </div>
         </div>
@@ -20,26 +20,23 @@
 			<div class="d-flex justify-content-between"></div>
 		</div>
 		<div class="table-responsive table-responsive-md">
-			<table class="table table-hover table-custom datatable" id="video_table">
+			<table class="table table-hover table-custom datatable" id="slide_table">
 				<thead>
                     <tr>
                         <th>
-                            {{ trans('global.video.fields.id') }}
+                            {{ trans('global.quiz.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('global.video.fields.title') }}
+                            {{ trans('global.quiz.fields.title') }}
                         </th>
                         <th>
                             {{ trans('global.course.title_singular') }}
                         </th>  
                         <th>
-                            {{ trans('global.video.fields.place') }}
+                            {{ trans('global.quiz.fields.place') }}
                         </th>
                         <th>
-                            {{ trans('global.video.fields.attachment') }}
-                        </th>
-                        <th>
-                            {{ trans('global.video.fields.status') }}
+                            {{ trans('global.slide.fields.status') }}
                         </th>
                         <th>
                             &nbsp;
@@ -92,17 +89,16 @@
 </script>
 <script>
 
-        $('#video_table').DataTable({
+        $('#slide_table').DataTable({
             serverSide: true,
             processing: true,
             responsive: true,
-            ajax: "{{ route('admin.videos.list') }}",
+            ajax: "{{ route('admin.quizzes.list') }}",
             columns: [
               { name: 'id' },
               { name: '{{$locale."_title"}}' },
               { name: 'course.{{$locale."_title"}}', orderable : false },
               { name: 'place' },
-              { name: '{{$locale."_attachment_file_name"}}' },
               { name: 'status' },
               { name: 'action', orderable: false, searchable: false }
             ],

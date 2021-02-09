@@ -11,7 +11,7 @@
 <div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.show') }} {{ trans('global.video.title_singular') }}
+                {{ trans('global.show') }} {{ trans('global.slide.title_singular') }}
             </h2>
         </div>
         <div class="search-wrp">
@@ -26,25 +26,25 @@
                             {{ trans('global.course.title_singular') }}
                         </td>
                         <td>
-                            {{ $coursevideo->course->$coursetitle }}
+                            {{ $courseslide->course->$coursetitle }}
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            {{ trans('global.video.fields.title') }}
+                            {{ trans('global.slide.fields.title') }}
                         </td>
                         <td>
-                            {{ $coursevideo->$videotitle }}
+                            {{ $courseslide->$videotitle }}
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            {{ trans('global.video.fields.place') }}
+                            {{ trans('global.slide.fields.place') }}
                         </td>
                         <td>
-                            {{ $coursevideo->place }}
+                            {{ $courseslide->place }}
                         </td>
                     </tr>
                     
@@ -53,10 +53,10 @@
                             {{ trans('global.video.fields.attachment') }}
                         </td>
                         <td>
-                            <video width="320" height="240" controls>
-                              <source src="{{ $coursevideo->$attachment_url }}" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
+                            <a href="{{ $courseslide->$attachment_url }}">
+                                {{ trans('global.view_file') }}
+                            </a>
+
                         </td>
                     </tr>
 
