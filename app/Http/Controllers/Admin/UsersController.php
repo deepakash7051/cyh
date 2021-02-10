@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateUserRequest;
 use Freshbitsweb\Laratables\Laratables;
 use App\Role;
 use App\User;
+use App\RoleUser;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -25,13 +27,19 @@ class UsersController extends Controller
     {
         abort_unless(\Gate::allows('user_access'), 403);
 
-        /*$users = User::with(['role_user' => function ($query){
-            $query->where('role_user.role_id', '>', '2');
-        }]);
+        $user = auth()->user();
+        $roleid = RoleUser::where('user_id', $user->id)->min('role_id');
+        $roleToExclude = [];
+        for($i=0; $i<= $roleid; $i++){
+            array_push($roleToExclude, $i);
+        }
 
-        echo '<pre>';
-        print($users->first()->role_user()->first()->role_id);*/
-        return Laratables::recordsOf(User::class);
+        return Laratables::recordsOf(User::class, function($query)  use ($roleToExclude) 
+        {
+            return $query->whereDoesntHave('roles', function($query) use ($roleToExclude){
+                $query->whereIn('id', $roleToExclude);
+            });
+        });
 
     }
 
@@ -39,7 +47,9 @@ class UsersController extends Controller
     {
         abort_unless(\Gate::allows('user_create'), 403);
 
-        $roles = Role::all()->pluck('title', 'id');
+        $user = auth()->user();
+        $roleid = RoleUser::where('user_id', $user->id)->min('role_id');
+        $roles = Role::where('id', '>', $roleid)->pluck('title', 'id');
 
         return view('admin.users.create', compact('roles'));
     }
@@ -58,7 +68,9 @@ class UsersController extends Controller
     {
         abort_unless(\Gate::allows('user_edit'), 403);
 
-        $roles = Role::all()->pluck('title', 'id');
+        $authuser = auth()->user();
+        $roleid = RoleUser::where('user_id', $authuser->id)->min('role_id');
+        $roles = Role::where('id', '>', $roleid)->pluck('title', 'id');
 
         $user->load('roles');
 

@@ -15,7 +15,7 @@ class UpdateUserRequest extends FormRequest
 
     public function rules()
     {
-        $user = User::find($this->route('user'));
+        $user_id =  $this->request->get('user_id');
         
         return [
             'name'    => [
@@ -24,17 +24,8 @@ class UpdateUserRequest extends FormRequest
             'isd_code'     => [
                 'required',
             ],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255', 
-            ],
-            'phone'    => [
-                'required',
-                'integer',
-                'min:10',
-            ],
+            'email' => 'required|email|unique:users,email,'.$user_id,
+            'phone' => 'required|min:10|integer|unique:users,phone,'.$user_id,
             'roles.*' => [
                 'integer',
             ],

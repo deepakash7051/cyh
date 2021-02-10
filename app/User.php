@@ -110,6 +110,11 @@ class User extends Authenticatable
         return view('admin.users.action', compact('user'))->render();
     }
 
+    public static function laratablesStatus($user)
+    {
+        return $user->status == 1 ? trans('global.active') : trans('global.inactive');
+    }
+
     public static function update_user($input, $where){
         $query = User::where($where);
         if($query->update($input)) {    
@@ -119,12 +124,5 @@ class User extends Authenticatable
         }
     }
 
-    /*public static function laratablesQueryConditions($query)
-    {
-        return $query->with(['role_user' => function($query){
-            $query->where('role_user.role_id', '>', '2');
-        }]);
-        return $query->where('id', '3');
-    }*/
 
 }

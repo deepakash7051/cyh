@@ -1,5 +1,10 @@
 [
   {
+    "name": "Singapore",
+    "dial_code": "+65",
+    "code": "SG"
+  },
+  {
     "name": "Afghanistan",
     "dial_code": "+93",
     "code": "AF"
@@ -973,11 +978,6 @@
     "name": "Sierra Leone",
     "dial_code": "+232",
     "code": "SL"
-  },
-  {
-    "name": "Singapore",
-    "dial_code": "+65",
-    "code": "SG"
   },
   {
     "name": "Slovakia",

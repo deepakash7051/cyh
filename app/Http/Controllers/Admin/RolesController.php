@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Permission;
 use App\Role;
+use App\RoleUser;
 use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
@@ -16,7 +17,9 @@ class RolesController extends Controller
     {
         abort_unless(\Gate::allows('role_access'), 403);
 
-        $roles = Role::all();
+        $user = auth()->user();
+        $roleid = RoleUser::where('user_id', $user->id)->min('role_id');
+        $roles = Role::where('id', '>=', $roleid)->get();
 
         return view('admin.roles.index', compact('roles'));
     }

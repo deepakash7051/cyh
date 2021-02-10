@@ -14,6 +14,7 @@
 			<form action="{{ route('admin.users.update', [$user->id]) }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				@method('PUT')
+				<input type="hidden" name="user_id" value="{{$user->id}}">
 				<div class="form-group mb-2 {{ $errors->has('name') ? 'has-error' : '' }}">
 					<label>{{ trans('global.user.fields.name') }}*</label>
 					<input class="frm-field" type="text" id="name" name="name" value="{{ old('name', isset($user) ? $user->name : '') }}">
@@ -43,7 +44,6 @@
                         <div class="col-md-3 {{ $errors->has('isd_code') ? ' is-invalid' : '' }}">
                         	<label>{{ trans('global.user.fields.isd_code') }}*</label>
                             <select class="frm-field select2" name="isd_code" id="isd_code" >
-                                <option value="">Select</option>
                                 @foreach($CountryCodes as $CountryCode)
                                     <option value="{{$CountryCode->dial_code}}" 
                                     	{{ $user->isd_code == $CountryCode->dial_code ? 'selected="selected"' : '' }}>

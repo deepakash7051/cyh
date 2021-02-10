@@ -31,6 +31,12 @@
                             {{ trans('global.user.fields.phone') }}
                         </th>
                         <th>
+                            {{ trans('global.user.fields.status') }}
+                        </th>
+                        <th>
+                            {{ trans('global.user.fields.roles') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -90,6 +96,8 @@
                 { name: 'name' },
                 { name: 'email' },
                 { name: 'phone' },
+                { name: 'status'},
+                { name: 'roles', orderable: false, searchable: false},
                 { name: 'action', orderable: false, searchable: false }
             ],
             dom: 'Bfrtip',
