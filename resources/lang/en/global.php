@@ -17,6 +17,8 @@ return [
     'delete'                               => 'Delete',
     'save'                                 => 'Save',
     'arrange'                              => 'Arrange',
+    'dummy'                              => 'Dummy',
+    'demo'                              => 'Demo',
     'use_same_video'  => 'Use same video for all languages',
     'use_same_slide'  => 'Use same slide for all languages',
     'use_same'  => 'Use same for all languages',
@@ -549,6 +551,30 @@ return [
             'deleted_at_helper'  => '',
         ],
     ],
+
+    'import'                              => [
+        'title'          => 'Imports',
+        'title_singular' => 'Import',
+        'fields'         => [
+            'id'                 => 'ID',
+            'id_helper'          => '',
+            'title'        => 'Title',
+            'title_helper' => '',
+            'place'        => 'Place',
+            'place_helper' => '',
+            'attachment'        => 'Attachment',
+            'attachment_helper' => '',
+            'status'              => 'Status',
+            'status_helper'       => '',
+            'created_at'         => 'Created At',
+            'created_at_helper'  => '',
+            'updated_at'         => 'Updated At',
+            'updated_at_helper'  => '',
+            'deleted_at'         => 'Deleted at',
+            'deleted_at_helper'  => '',
+        ],
+    ],
+
 ];
 
 

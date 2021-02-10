@@ -39,6 +39,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::get('/quizzes/list', 'QuizzesController@list')->name('quizzes.list');
 	    Route::post('/arrangequizzes', 'QuizzesController@arrange')->name('quizzes.arrange');
 	    Route::post('/arrangequestions', 'QuestionsController@arrange')->name('questions.arrange');
+	    Route::get('/import/users', 'ImportsController@users')->name('import.users');
+	    Route::post('/import/parseusers', 'ImportsController@parseusers')->name('import.parseusers');
+	    Route::post('/import/saveusers', 'ImportsController@saveusers')->name('import.saveusers');
 
 	    Route::resource('permissions', 'PermissionsController');
 	    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
