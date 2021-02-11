@@ -60,8 +60,23 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         return $this->belongsTo('App\Category');
     }
 
-    public function shop_videos()
+    public function course_videos()
     {
         return $this->hasMany('App\CourseVideo');
+    }
+
+    public function course_slides()
+    {
+        return $this->hasMany('App\CourseSlide');
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany('App\Quiz');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Question');
     }
 }

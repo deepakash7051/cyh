@@ -1,7 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 
-
+<?php 
+    $coursename = config('app.locale').'_title';
+    $categoryname = config('app.locale').'_name';
+?>
 <div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
@@ -49,11 +52,32 @@
                 </tr>
                 <tr>
                     <td>
-                        Roles
+                        {{ trans('global.user.fields.roles') }}
                     </td>
                     <td>
                         @foreach($user->roles as $id => $roles)
-                            <span class="label label-info label-many">{{ $roles->title }}</span>
+                            <span class="badge badge-info">{{ $roles->title }}</span>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ trans('global.user.fields.categories') }}
+                    </td>
+                    <td>
+                        @foreach($user->categories as $id => $categories)
+                            <span class="badge badge-info">{{ $categories->$categoryname }}</span>
+                            <!-- <span class="label label-info label-many">{{ $roles->title }}</span> -->
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ trans('global.user.fields.courses') }}
+                    </td>
+                    <td>
+                        @foreach($user->courses as $id => $courses)
+                            <span class="badge badge-info">{{ $courses->$coursename }}</span>
                         @endforeach
                     </td>
                 </tr>

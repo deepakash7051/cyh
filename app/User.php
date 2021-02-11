@@ -90,6 +90,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
     public function role_user(){
         return $this->hasMany('App\RoleUser');
     }

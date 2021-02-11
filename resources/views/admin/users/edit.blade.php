@@ -3,6 +3,7 @@
 <?php 
     $CountryCodesJson = file_get_contents(base_path('uploads/CountryCodes.json'));
     $CountryCodes = json_decode($CountryCodesJson);
+    $coursename = config('app.locale').'_title';
 ?>
 	<div class="dash-main">
 		<div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
@@ -109,6 +110,48 @@
 	                </p>
 	            </div>
 
+	            <div class="form-group mb-2 {{ $errors->has('categories') ? 'has-error' : '' }}">
+	                <label for="roles">{{ trans('global.user.fields.categories') }}
+	                    <span class="btn btn-info btn-xs select-all">Select all</span>
+	                    <span class="btn btn-info btn-xs deselect-all">Deselect all</span></label>
+	                <select name="categories[]" id="user_categories" class="frm-field select2" multiple="multiple">
+	                    @foreach($categories as $id => $categories)
+	                        <option value="{{ $id }}" {{ (in_array($id, old('categories', [])) || isset($user) && $user->categories->contains($id)) ? 'selected' : '' }}>
+	                            {{ $categories }}
+	                        </option>
+	                    @endforeach
+	                </select>
+	                @if($errors->has('categories'))
+	                    <em class="invalid-feedback">
+	                        {{ $errors->first('categories') }}
+	                    </em>
+	                @endif
+	                <p class="helper-block">
+	                    {{ trans('global.user.fields.categories_helper') }}
+	                </p>
+	            </div>
+
+	            <div class="form-group mb-2 {{ $errors->has('courses') ? 'has-error' : '' }}">
+	                <label for="roles">{{ trans('global.user.fields.courses') }}
+	                    <span class="btn btn-info btn-xs select-all">Select all</span>
+	                    <span class="btn btn-info btn-xs deselect-all">Deselect all</span></label>
+	                <select name="courses[]" id="user_courses" class="frm-field select2" multiple="multiple">
+	                    @foreach($courses as $id => $courses)
+	                        <option value="{{ $id }}" {{ (in_array($id, old('courses', [])) || isset($user) && $user->courses->contains($id)) ? 'selected' : '' }}>
+	                            {{ $courses }}
+	                        </option>
+	                    @endforeach
+	                </select>
+	                @if($errors->has('courses'))
+	                    <em class="invalid-feedback">
+	                        {{ $errors->first('courses') }}
+	                    </em>
+	                @endif
+	                <p class="helper-block">
+	                    {{ trans('global.user.fields.courses_helper') }}
+	                </p>
+	            </div>
+
 	            <div>
 	                <input class="btnn btnn-s" type="submit" value="{{ trans('global.save') }}">
 	            </div>
@@ -119,6 +162,33 @@
 	</div>
 @section('scripts')
 @parent
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    $('#user_categories').on('change', function() {
+
+        var categories = $(this).val();
+            if(categories) {
+	            $.ajax({
+	                url: "{{url('/admin/users/courses/')}}",
+	                type: "GET",
+	                data: {'categories':categories},
+	                dataType: "json",
+	                success:function(data) {
+	                	$('#user_courses').empty();
+		                $.each(data, function(key, value) {
+		                    $('#user_courses').append('<option value="'+ value.id +'">'+ value.{{$coursename}} +'</option>');
+		                });
+	                }
+	            });
+	        } else {
+	        	$('#courses').empty();
+	        }
+   });
+
+    
+    });
+</script>
 @endsection
 
 @endsection
