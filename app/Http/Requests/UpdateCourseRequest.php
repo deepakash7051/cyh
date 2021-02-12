@@ -29,6 +29,7 @@ class UpdateCourseRequest extends FormRequest
         $validatefields['ref_code'] = ['required'];
         $validatefields['price'] = ['required'];
         $validatefields['duration'] = ['required'];
+        $validatefields['image'] = ['mimes:jpeg,jpg,png,gif'];
         $languages = config('panel.available_languages');
         if(count($languages) > 0){
             foreach($languages as $key => $value){

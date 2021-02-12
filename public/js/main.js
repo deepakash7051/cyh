@@ -55,6 +55,45 @@ $(document).ready(function () {
         }
     });
 
+    $('#sameans_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlangans').hide();
+        } else {
+            $('.otherlangans').show();
+        }
+    });
+
+    $('#sameoption_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlangoption').hide();
+        } else {
+            $('.otherlangoption').show();
+        }
+    });
+
+    $('#visible').change(function() {
+        if($(this).val()=='text') {
+            $('#ques_options').show();
+            $('#quesattachments').hide();
+            $('#questitles').show();
+        } else {
+            $('#ques_options').hide();
+            $('#quesattachments').show();
+            $('#questitles').hide();
+        }
+    });
+
+    $('#type').change(function() {
+        if($(this).val()== '1') {
+            $('#visiblesec').show();
+            $('#questitles').hide();
+        } else {
+            $('#ques_options').hide();
+            $('#visiblesec').hide();
+            $('#questitles').show();
+        }
+    });
+
 })
 
 $(function () {

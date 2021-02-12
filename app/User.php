@@ -134,5 +134,10 @@ class User extends Authenticatable
         }
     }
 
+    public static function laratablesRowClass($user)
+    {
+        return $user->status=='1' ? 'text-dark' : 'text-danger';
+    }
+
 
 }

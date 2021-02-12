@@ -27,17 +27,49 @@ class StoreQuestionRequest extends FormRequest
     public function rules()
     {
 
-        $same_for_all =  $this->request->get('same_for_all');
+        $same_for_all =  $this->request->has('same_for_all') ? $this->request->get('same_for_all') : '0';
+        $sameans_for_all =  $this->request->has('sameans_for_all') ? $this->request->get('sameans_for_all') : '0';
+        $sameoption_for_all =  $this->request->has('sameoption_for_all') ? $this->request->get('sameoption_for_all') : '0';
+        $visible =  $this->request->get('visible');
+        $type = $this->request->get('type');
         $validatefields = [];
         $validatefields['quiz_id'] = ['required'];
+        $validatefields['type'] = ['required'];
         $languages = config('panel.available_languages');
         if(count($languages) > 0){
             foreach($languages as $key => $value){
-                $validatefields[$key.'_title'] = ['required'];
-                if($same_for_all=='1'){
-                    $validatefields['en_attachment'] = ['required'];
+                if($type=='0'){
+                    $validatefields[$key.'_title'] = ['required'];
                 } else {
-                    $validatefields[$key.'_attachment'] = ['required'];
+                    $validatefields['visible'] = ['required'];
+                    if($visible=='image'){
+                        if($same_for_all=='1'){
+                            $validatefields['en_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
+                        } else {
+                            $validatefields[$key.'_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
+                        }
+
+                    } else {
+                        $validatefields[$key.'_title'] = ['required'];
+                        if($sameoption_for_all=='1'){
+                            $validatefields['en_option_a'] = ['required'];
+                            $validatefields['en_option_b'] = ['required'];
+                            $validatefields['en_option_c'] = ['required'];
+                            $validatefields['en_option_d'] = ['required'];
+                        } else {
+                            $validatefields[$key.'_option_a'] = ['required'];
+                            $validatefields[$key.'_option_b'] = ['required'];
+                            $validatefields[$key.'_option_c'] = ['required'];
+                            $validatefields[$key.'_option_d'] = ['required'];
+                        }
+
+                    }
+                }
+                
+                if($sameans_for_all=='1'){
+                    $validatefields['en_correct_answer'] = ['required'];
+                } else {
+                    $validatefields[$key.'_correct_answer'] = ['required'];
                 }
             }
         }

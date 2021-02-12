@@ -39,4 +39,9 @@ class Quiz extends Model
     {
         return $this->belongsTo('App\Course');
     }
+
+    public static function laratablesRowClass($quiz)
+    {
+        return $quiz->status=='1' ? 'text-dark' : 'text-danger';
+    }
 }

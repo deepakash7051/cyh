@@ -78,7 +78,7 @@
 @parent
 <script>
     $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  /*let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.roles.massDestroy') }}",
@@ -103,11 +103,11 @@
           .done(function () { location.reload() })
       }
     }
-  }
+  }*/
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('role_delete')
+/*@can('role_delete')
   dtButtons.push(deleteButton)
-@endcan
+@endcan*/
 
   $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
 })

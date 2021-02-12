@@ -49,4 +49,9 @@ class Category extends Model
     public function courses(){
         return $this->hasMany('App\Course');
     }
+
+    public static function laratablesRowClass($category)
+    {
+        return $category->status=='1' ? 'text-dark' : 'text-danger';
+    }
 }

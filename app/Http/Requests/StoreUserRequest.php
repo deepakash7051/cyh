@@ -31,18 +31,14 @@ class StoreUserRequest extends FormRequest
             'phone'    => [
                 'required',
                 'integer',
-                'min:10',
+                'digits:10',
                 'unique:users',
             ],
             'password' => [
                 'required',
             ],
-            'roles.*'  => [
-                'integer',
-            ],
-            'roles'    => [
+            'role'    => [
                 'required',
-                'array',
             ],
         ];
     }

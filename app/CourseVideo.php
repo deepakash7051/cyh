@@ -70,4 +70,9 @@ class CourseVideo extends Model implements \Czim\Paperclip\Contracts\AttachableI
     {
         return $this->belongsTo('App\Course');
     }
+
+    public static function laratablesRowClass($video)
+    {
+        return $video->status=='1' ? 'text-dark' : 'text-danger';
+    }
 }

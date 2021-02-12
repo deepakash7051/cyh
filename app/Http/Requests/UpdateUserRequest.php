@@ -25,13 +25,9 @@ class UpdateUserRequest extends FormRequest
                 'required',
             ],
             'email' => 'required|email|unique:users,email,'.$user_id,
-            'phone' => 'required|min:10|integer|unique:users,phone,'.$user_id,
-            'roles.*' => [
-                'integer',
-            ],
-            'roles'   => [
+            'phone' => 'required|digits:10|integer|unique:users,phone,'.$user_id,
+            'role'   => [
                 'required',
-                'array',
             ],
         ];
     }

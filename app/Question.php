@@ -19,6 +19,11 @@ class Question extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         'zh_title',
         'ta_title',
         'place',
+        'visible',
+        'en_correct_answer',
+        'bn_correct_answer',
+        'zh_correct_answer',
+        'ta_correct_answer',
         'en_attachment',
         'bn_attachment',
         'zh_attachment',
@@ -76,5 +81,15 @@ class Question extends Model implements \Czim\Paperclip\Contracts\AttachableInte
     public function quiz()
     {
         return $this->belongsTo('App\Quiz');
+    }
+
+    public function mcqoption()
+    {
+        return $this->hasOne('App\Mcqoption');
+    }
+
+    public static function laratablesRowClass($question)
+    {
+        return $question->status=='1' ? 'text-dark' : 'text-danger';
     }
 }

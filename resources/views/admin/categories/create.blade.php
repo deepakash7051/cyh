@@ -55,9 +55,7 @@
 					@endphp
 					<select class="frm-field " name="status" id="status" >
                         @foreach($status as $stkey => $stvalue)
-                        	<option value="{{$stkey}}" 
-                        		{{ old('status') == $stkey ? 'selected="selected"' : '' }}
-                        	>{{$stvalue}}</option>
+                        	<option value="{{$stkey}}" >{{$stvalue}}</option>
                         @endforeach
                     </select>
 

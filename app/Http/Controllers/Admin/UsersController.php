@@ -78,7 +78,7 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_create'), 403);
 
         $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        $user->roles()->sync($request->input('role'));
         $user->categories()->sync($request->input('categories', []));
         $user->courses()->sync($request->input('courses', []));
 
@@ -111,7 +111,7 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_edit'), 403);
 
         $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        $user->roles()->sync($request->input('role'));
         $user->categories()->sync($request->input('categories', []));
         $user->courses()->sync($request->input('courses', []));
 

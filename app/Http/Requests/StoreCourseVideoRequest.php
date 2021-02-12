@@ -27,7 +27,7 @@ class StoreCourseVideoRequest extends FormRequest
     public function rules()
     {
 
-        $same_for_all =  $this->request->get('same_for_all');
+        $same_for_all =  $this->request->has('same_for_all') ? $this->request->get('same_for_all') : '0';
         $validatefields = [];
         $validatefields['course_id'] = ['required'];
         $languages = config('panel.available_languages');
@@ -35,9 +35,11 @@ class StoreCourseVideoRequest extends FormRequest
             foreach($languages as $key => $value){
                 $validatefields[$key.'_title'] = ['required'];
                 if($same_for_all=='1'){
-                    $validatefields['en_attachment'] = ['required'];
+                    //$validatefields['en_attachment'] = ['required'];
+                    $validatefields['en_attachment'] =['mimes:mp4,3gp,avi,flv,m3u8,ts,wmv,mov,ogg','required'];
                 } else {
-                    $validatefields[$key.'_attachment'] = ['required'];
+                    //$validatefields[$key.'_attachment'] = ['required'];
+                    $validatefields[$key.'_attachment'] =['mimes:mp4,3gp,avi,flv,m3u8,ts,wmv,mov,ogg','required'];
                 }
             }
         }

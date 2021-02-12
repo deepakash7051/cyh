@@ -89,24 +89,48 @@
 	                    {{ trans('global.user.fields.password_helper') }}
 	                </p>
 				</div>
-				<div class="form-group mb-2 {{ $errors->has('roles') ? 'has-error' : '' }}">
-	                <label for="roles">{{ trans('global.user.fields.roles') }}*
-	                    <span class="btn btn-info btn-xs select-all">Select all</span>
-	                    <span class="btn btn-info btn-xs deselect-all">Deselect all</span></label>
-	                <select name="roles[]" id="roles" class="frm-field select2" multiple="multiple">
+
+				<div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
+					<label>{{ trans('global.user.fields.status') }}</label>
+					@php 
+						$status = ['1' => trans('global.active'), '0' => trans('global.inactive')];
+					@endphp
+					<select class="frm-field " name="status" id="status" >
+                        @foreach($status as $stkey => $stvalue)
+                        	<option value="{{$stkey}}" 
+                        		{{ $user->status == $stkey ? 'selected="selected"' : '' }}
+                        	>{{$stvalue}}</option>
+                        @endforeach
+                    </select>
+
+					@if($errors->has('status'))
+                    <em class="invalid-feedback">
+	                        {{ $errors->first('status') }}
+	                    </em>
+	                @endif
+	                <p class="helper-block">
+	                    {{ trans('global.user.fields.status_helper') }}
+	                </p>
+				</div>
+
+				<div class="form-group mb-2 {{ $errors->has('role') ? 'has-error' : '' }}">
+	                <label for="role">{{ trans('global.user.fields.role') }}*
+	                <select name="role" id="role" class="frm-field select2">
 	                    @foreach($roles as $id => $roles)
-	                        <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->roles->contains($id)) ? 'selected' : '' }}>
+	                        <option value="{{ $id }}" 
+	                        	{{ (in_array($id, old('role', [])) || isset($user) && $user->roles->contains($id)) ? 'selected' : '' }}
+	                        >
 	                            {{ $roles }}
 	                        </option>
 	                    @endforeach
 	                </select>
-	                @if($errors->has('roles'))
+	                @if($errors->has('role'))
 	                    <em class="invalid-feedback">
-	                        {{ $errors->first('roles') }}
+	                        {{ $errors->first('role') }}
 	                    </em>
 	                @endif
 	                <p class="helper-block">
-	                    {{ trans('global.user.fields.roles_helper') }}
+	                    {{ trans('global.user.fields.role_helper') }}
 	                </p>
 	            </div>
 

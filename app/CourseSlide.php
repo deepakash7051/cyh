@@ -70,4 +70,9 @@ class CourseSlide extends Model implements \Czim\Paperclip\Contracts\AttachableI
     {
         return $this->belongsTo('App\Course');
     }
+
+    public static function laratablesRowClass($slide)
+    {
+        return $slide->status=='1' ? 'text-dark' : 'text-danger';
+    }
 }

@@ -100,18 +100,46 @@
 	                </p>
 				</div>
 
-				<div class="form-group mb-2 {{ $errors->has('duration') ? 'has-error' : '' }}">
-					<label>{{ trans('global.course.fields.duration') }}*</label>
-					<input class="frm-field decimalp2" type="text" id="duration" name="duration" value="{{ old('duration', isset($course) ? $course->duration : '') }}">
-					@if($errors->has('duration'))
-                    <em class="invalid-feedback">
-	                        {{ $errors->first('duration') }}
-	                    </em>
-	                @endif
-	                <p class="helper-block">
-	                    {{ trans('global.course.fields.duration_helper') }}
-	                </p>
-				</div>
+				<div class="form-group mb-2">
+                    <div class="row">
+                        <div class="col-md-6 {{ $errors->has('isd_code') ? ' is-invalid' : '' }}">
+                        	<label>{{ trans('global.course.fields.duration') }}*</label>
+							<input class="frm-field decimalp2" type="text" id="duration" name="duration" value="{{ old('duration', isset($course) ? $course->duration : '') }}">
+							@if($errors->has('duration'))
+		                    <em class="invalid-feedback">
+			                        {{ $errors->first('duration') }}
+			                    </em>
+			                @endif
+			                <p class="helper-block">
+			                    {{ trans('global.course.fields.duration_helper') }}
+			                </p>
+                        </div>
+                        <div class="col-md-6 {{ $errors->has('duration_type') ? ' is-invalid' : '' }}">
+                        	<label>{{ trans('global.course.fields.duration_type') }}*</label>
+                            <select class="frm-field select2" name="duration_type" id="duration_type" >
+                            	@php 
+									$DurationTypes = ['1' => trans('global.hour'), '2' => trans('global.day'), '3' => trans('global.month'), '4' => trans('global.year')];
+								@endphp
+                                @foreach($DurationTypes as $DTkey => $DTvalue)
+                                    <option value="{{$DTkey}}" 
+                                    	{{ $course->duration_type == $DTkey ? 'selected="selected"' : '' }}
+                                    >
+                                        {{$DTvalue}}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @if($errors->has('duration_type'))
+		                    <em class="invalid-feedback">
+			                        {{ $errors->first('duration_type') }}
+			                    </em>
+			                @endif
+			                <p class="helper-block">
+			                    {{ trans('global.course.fields.duration_type_helper') }}
+			                </p>
+                        </div>
+                    </div> 
+                </div>
 
 				<div class="form-group mb-2 {{ $errors->has('seats') ? 'has-error' : '' }}">
 					<label>{{ trans('global.course.fields.seats') }}</label>

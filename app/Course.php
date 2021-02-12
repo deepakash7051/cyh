@@ -23,6 +23,7 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         'ta_description',
         'price',
         'duration',
+        'duration_type',
         'seats',
         'image',
         'status',
@@ -78,5 +79,10 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
     public function questions()
     {
         return $this->hasMany('App\Question');
+    }
+
+    public static function laratablesRowClass($course)
+    {
+        return $course->status=='1' ? 'text-dark' : 'text-danger';
     }
 }
