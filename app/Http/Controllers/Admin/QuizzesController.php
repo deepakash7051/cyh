@@ -54,11 +54,12 @@ class QuizzesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         abort_unless(\Gate::allows('quiz_create'), 403);
         $courses = Course::where('status', '1')->get();
-        return view('admin.quizzes.create', compact('courses'));
+        $course_id = $request->course_id;
+        return view('admin.quizzes.create', compact('courses', 'course_id'));
     }
 
     /**

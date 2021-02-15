@@ -22,7 +22,7 @@
 	                    @if(count($quizzes) > 0)
 	                        @foreach($quizzes as $quiz)
 	                            <option value="{{$quiz->id}}" 
-	                            		{{ old('quiz_id') == $quiz->id ? 'selected="selected"' : '' }}
+	                            		{{ old('quiz_id', isset($question)) || $quiz_id == $quiz->id ? 'selected="selected"' : '' }}
 	                            	>
 	                                {{$quiz->$title}}
 	                            </option>

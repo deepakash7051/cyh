@@ -13,7 +13,7 @@
             </h2>
             <div>
                 @can('question_create')
-                <a href="{{ route('admin.questions.create') }}" class="btnn btnn-s">
+                <a href="{{ url('admin/questions/create/?quiz_id='.$quiz->id) }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.question.title_singular') }}
                 </a>
                 @endcan

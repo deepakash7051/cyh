@@ -22,7 +22,7 @@
 	                    @if(count($courses) > 0)
 	                        @foreach($courses as $course)
 	                            <option value="{{$course->id}}" 
-	                            		{{ old('course_id') == $course->id ? 'selected="selected"' : '' }}
+	                            		{{ old('course_id', isset($slide)) || $course_id == $course->id ? 'selected="selected"' : '' }}
 	                            	>
 	                                {{$course->$coursename}}
 	                            </option>

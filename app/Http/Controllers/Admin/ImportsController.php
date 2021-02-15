@@ -50,7 +50,7 @@ class ImportsController extends Controller
                     $newuser = User::create([
                         'name' => $user[0],
                         'email' => $user[1],
-                        'isd_code' => $user[1],
+                        'isd_code' => '+'.$user[2],
                         'phone' => $user[3],
                         'password' => bcrypt($user[3])
                     ]);

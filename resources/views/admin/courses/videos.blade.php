@@ -13,7 +13,7 @@
             </h2>
             <div>
                 @can('video_create')
-                <a href="{{ route('admin.videos.create') }}" class="btnn btnn-s">
+                <a href="{{ url('admin/videos/create/?course_id='.$course->id) }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.video.title_singular') }}
                 </a>
                 @endcan
