@@ -68,7 +68,7 @@ class UsersController extends Controller
         $categories = Category::where('status', '1')->pluck($categoryname, 'id');
 
         $coursetitle = config('app.locale').'_title';
-        $courses = Course::where('status', '1')->pluck($coursetitle, 'id');
+        $courses = Course::where('status', '1')->get();
 
         return view('admin.users.create', compact('roles', 'categories', 'courses'));
     }
@@ -97,7 +97,7 @@ class UsersController extends Controller
         $categories = Category::where('status', '1')->pluck($categoryname, 'id');
 
         $coursetitle = config('app.locale').'_title';
-        $courses = Course::where('status', '1')->pluck($coursetitle, 'id');
+        $courses = Course::where('status', '1')->get();
 
         $user->load('courses');
         $user->load('roles');

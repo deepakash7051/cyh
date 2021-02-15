@@ -73,7 +73,7 @@
 						<option value="">{{trans('global.pleaseSelect')}}</option>
                         @foreach($visiblity as $vbkey => $vbvalue)
                         	<option value="{{$vbkey}}"
-                        		{{ old('visible', isset($question)) == $vbkey ? 'selected="selected"' : '' }}
+                        		{{ old('visible', isset($question)) && $question->visible == $vbkey ? 'selected="selected"' : '' }}
                         	>{{$vbvalue}}</option>
                         @endforeach
                     </select>
@@ -88,7 +88,7 @@
 	                </p>
 				</div>
 
-				<div id="questitles" style="display:{{ old('visible', isset($question)) =='text'  ? 'block' : 'none' }};">
+				<div id="questitles" style="display:{{$question->visible=='text' ? 'block' : 'none' }};">
 					@if(count($languages) > 0)
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 
@@ -111,7 +111,7 @@
 		            @endif
 	        	</div>
 
-	        	<div id="quesattachments" style="display:{{old('visible', isset($question))=='image' ? 'block' : 'none' }};">
+	        	<div id="quesattachments" style="display:{{$question->visible=='image' ? 'block' : 'none' }};">
 		            @if(count($languages) > 0)
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 
@@ -141,7 +141,7 @@
 		            @endif
 	        	</div>
 
-	        	<div id="ques_options" style="display:{{ old('type', isset($question))=='1' && old('visible', isset($question))=='text' ? 'block' : 'none' }};">
+	        	<div id="ques_options" style="display:{{ $question->type=='1' && $question->visible=='text' ? 'block' : 'none' }};">
 
 	        		<div class="form-group mb-4 mt-4 border border-secondary border-left-0 border-right-0 border-top-0">
 		                <label for="">{{ trans('global.mcq_options') }}

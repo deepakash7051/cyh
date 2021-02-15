@@ -2,7 +2,8 @@
 @section('content')
 
 <?php 
-  $title = config('app.locale').'_title';  
+  $title = config('app.locale').'_title';
+  $attachment = config('app.locale').'_attachment_file_name';   
   $languages = config('panel.available_languages');
 ?>
 
@@ -28,13 +29,16 @@
         <ul id="questionsortable">
             @foreach($questions as $question)
             <li class="ui-state-default" data-val="{{$question->id}}"> 
-                <i class="fas fa-arrows-alt"></i> {{$question->$title}} 
+                <i class="fas fa-arrows-alt"></i> 
+                @if($question->visible=='text')
+                    {{$question->$title}} 
+                @else
+                {{$question->$attachment}}
+                @endif
+
+
                 <span class="float-right">
-                    <!-- @can('question_access')
-                        <a class="btn btn-xs btn-success" href="{{ route('admin.quizzes.questions', $quiz->id) }}">
-                            {{ trans('global.question.title') }}
-                        </a>
-                    @endcan -->
+                    
                     @can('question_show')
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.questions.show', $question->id) }}">
                             {{ trans('global.view') }}

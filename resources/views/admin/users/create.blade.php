@@ -4,6 +4,7 @@
     $CountryCodesJson = file_get_contents(base_path('uploads/CountryCodes.json'));
     $CountryCodes = json_decode($CountryCodesJson);
     $coursename = config('app.locale').'_title';
+    $categoryname = config('app.locale').'_name';
 ?>
 	<div class="dash-main">
 		<div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
@@ -156,9 +157,9 @@
 	                    <span class="btn btn-info btn-xs select-all">Select all</span>
 	                    <span class="btn btn-info btn-xs deselect-all">Deselect all</span></label>
 	                <select name="courses[]" id="user_courses" class="frm-field select2" multiple="multiple">
-	                    @foreach($courses as $id => $courses)
-	                        <option value="{{ $id }}" {{ (in_array($id, old('courses', [])) || isset($user) && $user->courses->contains($id)) ? 'selected' : '' }}>
-	                            {{ $courses }}
+	                    @foreach($courses as $id => $course)
+	                        <option value="{{ $course->id }}" {{ (in_array($course->id, old('courses', [])) || isset($user) && $user->courses->contains($course->id)) ? 'selected' : '' }}>
+	                            {{ $course->$coursename }} ({{$course->category->$categoryname}})
 	                        </option>
 	                    @endforeach
 	                </select>
@@ -186,7 +187,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-    $('#user_categories').on('change', function() {
+    /*$('#user_categories').on('change', function() {
 
         var categories = $(this).val();
             if(categories) {
@@ -205,7 +206,7 @@
 	        } else {
 	        	$('#courses').empty();
 	        }
-   });
+   });*/
 
     
     });
