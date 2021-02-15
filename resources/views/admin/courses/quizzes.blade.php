@@ -12,9 +12,11 @@
                 {{ $course->$title }} {{ trans('global.quiz.title') }}
             </h2>
             <div>
+                @can('quiz_create')
                 <a href="{{ route('admin.quizzes.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.quiz.title_singular') }}
                 </a>
+                @endcan
             </div>
         </div>
 
@@ -22,9 +24,10 @@
             <div class="d-flex justify-content-between"></div>
         </div>
 
+        @if(count($quizzes) > 0)
         <ul id="quizsortable">
-            @if(count($quizzes) > 0)
-                @foreach($quizzes as $quiz)
+            
+            @foreach($quizzes as $quiz)
             <li class="ui-state-default" data-val="{{$quiz->id}}"> 
                 <i class="fas fa-arrows-alt"></i> {{$quiz->$title}} 
                 <span class="float-right">
@@ -52,9 +55,12 @@
                     @endcan
                 </span>
             </li>
-                @endforeach
-            @endif
+            @endforeach
+            
         </ul>
+        @else
+            <div class="text-center">{{ trans('global.no')}} {{trans('global.quiz.title_singular')}} {{trans('global.found')}}</div>
+        @endif
     </div>
 
 @section('scripts')

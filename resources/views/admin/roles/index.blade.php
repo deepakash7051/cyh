@@ -6,9 +6,11 @@
             {{ trans('global.role.title_singular') }} {{ trans('global.list') }}
         </h2>
         <div>
+          @can('role_create')
             <a href="{{ route('admin.roles.create') }}" class="btnn btnn-s">
                 {{ trans('global.add') }} {{ trans('global.role.title_singular') }}
             </a>
+          @endcan
         </div>
     </div>
 		<div class="search-wrp">

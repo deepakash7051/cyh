@@ -6,12 +6,15 @@
                 {{ trans('global.user.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
+              @can('user_create')
                 <a href="{{ route('admin.users.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.user.title_singular') }}
                 </a>
+
                 <a href="{{ route('admin.import.users') }}" class="btnn btnn-s">
                     {{ trans('global.import.title_singular') }} {{ trans('global.user.title') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">

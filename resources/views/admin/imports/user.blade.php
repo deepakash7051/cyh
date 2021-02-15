@@ -10,9 +10,11 @@
                 {{ trans('global.csvImport') }} {{ trans('global.user.title') }}
             </h2>
             <div>
+            	@can('user_create')
                 <a href="{{ asset('imports/importuser.csv') }}" class="btnn btnn-s">
                     {{ trans('global.demo') }} {{ trans('global.downloadFile') }} 
                 </a>
+                @endcan
             </div>
         </div>
 		<div class="form-wrap">

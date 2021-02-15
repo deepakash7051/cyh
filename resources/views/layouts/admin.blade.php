@@ -199,14 +199,14 @@
           columns: ':visible'
         }
       },
-      {
+      /*{
         extend: 'colvis',
         className: 'btn-default',
         text: colvisButtonTrans,
         exportOptions: {
           columns: ':visible'
         }
-      }
+      }*/
     ]
   });
 

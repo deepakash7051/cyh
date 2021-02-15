@@ -48,7 +48,9 @@
 					<select class="frm-field " name="type" id="type" >
 						<option value="">{{trans('global.pleaseSelect')}}</option>
                         @foreach($types as $tykey => $tyvalue)
-                        	<option value="{{$tykey}}" >{{$tyvalue}}</option>
+                        	<option value="{{$tykey}}" 
+                        		{{ old('type')==$tykey  ? 'selected="selected"' : '' }}
+                        	>{{$tyvalue}}</option>
                         @endforeach
                     </select>
 
@@ -62,7 +64,7 @@
 	                </p>
 				</div>
 
-				<div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" style="display: none;" id="visiblesec">
+				<div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" id="visiblesec">
 					<label>{{ trans('global.question.fields.visible') }}</label>
 					@php 
 						$visiblity = ['image' => trans('global.image'), 'text' => trans('global.text') ];
@@ -70,7 +72,9 @@
 					<select class="frm-field " name="visible" id="visible" >
 						<option value="">{{trans('global.pleaseSelect')}}</option>
                         @foreach($visiblity as $vbkey => $vbvalue)
-                        	<option value="{{$vbkey}}">{{$vbvalue}}</option>
+                        	<option value="{{$vbkey}}"
+                        		{{ old('visible') ==$vbkey ? 'selected="selected"' : '' }}
+                        	>{{$vbvalue}}</option>
                         @endforeach
                     </select>
 
@@ -85,7 +89,7 @@
 				</div>
 
 
-				<div id="questitles" style="display:none;">
+				<div id="questitles" style="display:{{old('visible')=='text' ? 'block' : 'none'}};">
 					@if(count($languages) > 0)
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 
@@ -108,7 +112,7 @@
 		            @endif
 	        	</div>
 
-				<div id="quesattachments" style="display: none;">
+				<div id="quesattachments" style="display:{{old('visible')=='image' ? 'block' : 'none'}};">
 	            @if(count($languages) > 0)
 	                @foreach($languages as $langKey => $langValue)
 	                    @php 
@@ -136,7 +140,7 @@
 	        	</div>
 
 
-	        	<div id="ques_options" style="display:none;">
+	        	<div id="ques_options" style="display:{{old('type')=='1' && old('visible')=='text' ? 'block' : 'none'}};">
 
 	        		<div class="form-group mb-4 mt-4 border border-secondary border-left-0 border-right-0 border-top-0">
 		                <label for="">{{ trans('global.mcq_options') }}

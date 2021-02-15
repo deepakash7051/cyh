@@ -230,6 +230,7 @@ return [
     'assets_management'                    => 'Assets management',
     'slug'                                 => 'Slug',
     'content_management'                   => 'Content management',
+    'found'                                 => 'Found',
     'text'                                 => 'Text',
     'image'                                 => 'Image',
     'excerpt'                              => 'Excerpt',

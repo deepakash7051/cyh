@@ -12,9 +12,12 @@
                 {{ $course->$title }} {{ trans('global.video.title') }}
             </h2>
             <div>
+                @can('video_create')
                 <a href="{{ route('admin.videos.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.video.title_singular') }}
                 </a>
+                @endcan
+                
             </div>
         </div>
 
@@ -22,9 +25,9 @@
             <div class="d-flex justify-content-between"></div>
         </div>
 
+        @if(count($coursevideos) > 0)
         <ul id="videosortable">
-            @if(count($coursevideos) > 0)
-                @foreach($coursevideos as $coursevideo)
+            @foreach($coursevideos as $coursevideo)
             <li class="ui-state-default" data-val="{{$coursevideo->id}}"> 
                 <i class="fas fa-arrows-alt"></i> {{$coursevideo->$title}}
                 <span class="float-right">
@@ -47,9 +50,11 @@
                     @endcan
                 </span>
             </li>
-                @endforeach
-            @endif
+            @endforeach
         </ul>
+        @else
+            <div class="text-center">{{ trans('global.no')}} {{trans('global.video.title_singular')}} {{trans('global.found')}}</div>
+        @endif
     </div>
 
 @section('scripts')

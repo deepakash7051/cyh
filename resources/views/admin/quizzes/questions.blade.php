@@ -12,9 +12,11 @@
                 {{ $quiz->$title }} {{ trans('global.question.title') }}
             </h2>
             <div>
+                @can('question_create')
                 <a href="{{ route('admin.questions.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.question.title_singular') }}
                 </a>
+                @endcan
             </div>
         </div>
 
@@ -22,9 +24,9 @@
             <div class="d-flex justify-content-between"></div>
         </div>
 
+        @if(count($questions) > 0)
         <ul id="questionsortable">
-            @if(count($questions) > 0)
-                @foreach($questions as $question)
+            @foreach($questions as $question)
             <li class="ui-state-default" data-val="{{$question->id}}"> 
                 <i class="fas fa-arrows-alt"></i> {{$question->$title}} 
                 <span class="float-right">
@@ -52,9 +54,11 @@
                     @endcan
                 </span>
             </li>
-                @endforeach
-            @endif
+            @endforeach
         </ul>
+        @else
+            <div class="text-center">{{ trans('global.no')}} {{trans('global.question.title_singular')}} {{trans('global.found')}}</div>
+        @endif
     </div>
 
 @section('scripts')

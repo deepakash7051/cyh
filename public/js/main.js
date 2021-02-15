@@ -72,10 +72,17 @@ $(document).ready(function () {
     });
 
     $('#visible').change(function() {
+        var type = $("#type").val();
         if($(this).val()=='text') {
-            $('#ques_options').show();
             $('#quesattachments').hide();
             $('#questitles').show();
+
+            if(type=='1'){
+                $('#ques_options').show();
+            } else {
+                $('#ques_options').hide();
+            }
+
         } else {
             $('#ques_options').hide();
             $('#quesattachments').show();
@@ -84,13 +91,15 @@ $(document).ready(function () {
     });
 
     $('#type').change(function() {
-        if($(this).val()== '1') {
-            $('#visiblesec').show();
-            $('#questitles').hide();
+        var visible = $("#visible").val();
+        if($(this).val()== '1' && visible=='text') {
+            /*$('#visiblesec').show();
+            $('#questitles').hide();*/
+            $('#ques_options').show();
         } else {
             $('#ques_options').hide();
-            $('#visiblesec').hide();
-            $('#questitles').show();
+            /*$('#visiblesec').hide();
+            $('#questitles').show();*/
         }
     });
 

@@ -12,9 +12,11 @@
                 {{ $course->$title }} {{ trans('global.slide.title') }}
             </h2>
             <div>
+                @can('slide_create')
                 <a href="{{ route('admin.slides.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.slide.title_singular') }}
                 </a>
+                @endcan
             </div>
         </div>
 
@@ -22,9 +24,9 @@
             <div class="d-flex justify-content-between"></div>
         </div>
 
+        @if(count($courseslides) > 0)
         <ul id="slidesortable">
-            @if(count($courseslides) > 0)
-                @foreach($courseslides as $courseslide)
+            @foreach($courseslides as $courseslide)
             <li class="ui-state-default" data-val="{{$courseslide->id}}"> 
                 <i class="fas fa-arrows-alt"></i> {{$courseslide->$title}} 
                 <span class="float-right">
@@ -47,9 +49,11 @@
                     @endcan
                 </span>
             </li>
-                @endforeach
-            @endif
+            @endforeach
         </ul>
+        @else
+            <div class="text-center">{{ trans('global.no')}} {{trans('global.slide.title_singular')}} {{trans('global.found')}}</div>
+        @endif
     </div>
 
 @section('scripts')

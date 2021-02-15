@@ -21,7 +21,7 @@
 
                     <tr>
                         <td>
-                            {{ trans('global.course.title_singular') }}
+                            {{ trans('global.category.title_singular') }}
                         </td>
                         <td>
                             {{ $course->category->$categoryname }}
@@ -77,7 +77,13 @@
                             {{ trans('global.course.fields.duration') }}
                         </td>
                         <td>
-                            {{ $course->duration }}
+                            {{ $course->duration }}  
+                                @if($course->duration_type=='1'){{'Hour'}}
+                                @elseif($course->duration_type=='2'){{'Day'}}
+                                @elseif($course->duration_type=='3'){{'Month'}}
+                                @elseif($course->duration_type=='4'){{'Year'}}
+                                @else
+                                @endif
                         </td>
                     </tr>
 

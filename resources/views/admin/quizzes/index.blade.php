@@ -11,9 +11,11 @@
                 {{ trans('global.quiz.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
+              @can('quiz_create')
                 <a href="{{ route('admin.quizzes.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.quiz.title_singular') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">

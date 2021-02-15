@@ -11,9 +11,11 @@
                 {{ trans('global.video.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
+              @can('video_create')
                 <a href="{{ route('admin.videos.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.video.title_singular') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">

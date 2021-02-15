@@ -8,12 +8,14 @@
 	<div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.slide.title_singular') }} {{ trans('global.list') }}
+                {{ trans('global.question.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
-                <a href="{{ route('admin.slides.create') }}" class="btnn btnn-s">
-                    {{ trans('global.add') }} {{ trans('global.slide.title_singular') }}
+              @can('question_create')
+                <a href="{{ route('admin.question.create') }}" class="btnn btnn-s">
+                    {{ trans('global.add') }} {{ trans('global.question.title_singular') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">

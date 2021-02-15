@@ -35,36 +35,38 @@ class StoreQuestionRequest extends FormRequest
         $validatefields = [];
         $validatefields['quiz_id'] = ['required'];
         $validatefields['type'] = ['required'];
+        $validatefields['visible'] = ['required'];
         $languages = config('panel.available_languages');
         if(count($languages) > 0){
             foreach($languages as $key => $value){
-                if($type=='0'){
+                if($type=='0' && $visible=='text'){
                     $validatefields[$key.'_title'] = ['required'];
-                } else {
-                    $validatefields['visible'] = ['required'];
-                    if($visible=='image'){
-                        if($same_for_all=='1'){
-                            $validatefields['en_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
-                        } else {
-                            $validatefields[$key.'_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
-                        }
-
+                } else if($type=='0' && $visible=='image'){
+                    if($same_for_all=='1'){
+                        $validatefields['en_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
                     } else {
-                        $validatefields[$key.'_title'] = ['required'];
-                        if($sameoption_for_all=='1'){
-                            $validatefields['en_option_a'] = ['required'];
-                            $validatefields['en_option_b'] = ['required'];
-                            $validatefields['en_option_c'] = ['required'];
-                            $validatefields['en_option_d'] = ['required'];
-                        } else {
-                            $validatefields[$key.'_option_a'] = ['required'];
-                            $validatefields[$key.'_option_b'] = ['required'];
-                            $validatefields[$key.'_option_c'] = ['required'];
-                            $validatefields[$key.'_option_d'] = ['required'];
-                        }
-
+                        $validatefields[$key.'_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
                     }
-                }
+                } else if($type=='1' && $visible=='text'){
+                    $validatefields[$key.'_title'] = ['required'];
+                    if($sameoption_for_all=='1'){
+                        $validatefields['en_option_a'] = ['required'];
+                        $validatefields['en_option_b'] = ['required'];
+                        $validatefields['en_option_c'] = ['required'];
+                        $validatefields['en_option_d'] = ['required'];
+                    } else {
+                        $validatefields[$key.'_option_a'] = ['required'];
+                        $validatefields[$key.'_option_b'] = ['required'];
+                        $validatefields[$key.'_option_c'] = ['required'];
+                        $validatefields[$key.'_option_d'] = ['required'];
+                    }
+                } else if($type=='1' && $visible=='image'){
+                    if($same_for_all=='1'){
+                        $validatefields['en_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
+                    } else {
+                        $validatefields[$key.'_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
+                    }
+                } else {}
                 
                 if($sameans_for_all=='1'){
                     $validatefields['en_correct_answer'] = ['required'];
@@ -77,3 +79,5 @@ class StoreQuestionRequest extends FormRequest
         return $validatefields;
     }
 }
+
+

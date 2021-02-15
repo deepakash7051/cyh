@@ -11,9 +11,11 @@
                 {{ trans('global.slide.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
+              @can('slide_create')
                 <a href="{{ route('admin.slides.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.slide.title_singular') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">

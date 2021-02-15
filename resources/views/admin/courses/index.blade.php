@@ -12,9 +12,11 @@
                 {{ trans('global.course.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
+              @can('course_create')
                 <a href="{{ route('admin.courses.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.course.title_singular') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">

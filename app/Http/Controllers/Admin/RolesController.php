@@ -19,7 +19,7 @@ class RolesController extends Controller
 
         $user = auth()->user();
         $roleid = RoleUser::where('user_id', $user->id)->min('role_id');
-        $roles = Role::where('id', '>=', $roleid)->get();
+        $roles = Role::where('id', '>', $roleid)->get();
 
         return view('admin.roles.index', compact('roles'));
     }

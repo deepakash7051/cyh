@@ -6,9 +6,11 @@
 				{{ trans('global.permission.title_singular') }} {{ trans('global.list') }}
 			</h2>
 			<div>
+      @can('permission_create')
 				<a href="{{ route('admin.permissions.create') }}" class="btnn btnn-s">
 					{{ trans('global.add') }} {{ trans('global.permission.title_singular') }}
 				</a>
+      @endcan
 			</div>
 		</div>
 		<div class="search-wrp">

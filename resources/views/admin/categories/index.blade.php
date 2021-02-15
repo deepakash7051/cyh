@@ -17,9 +17,11 @@
                 {{ trans('global.category.title_singular') }} {{ trans('global.list') }}
             </h2>
             <div>
+              @can('category_create')
                 <a href="{{ route('admin.categories.create') }}" class="btnn btnn-s">
                     {{ trans('global.add') }} {{ trans('global.category.title_singular') }}
                 </a>
+              @endcan
             </div>
         </div>
 		<div class="search-wrp">
