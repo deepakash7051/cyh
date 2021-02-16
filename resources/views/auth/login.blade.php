@@ -28,7 +28,6 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <select class="login-field select2 {{ $errors->has('isd_code') ? ' is-invalid' : '' }}" name="isd_code" id="isd_code" required>
-                                        <option value="">Select</option>
                                         @foreach($CountryCodes as $CountryCode)
                                             <option value="{{$CountryCode->dial_code}}">
                                                 {{$CountryCode->dial_code.' ('.$CountryCode->code.')'}}
@@ -53,7 +52,7 @@
                                 </div>
                             </div> 
                         </div>
-                        <!-- <div class="form-group"><input class="login-field" type="text" name="phone" placeholder="Enter your number"></div> -->
+                        
                         <div class="form-group verification-code">
                             <input class="login-field" type="text" name="verification-code" placeholder="Verification code">
 

@@ -514,7 +514,7 @@ return [
             'quiz_id_helper'          => '',
             'type'                 => 'Type',
             'type_helper'          => '',
-            'title'        => 'Title',
+            'title'        => 'Question',
             'title_helper' => '',
             'place'        => 'Place',
             'place_helper' => '',

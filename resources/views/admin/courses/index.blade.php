@@ -45,6 +45,9 @@
                             {{ trans('global.course.fields.duration') }}
                         </th>
                         <th>
+                            {{ trans('global.course.fields.duration_type') }}
+                        </th>
+                        <th>
                             {{ trans('global.course.fields.seats') }}
                         </th>
                         <th>
@@ -113,6 +116,7 @@
               { name: 'ref_code' },
               { name: 'price' },
               { name: 'duration' },
+              { name: 'duration_type' },
               { name: 'seats' },
               { name: 'status' },
               { name: 'action', orderable: false, searchable: false }

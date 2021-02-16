@@ -116,26 +116,46 @@
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 
 		                        $fieldattachment = $langKey.'_attachment';
+		                        $attachmentname = $langKey.'_attachment_file_name';
 		                        $fieldoldattachment = $langKey.'_oldattachment';
 		                        $fieldoldurl = $langKey.'_attachment_url';
 		                    @endphp
 		            <input type="hidden" id="{{$fieldoldattachment}}" name="{{$fieldoldattachment}}" value="{{$question->$fieldoldurl}}">
-		            <div class="form-group mb-2 {{ $errors->has($fieldattachment) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlang'}} @endif" style="display: @if($langKey!='en' && old('same_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
-		                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})*	@if($langKey=='en') 
-		                	<span class="pull-right" style="float: right;">
-		                		<input type="checkbox" id="same_for_all" name="same_for_all" class="mr-2" value="1" {{ old('same_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
-		                	</span>@endif
-		                </label>
-		                <input type="file" id="{{$fieldattachment}}" name="{{$fieldattachment}}" class="frm-field" value="">
-		                @if($errors->has($fieldattachment))
-		                    <em class="invalid-feedback">
-		                        {{ $errors->first($fieldattachment) }}
-		                    </em>
-		                @endif
-		                <p class="helper-block">
-		                    {{ trans('global.question.fields.title_helper') }}
-		                </p>
+
+		            <div class="row">
+
+		            	<div class="col-md-6 p-0">
+
+		            		<div class="form-group mb-2 {{ $errors->has($fieldattachment) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlang'}} @endif" style="display: @if($langKey!='en' && old('same_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
+				                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})*	
+				                </label>
+				                <input type="file" id="{{$fieldattachment}}" name="{{$fieldattachment}}" class="frm-field" value="">
+				                @if($errors->has($fieldattachment))
+				                    <em class="invalid-feedback">
+				                        {{ $errors->first($fieldattachment) }}
+				                    </em>
+				                @endif
+				                <p class="helper-block">
+				                    {{ trans('global.question.fields.title_helper') }}
+				                </p>
+				            </div>
+		            		
+		            	</div>
+		            	<div class="col-md-6">
+		            		@if($langKey=='en') 
+			                	<span class="pull-right" style="float: right;">
+			                		<input type="checkbox" id="same_for_all" name="same_for_all" class="mr-2" value="1" {{ old('same_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
+			                	</span>
+		                	@endif
+		            		<div class="form-group mb-2 pt-5 pl-2">
+		            			<label></label>
+		            			<a href="{{$question->$fieldoldurl}}" target="_blank">{{$question->$attachmentname}}</a>
+		            		</div>
+		            		
+		            	</div>
 		            </div>
+
+		            
 
 		                @endforeach
 		            @endif

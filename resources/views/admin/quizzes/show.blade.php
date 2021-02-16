@@ -29,14 +29,16 @@
                         </td>
                     </tr>
 
+                    @if(count($languages) > 0)
+                        @foreach($languages as $key => $value)
+                         @php $fieldtitle = $key.'_title'; @endphp
                     <tr>
-                        <td>
-                            {{ trans('global.video.fields.title') }}
-                        </td>
-                        <td>
-                            {{ $quiz->$quiztitle }}
-                        </td>
+                        <td>{{trans('global.quiz.fields.title')}} ({{$value}})</td>
+                        <td>{{$quiz->$fieldtitle}}</td>
                     </tr>
+                        @endforeach
+                    @endif
+
 
                     <tr>
                         <td>

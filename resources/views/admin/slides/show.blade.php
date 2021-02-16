@@ -3,7 +3,6 @@
 
 <?php 
   $coursetitle = config('app.locale').'_title';
-  $videotitle = config('app.locale').'_title';
   $attachment_url = config('app.locale').'_attachment_url';
   $languages = config('panel.available_languages');
 ?>
@@ -30,14 +29,6 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>
-                            {{ trans('global.slide.fields.title') }}
-                        </td>
-                        <td>
-                            {{ $courseslide->$videotitle }}
-                        </td>
-                    </tr>
 
                     <tr>
                         <td>
@@ -47,22 +38,34 @@
                             {{ $courseslide->place }}
                         </td>
                     </tr>
+
+                    @if(count($languages) > 0)
+                        @foreach($languages as $key => $value)
+                            @php 
+                                $attachment_url = $key.'_attachment_url'; 
+                                $title = $key.'_title'; 
+                            @endphp
+                            <tr>
+                                <td>
+                                    {{ trans('global.slide.fields.title')}} ({{$value}})
+                                </td>
+                                <td>
+                                    {{$courseslide->$title}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ trans('global.slide.fields.attachment')}} ({{$value}})
+                                </td>
+                                <td>
+                                        <a href="{{ $courseslide->$attachment_url }}">
+                                        {{ trans('global.view_file') }}
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     
-                    <tr>
-                        <td>
-                            {{ trans('global.video.fields.attachment') }}
-                        </td>
-                        <td>
-                            <a href="{{ $courseslide->$attachment_url }}">
-                                {{ trans('global.view_file') }}
-                            </a>
-                            <!-- <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=[{{ $courseslide->$attachment_url }}]" width='100%' height='600px' frameborder='0'> -->
-
-
-                        </td>
-                    </tr>
-
-                
             </tbody>
                 
             </table>

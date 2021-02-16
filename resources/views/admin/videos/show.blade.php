@@ -3,8 +3,6 @@
 
 <?php 
   $coursetitle = config('app.locale').'_title';
-  $videotitle = config('app.locale').'_title';
-  $attachment_url = config('app.locale').'_attachment_url';
   $languages = config('panel.available_languages');
 ?>
 
@@ -30,14 +28,6 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>
-                            {{ trans('global.video.fields.title') }}
-                        </td>
-                        <td>
-                            {{ $coursevideo->$videotitle }}
-                        </td>
-                    </tr>
 
                     <tr>
                         <td>
@@ -48,22 +38,39 @@
                         </td>
                     </tr>
                     
-                    <tr>
-                        <td>
-                            {{ trans('global.video.fields.attachment') }}
-                        </td>
-                        <td>
-                            <video width="320" height="240" controls>
-                              <source src="{{ $coursevideo->$attachment_url }}" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
-                        </td>
-                    </tr>
+                    @if(count($languages) > 0)
+                        @foreach($languages as $key => $value)
+                            @php 
+                                $attachment_url = $key.'_attachment_url'; 
+                                $title = $key.'_title'; 
+                            @endphp
+                            <tr>
+                                <td>
+                                    {{ trans('global.video.fields.title')}} ({{$value}})
+                                </td>
+                                <td>
+                                    {{$coursevideo->$title}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{ trans('global.video.fields.attachment')}} ({{$value}})
+                                </td>
+                                <td>
+                                    <video width="320" height="240" controls>
+                                      <source src="{{ $coursevideo->$attachment_url }}" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
 
                 
             </tbody>
                 
             </table>
+
         </div>
     </div>
 

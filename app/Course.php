@@ -85,4 +85,22 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
     {
         return $course->status=='1' ? 'text-dark' : 'text-danger';
     }
+
+
+    public static function laratablesDurationType($course)
+    {
+        if($course->duration_type==1){
+            return trans('global.hour');
+        }
+        if($course->duration_type==2){
+            return trans('global.day');
+        }
+        if($course->duration_type==3){
+            return trans('global.month');
+        }
+        if($course->duration_type==4){
+            return trans('global.year');
+        }
+    }
+
 }

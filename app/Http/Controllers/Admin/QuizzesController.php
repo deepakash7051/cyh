@@ -33,8 +33,8 @@ class QuizzesController extends Controller
 
     public  function arrange(Request $request){
         
-        $slideplaces = $request->slideplaces;
-        foreach($slideplaces as $key => $value){
+        $quizplaces = $request->quizplaces;
+        foreach($quizplaces as $key => $value){
             Quiz::where('id', $value)->update(['place'=>$key+1]);
         }
     }
