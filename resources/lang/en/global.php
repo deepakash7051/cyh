@@ -56,6 +56,7 @@ return [
     'year'                                 => 'Year',
     'month'                                => 'Month',
     'logout'                               => 'Logout',
+    'sorting_order' => 'Sorting Order',
     'calendar'                             => 'Calendar',
     'dashboard'                            => 'Dashboard',
     'datatables'                           => [

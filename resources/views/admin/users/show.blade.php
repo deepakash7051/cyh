@@ -42,14 +42,14 @@
                     </td>
                 </tr>
                 
-                <tr>
+                <!-- <tr>
                     <td>
                         {{ trans('global.user.fields.email_verified_at') }}
                     </td>
                     <td>
                         {{ $user->email_verified_at }}
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td>
                         {{ trans('global.user.fields.roles') }}

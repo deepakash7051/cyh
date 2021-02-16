@@ -119,7 +119,7 @@
 		                        $fieldoldattachment = $langKey.'_oldattachment';
 		                        $fieldoldurl = $langKey.'_attachment_url';
 		                    @endphp
-		            <input type="hidden" id="{{$fieldoldattachment}}" name="id="{{$fieldoldattachment}}" value="{{$question->$fieldoldurl}}">
+		            <input type="hidden" id="{{$fieldoldattachment}}" name="{{$fieldoldattachment}}" value="{{$question->$fieldoldurl}}">
 		            <div class="form-group mb-2 {{ $errors->has($fieldattachment) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlang'}} @endif" style="display: @if($langKey!='en' && old('same_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
 		                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})*	@if($langKey=='en') 
 		                	<span class="pull-right" style="float: right;">

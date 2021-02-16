@@ -41,7 +41,7 @@
 
                     <tr>
                         <td>
-                            {{ trans('global.slide.fields.place') }}
+                            {{ trans('global.sorting_order') }}
                         </td>
                         <td>
                             {{ $courseslide->place }}
@@ -56,6 +56,8 @@
                             <a href="{{ $courseslide->$attachment_url }}">
                                 {{ trans('global.view_file') }}
                             </a>
+                            <!-- <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=[{{ $courseslide->$attachment_url }}]" width='100%' height='600px' frameborder='0'> -->
+
 
                         </td>
                     </tr>

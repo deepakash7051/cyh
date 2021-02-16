@@ -62,7 +62,7 @@
 
                     <tr>
                         <td>
-                            {{ trans('global.question.fields.place') }}
+                            {{ trans('global.sorting_order') }}
                         </td>
                         <td>
                             {{ $question->place }}

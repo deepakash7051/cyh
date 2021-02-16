@@ -40,7 +40,7 @@
 
                     <tr>
                         <td>
-                            {{ trans('global.video.fields.place') }}
+                            {{ trans('global.sorting_order') }}
                         </td>
                         <td>
                             {{ $quiz->place }}
