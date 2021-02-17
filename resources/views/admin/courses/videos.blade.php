@@ -7,6 +7,9 @@
 ?>
 
 <div class="dash-main">
+        <a href="{{ route('admin.courses.index')}}">
+            <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
+        </a>
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
                 {{ $course->$title }} {{ trans('global.video.title') }}

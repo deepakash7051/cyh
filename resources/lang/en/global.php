@@ -72,6 +72,8 @@ return [
     'restore'                              => 'Restore',
     'permadel'                             => 'Delete Permanently',
     'all'                                  => 'All',
+    'back'  => 'Back',
+    'next'  => 'Next',
     'trash'                                => 'Trash',
     'update'                               => 'Update',
     'no_entries_in_table'                  => 'No entries in table',
