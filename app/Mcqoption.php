@@ -38,8 +38,5 @@ class Mcqoption extends Model implements \Czim\Paperclip\Contracts\AttachableInt
         return $this->belongsTo('App\Question');
     }
 
-    public function optionvalue($language, $option)
-    {
-        return $this->where('language', $language)->where('option', $option)->first();
-    }
+    
 }
