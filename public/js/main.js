@@ -55,19 +55,35 @@ $(document).ready(function () {
         }
     });
 
-    $('#sameans_for_all').change(function() {
+    $('#sametextans_for_all').change(function() {
         if($(this).is(":checked")) {
-            $('.otherlangans').hide();
+            $('.otherlangtextans').hide();
         } else {
-            $('.otherlangans').show();
+            $('.otherlangtextans').show();
         }
     });
 
-    $('#sameoption_for_all').change(function() {
+    $('#samemcqans_for_all').change(function() {
         if($(this).is(":checked")) {
-            $('.otherlangoption').hide();
+            $('.otherlangmcqans').hide();
         } else {
-            $('.otherlangoption').show();
+            $('.otherlangmcqans').show();
+        }
+    });
+
+    $('#sametextoption_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlangtextoption').hide();
+        } else {
+            $('.otherlangtextoption').show();
+        }
+    });
+
+    $('#sameimgoption_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlangimgoption').hide();
+        } else {
+            $('.otherlangimgoption').show();
         }
     });
 
@@ -77,14 +93,14 @@ $(document).ready(function () {
             $('#quesattachments').hide();
             $('#questitles').show();
 
-            if(type=='1'){
+            /*if(type=='1'){
                 $('#ques_options').show();
             } else {
                 $('#ques_options').hide();
-            }
+            }*/
 
         } else {
-            $('#ques_options').hide();
+            //$('#ques_options').hide();
             $('#quesattachments').show();
             $('#questitles').hide();
         }
@@ -92,15 +108,27 @@ $(document).ready(function () {
 
     $('#type').change(function() {
         var visible = $("#visible").val();
-        if($(this).val()== '1' && visible=='text') {
-            /*$('#visiblesec').show();
-            $('#questitles').hide();*/
-            $('#ques_options').show();
+        if($(this).val()== '1'){
+            $('#mcqcrctans').show();
+            $('#mcqoptlbl').show();
+            $('#shtcrctans').hide();
         } else {
-            $('#ques_options').hide();
-            /*$('#visiblesec').hide();
-            $('#questitles').show();*/
+            $('#mcqcrctans').hide();
+            $('#mcqoptlbl').hide();
+            $('#shtcrctans').show();
         }
+        
+    });
+
+    $('#option_label').change(function() {
+        if($(this).val()== 'text'){
+            $('#ques_textoptions').show();
+            $('#ques_imageoptions').hide();
+        } else {
+            $('#ques_textoptions').hide();
+            $('#ques_imageoptions').show();
+        }
+        
     });
 
 })

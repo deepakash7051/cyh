@@ -139,13 +139,39 @@
 	            @endif
 	        	</div>
 
+	        	<div id="mcqoptlbl" style="display:{{old('type')=='1' ? 'block' : 'none'}};">
+		        	<div class="form-group mb-2 {{ $errors->has('option_label') ? 'has-error' : '' }}" >
+						<label>{{ trans('global.question.fields.option_label') }}</label>
+						@php 
+							$visiblity = ['image' => trans('global.image'), 'text' => trans('global.text') ];
+						@endphp
+						<select class="frm-field " name="option_label" id="option_label" >
+							<option value="">{{trans('global.pleaseSelect')}}</option>
+	                        @foreach($visiblity as $vbkey => $vbvalue)
+	                        	<option value="{{$vbkey}}"
+	                        		{{ old('option_label') ==$vbkey ? 'selected="selected"' : '' }}
+	                        	>{{$vbvalue}}</option>
+	                        @endforeach
+	                    </select>
 
-	        	<div id="ques_options" style="display:{{old('type')=='1' && old('visible')=='text' ? 'block' : 'none'}};">
+						@if($errors->has('option_label'))
+	                    <em class="invalid-feedback">
+		                        {{ $errors->first('option_label') }}
+		                    </em>
+		                @endif
+		                <p class="helper-block">
+		                    {{ trans('global.question.fields.option_label_helper') }}
+		                </p>
+					</div>
+				</div>
+
+
+	        	<div id="ques_textoptions" style="display:{{old('type')=='1' && old('option_label')=='text' ? 'block' : 'none'}};">
 
 	        		<div class="form-group mb-4 mt-4 border border-secondary border-left-0 border-right-0 border-top-0">
 		                <label for="">{{ trans('global.mcq_options') }}
 		                	<span class="float-right">
-		                		<input type="checkbox" id="sameoption_for_all" name="sameoption_for_all" class="mr-2" value="1" {{ old('sameoption_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
+		                		<input type="checkbox" id="sametextoption_for_all" name="sametextoption_for_all" class="mr-2" value="1" {{ old('sametextoption_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
 		                	</span>
 		                	
 		                </label>
@@ -159,7 +185,7 @@
 	                        $fieldoption_d = $langKey.'_option_d';
 	                    @endphp
 	            
-                    	<div class="form-group mb-2 @if($langKey!='en') {{'otherlangoption'}} @endif" style="display: @if($langKey!='en' && old('sameoption_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
+                    	<div class="form-group mb-2 @if($langKey!='en') {{'otherlangtextoption'}} @endif" style="display: @if($langKey!='en' && old('sametextoption_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
 
 		                    <div class="row" >
 		                        <div class="col-md-3 {{ $errors->has($fieldoption_a) ? ' is-invalid' : '' }}">
@@ -224,19 +250,140 @@
 	            @endif
 	        	</div>
 
+	        	<div id="ques_imageoptions" style="display:{{old('type')=='1' && old('option_label')=='image' ? 'block' : 'none'}};">
 
-	            @if(count($languages) > 0)
+	        		<div class="form-group mb-4 mt-4 border border-secondary border-left-0 border-right-0 border-top-0">
+		                <label for="">{{ trans('global.mcq_options') }}
+		                	<span class="float-right">
+		                		<input type="checkbox" id="sameimgoption_for_all" name="sameimgoption_for_all" class="mr-2" value="1" {{ old('sameimgoption_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
+		                	</span>
+		                	
+		                </label>
+		            </div>
+        		@if(count($languages) > 0)
 	                @foreach($languages as $langKey => $langValue)
 	                    @php 
-	                        $fieldcorrectanswer = $langKey.'_correct_answer';
+	                        $fieldoption_a = $langKey.'_option_attachment_a';
+	                        $fieldoption_b = $langKey.'_option_attachment_b';
+	                        $fieldoption_c = $langKey.'_option_attachment_c';
+	                        $fieldoption_d = $langKey.'_option_attachment_d';
 	                    @endphp
-	            <div class="form-group mb-2 {{ $errors->has($fieldcorrectanswer) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlangans'}} @endif" style="display: @if($langKey!='en' && old('sameans_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
+	            
+                    	<div class="form-group mb-2 @if($langKey!='en') {{'otherlangimgoption'}} @endif" style="display: @if($langKey!='en' && old('sameimgoption_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
+
+		                    <div class="row" >
+		                        <div class="col-md-3 {{ $errors->has($fieldoption_a) ? ' is-invalid' : '' }}">
+		                        	<label>{{ trans('global.question.fields.option_a') }} ({{$langValue}})*</label>
+		                            <input class="frm-field" type="file" id="{{$fieldoption_a}}" name="{{$fieldoption_a}}" value="{{ old($fieldoption_a, isset($question) ? $question->$fieldoption_a : '') }}" >
+
+		                            @if($errors->has($fieldoption_a))
+				                    <em class="invalid-feedback">
+					                        {{ $errors->first($fieldoption_a) }}
+					                    </em>
+					                @endif
+					                <p class="helper-block">
+					                    {{ trans('global.question.fields.option_a_helper') }}
+					                </p>
+		                        </div>
+
+		                        <div class="col-md-3 {{ $errors->has($fieldoption_b) ? ' is-invalid' : '' }}">
+		                        	<label>{{ trans('global.question.fields.option_b') }} ({{$langValue}})*</label>
+		                            <input class="frm-field" type="file" id="{{$fieldoption_b}}" name="{{$fieldoption_b}}" value="{{ old($fieldoption_b, isset($question) ? $question->$fieldoption_b : '') }}" >
+
+		                            @if($errors->has($fieldoption_b))
+				                    <em class="invalid-feedback">
+					                        {{ $errors->first($fieldoption_b) }}
+					                    </em>
+					                @endif
+					                <p class="helper-block">
+					                    {{ trans('global.question.fields.option_b_helper') }}
+					                </p>
+		                        </div>
+
+		                        <div class="col-md-3 {{ $errors->has($fieldoption_c) ? ' is-invalid' : '' }}">
+		                        	<label>{{ trans('global.question.fields.option_c') }} ({{$langValue}})*</label>
+		                            <input class="frm-field" type="file" id="{{$fieldoption_c}}" name="{{$fieldoption_c}}" value="{{ old($fieldoption_c, isset($question) ? $question->$fieldoption_c : '') }}" >
+
+		                            @if($errors->has($fieldoption_c))
+				                    <em class="invalid-feedback">
+					                        {{ $errors->first($fieldoption_c) }}
+					                    </em>
+					                @endif
+					                <p class="helper-block">
+					                    {{ trans('global.question.fields.option_c_helper') }}
+					                </p>
+		                        </div>
+
+		                        <div class="col-md-3 {{ $errors->has($fieldoption_d) ? ' is-invalid' : '' }}">
+		                        	<label>{{ trans('global.question.fields.option_d') }} ({{$langValue}})*</label>
+		                            <input class="frm-field" type="file" id="{{$fieldoption_d}}" name="{{$fieldoption_d}}" value="{{ old($fieldoption_d, isset($question) ? $question->$fieldoption_d : '') }}" >
+
+		                            @if($errors->has($fieldoption_d))
+				                    <em class="invalid-feedback">
+					                        {{ $errors->first($fieldoption_d) }}
+					                    </em>
+					                @endif
+					                <p class="helper-block">
+					                    {{ trans('global.question.fields.option_d_helper') }}
+					                </p>
+		                        </div>
+		                    </div> 
+		                </div>
+
+	                @endforeach
+	            @endif
+	        	</div>
+
+
+	        	<div id="shtcrctans" style="display:{{old('type')=='1' ? 'none' : 'block'}};">
+
+		            @if(count($languages) > 0)
+		                @foreach($languages as $langKey => $langValue)
+		                    @php 
+		                        $fieldcorrectanswer = $langKey.'_correct_answer';
+		                    @endphp
+		            <div class="form-group mb-2 {{ $errors->has($fieldcorrectanswer) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlangtextans'}} @endif" style="display: @if($langKey!='en' && old('sametextans_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
+		                <label for="{{$fieldcorrectanswer}}">{{ trans('global.question.fields.correct_answer') }} ({{$langValue}})*	@if($langKey=='en') 
+		                	<span class="pull-right" style="float: right;">
+		                		<input type="checkbox" id="sametextans_for_all" name="sametextans_for_all" class="mr-2" value="1" {{ old('sametextans_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
+		                	</span>@endif
+		                </label>
+		                <input type="text" id="{{$fieldcorrectanswer}}" name="{{$fieldcorrectanswer}}" class="frm-field" value="{{ old($fieldcorrectanswer, isset($question) ? $question->$fieldcorrectanswer : '') }}">
+		                @if($errors->has($fieldcorrectanswer))
+		                    <em class="invalid-feedback">
+		                        {{ $errors->first($fieldcorrectanswer) }}
+		                    </em>
+		                @endif
+		                <p class="helper-block">
+		                    {{ trans('global.question.fields.title_helper') }}
+		                </p>
+		            </div>
+
+		                @endforeach
+		            @endif
+	        	</div>
+
+	        	<div id="mcqcrctans" style="display:{{old('type')=='1' ? 'block' : 'none'}};">
+
+        		@if(count($languages) > 0)
+	                @foreach($languages as $langKey => $langValue)
+	                    @php 
+	                        $fieldcorrectanswer = $langKey.'_mcqcorrect_answer';
+	                    @endphp
+	            <div class="form-group mb-2 {{ $errors->has($fieldcorrectanswer) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlangmcqans'}} @endif" style="display: @if($langKey!='en' && old('samemcqans_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
 	                <label for="{{$fieldcorrectanswer}}">{{ trans('global.question.fields.correct_answer') }} ({{$langValue}})*	@if($langKey=='en') 
 	                	<span class="pull-right" style="float: right;">
-	                		<input type="checkbox" id="sameans_for_all" name="sameans_for_all" class="mr-2" value="1" {{ old('sameans_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
+	                		<input type="checkbox" id="samemcqans_for_all" name="samemcqans_for_all" class="mr-2" value="1" {{ old('samemcqans_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
 	                	</span>@endif
 	                </label>
-	                <input type="text" id="{{$fieldcorrectanswer}}" name="{{$fieldcorrectanswer}}" class="frm-field" value="{{ old($fieldcorrectanswer, isset($question) ? $question->$fieldcorrectanswer : '') }}">
+	                <select id="{{$fieldcorrectanswer}}" name="{{$fieldcorrectanswer}}" class="frm-field" >
+	                	<option value="">{{trans('global.pleaseSelect')}}</option> 
+	                	<option value="a">{{trans('global.question.fields.option_a')}}</option>
+	                	<option value="b">{{trans('global.question.fields.option_b')}}</option>
+	                	<option value="c">{{trans('global.question.fields.option_c')}}</option>
+	                	<option value="d">{{trans('global.question.fields.option_d')}}</option>
+	                </select>
+	                
 	                @if($errors->has($fieldcorrectanswer))
 	                    <em class="invalid-feedback">
 	                        {{ $errors->first($fieldcorrectanswer) }}
@@ -249,6 +396,10 @@
 
 	                @endforeach
 	            @endif
+	        		
+	        	</div>
+
+
 
 	            <div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
 					<label>{{ trans('global.question.fields.status') }}</label>

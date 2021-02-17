@@ -47,6 +47,7 @@ class QuestionsController extends Controller
      */
     public function create(Request $request)
     {
+
         abort_unless(\Gate::allows('question_create'), 403);
 
         $quizzes = Quiz::where('status', '1')->get();
@@ -70,36 +71,81 @@ class QuestionsController extends Controller
             $params['zh_attachment'] = $request->en_attachment;
             $params['ta_attachment'] = $request->en_attachment;
         }
-        if($request->sameans_for_all=='1'){
-            $params['bn_correct_answer'] = $request->en_correct_answer;
-            $params['zh_correct_answer'] = $request->en_correct_answer;
-            $params['ta_correct_answer'] = $request->en_correct_answer;
+
+        if($request->type=='0'){
+            if($request->sametextans_for_all=='1'){
+                $params['bn_correct_answer'] = $request->en_correct_answer;
+                $params['zh_correct_answer'] = $request->en_correct_answer;
+                $params['ta_correct_answer'] = $request->en_correct_answer;
+            }
+        } else {
+            if($request->samemcqans_for_all=='1'){
+                $params['en_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['bn_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['zh_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['ta_correct_answer'] = $request->en_mcqcorrect_answer;
+            } else {
+                $params['en_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['bn_correct_answer'] = $request->bn_mcqcorrect_answer;
+                $params['zh_correct_answer'] = $request->zh_mcqcorrect_answer;
+                $params['ta_correct_answer'] = $request->ta_mcqcorrect_answer;
+            }
         }
+
+        
         $quiz = Quiz::find($request->quiz_id);
         $questioncount = Question::where('quiz_id', $request->quiz_id)->count();
         $params['place'] = $questioncount+1;
         $params['course_id'] = $quiz->course_id;
         $question = Question::create($params);
 
-        if($request->type=='1' && $request->visible=='text'){
-            if($request->sameoption_for_all=='1'){
-                //$options = [];
-                $keys_a = array('en_option_a','bn_option_a','zh_option_a', 'ta_option_a');
-                $options_a = array_fill_keys($keys_a, $request->en_option_a);
-                $keys_b = array('en_option_b','bn_option_b','zh_option_b', 'ta_option_b');
-                $options_b = array_fill_keys($keys_b, $request->en_option_b);
-                $keys_c = array('en_option_c','bn_option_c','zh_option_c', 'ta_option_c');
-                $options_c = array_fill_keys($keys_c, $request->en_option_c);
-                $keys_d = array('en_option_d','bn_option_d','zh_option_d', 'ta_option_d');
-                $options_d = array_fill_keys($keys_d, $request->en_option_d);
-                
-                $params = array_merge($params, $options_a, $options_b, $options_c, $options_d);
-                $question->mcqoption()->create($params);
-
-            } else {
-                $question->mcqoption()->create($params);
+        $languages = config('panel.available_languages');
+        if(count($languages) > 0){
+            if($request->type=='1'){
+                if($request->option_label=='text'){
+                    if($request->sametextoption_for_all=='1'){
+                        foreach($languages as $key => $val){
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'a', 'value' => $request->en_option_a]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'b', 'value' => $request->en_option_b]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'c', 'value' => $request->en_option_c]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'd', 'value' => $request->en_option_d]);
+                        }
+                    } else {
+                        foreach($languages as $key => $val){
+                            $option_a = $key.'_option_a';
+                            $option_b = $key.'_option_b';
+                            $option_c = $key.'_option_c';
+                            $option_d = $key.'_option_d';
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'a', 'value' => $request->$option_a]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'b', 'value' => $request->$option_b]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'c', 'value' => $request->$option_c]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'd', 'value' => $request->$option_d]);
+                        }
+                    }
+                } else {
+                    if($request->sameimgoption_for_all=='1'){
+                        foreach($languages as $key => $val){
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'a', 'attachment' => $request->en_option_attachment_a]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'b', 'attachment' => $request->en_option_attachment_b]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'c', 'attachment' => $request->en_option_attachment_c]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'd', 'attachment' => $request->en_option_attachment_d]);
+                        }
+                    } else {
+                        foreach($languages as $key => $val){
+                            $option_a = $key.'_option_attachment_a';
+                            $option_b = $key.'_option_attachment_b';
+                            $option_c = $key.'_option_attachment_c';
+                            $option_d = $key.'_option_attachment_d';
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'a', 'attachment' => $request->$option_a]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'b', 'attachment' => $request->$option_b]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'c', 'attachment' => $request->$option_c]);
+                            $question->mcqoptions()->create(['type' => 'text', 'language' => $key, 'option' => 'd', 'attachment' => $request->$option_d]);
+                        }
+                    }
+                }
             }
-        } 
+
+        }
 
         //return redirect()->route('admin.quizzes.index');
         return redirect()->route('admin.quizzes.questions', ['id' => $request->quiz_id]);
@@ -145,15 +191,34 @@ class QuestionsController extends Controller
         abort_unless(\Gate::allows('question_edit'), 403);
 
         $params = $request->all();
+
+        /*echo '<pre>';
+        print_r($params);
+        exit();*/
+
         if($request->same_for_all=='1'){
             $params['bn_attachment'] = $request->en_attachment;
             $params['zh_attachment'] = $request->en_attachment;
             $params['ta_attachment'] = $request->en_attachment;
         }
-        if($request->sameans_for_all=='1'){
-            $params['bn_correct_answer'] = $request->en_correct_answer;
-            $params['zh_correct_answer'] = $request->en_correct_answer;
-            $params['ta_correct_answer'] = $request->en_correct_answer;
+        if($request->type=='0'){
+            if($request->sametextans_for_all=='1'){
+                $params['bn_correct_answer'] = $request->en_correct_answer;
+                $params['zh_correct_answer'] = $request->en_correct_answer;
+                $params['ta_correct_answer'] = $request->en_correct_answer;
+            }
+        } else {
+            if($request->samemcqans_for_all=='1'){
+                $params['en_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['bn_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['zh_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['ta_correct_answer'] = $request->en_mcqcorrect_answer;
+            } else {
+                $params['en_correct_answer'] = $request->en_mcqcorrect_answer;
+                $params['bn_correct_answer'] = $request->bn_mcqcorrect_answer;
+                $params['zh_correct_answer'] = $request->zh_mcqcorrect_answer;
+                $params['ta_correct_answer'] = $request->ta_mcqcorrect_answer;
+            }
         }
 
         $quiz = Quiz::find($request->quiz_id);
@@ -162,35 +227,135 @@ class QuestionsController extends Controller
         $params['course_id'] = $quiz->course_id;
         $question->update($params);
 
-        if($request->type=='1' && $request->visible=='text'){
-            if($request->sameoption_for_all=='1'){
-                //$options = [];
-                $keys_a = array('en_option_a','bn_option_a','zh_option_a', 'ta_option_a');
-                $options_a = array_fill_keys($keys_a, $request->en_option_a);
-                $keys_b = array('en_option_b','bn_option_b','zh_option_b', 'ta_option_b');
-                $options_b = array_fill_keys($keys_b, $request->en_option_b);
-                $keys_c = array('en_option_c','bn_option_c','zh_option_c', 'ta_option_c');
-                $options_c = array_fill_keys($keys_c, $request->en_option_c);
-                $keys_d = array('en_option_d','bn_option_d','zh_option_d', 'ta_option_d');
-                $options_d = array_fill_keys($keys_d, $request->en_option_d);
-                
-                $params = array_merge($params, $options_a, $options_b, $options_c, $options_d);
+        $languages = config('panel.available_languages');
+        if(count($languages) > 0){
+            if($request->type=='1'){
+                if($request->option_label=='text'){
+                    if($request->sametextoption_for_all=='1'){
+                        foreach($languages as $key => $val){
+                            $match_a = array('question_id' => $question->id, 'language' => $key, 'option' => 'a');
+                            Mcqoption::updateOrCreate($match_a, [
+                                'type' => 'text',
+                                'value' => $request->en_option_a, 
+                            ]);
 
-                $mcqoption = Mcqoption::where('question_id', $question->id);
-                if($mcqoption->count() > 0){
-                    $question->mcqoption->update($params);
-                } else {
-                    $question->mcqoption()->create($params);
-                }
+                            $match_b = array('question_id' => $question->id, 'language' => $key, 'option' => 'b');
+                            Mcqoption::updateOrCreate($match_b, [
+                                'type' => 'text',
+                                'value' => $request->en_option_b, 
+                            ]);
 
-            } else {
-                $mcqoption = Mcqoption::where('question_id', $question->id);
-                if($mcqoption->count() > 0){
-                    $question->mcqoption->update($params);
+                            $match_c = array('question_id' => $question->id, 'language' => $key, 'option' => 'c');
+                            Mcqoption::updateOrCreate($match_c, [
+                                'type' => 'text',
+                                'value' => $request->en_option_c, 
+                            ]);
+
+                            $match_d = array('question_id' => $question->id, 'language' => $key, 'option' => 'd');
+                            Mcqoption::updateOrCreate($match_d, [
+                                'type' => 'text',
+                                'value' => $request->en_option_d, 
+                            ]);
+
+                        }
+                    } else {
+                        foreach($languages as $key => $val){
+                            $option_a = $key.'_option_a';
+                            $option_b = $key.'_option_b';
+                            $option_c = $key.'_option_c';
+                            $option_d = $key.'_option_d';
+
+                            $match_a = array('question_id' => $question->id, 'language' => $key, 'option' => 'a');
+                            Mcqoption::updateOrCreate($match_a, [
+                                'type' => 'text',
+                                'value' => $request->$option_a, 
+                            ]);
+
+                            $match_b = array('question_id' => $question->id, 'language' => $key, 'option' => 'b');
+                            Mcqoption::updateOrCreate($match_b, [
+                                'type' => 'text',
+                                'value' => $request->$option_b, 
+                            ]);
+
+                            $match_c = array('question_id' => $question->id, 'language' => $key, 'option' => 'c');
+                            Mcqoption::updateOrCreate($match_c, [
+                                'type' => 'text',
+                                'value' => $request->$option_c, 
+                            ]);
+
+                            $match_d = array('question_id' => $question->id, 'language' => $key, 'option' => 'd');
+                            Mcqoption::updateOrCreate($match_d, [
+                                'type' => 'text',
+                                'value' => $request->$option_d, 
+                            ]);
+
+                        }
+                    }
                 } else {
-                    $question->mcqoption()->create($params);
+                    if($request->sameimgoption_for_all=='1'){
+                        foreach($languages as $key => $val){
+                            $match_a = array('question_id' => $question->id, 'language' => $key, 'option' => 'a');
+                            Mcqoption::updateOrCreate($match_a, [
+                                'type' => 'text',
+                                'attachment' => $request->en_option_attachment_a, 
+                            ]);
+
+                            $match_b = array('question_id' => $question->id, 'language' => $key, 'option' => 'b');
+                            Mcqoption::updateOrCreate($match_b, [
+                                'type' => 'text',
+                                'attachment' => $request->en_option_attachment_b, 
+                            ]);
+
+                            $match_c = array('question_id' => $question->id, 'language' => $key, 'option' => 'c');
+                            Mcqoption::updateOrCreate($match_c, [
+                                'type' => 'text',
+                                'attachment' => $request->en_option_attachment_c, 
+                            ]);
+
+                            $match_d = array('question_id' => $question->id, 'language' => $key, 'option' => 'd');
+                            Mcqoption::updateOrCreate($match_d, [
+                                'type' => 'text',
+                                'attachment' => $request->en_option_attachment_d, 
+                            ]);
+
+                            
+                        }
+                    } else {
+                        foreach($languages as $key => $val){
+                            $option_a = $key.'_option_attachment_a';
+                            $option_b = $key.'_option_attachment_b';
+                            $option_c = $key.'_option_attachment_c';
+                            $option_d = $key.'_option_attachment_d';
+
+                            $match_a = array('question_id' => $question->id, 'language' => $key, 'option' => 'a');
+                            Mcqoption::updateOrCreate($match_a, [
+                                'type' => 'text',
+                                'attachment' => $request->$option_a, 
+                            ]);
+
+                            $match_b = array('question_id' => $question->id, 'language' => $key, 'option' => 'b');
+                            Mcqoption::updateOrCreate($match_b, [
+                                'type' => 'text',
+                                'attachment' => $request->$option_b, 
+                            ]);
+
+                            $match_c = array('question_id' => $question->id, 'language' => $key, 'option' => 'c');
+                            Mcqoption::updateOrCreate($match_c, [
+                                'type' => 'text',
+                                'attachment' => $request->$option_c, 
+                            ]);
+
+                            $match_d = array('question_id' => $question->id, 'language' => $key, 'option' => 'd');
+                            Mcqoption::updateOrCreate($match_d, [
+                                'type' => 'text',
+                                'attachment' => $request->$option_d, 
+                            ]);
+
+                        }
+                    }
                 }
             }
+
         }
 
         //return redirect()->route('admin.quizzes.index');

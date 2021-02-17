@@ -20,6 +20,7 @@ class Question extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         'ta_title',
         'place',
         'visible',
+        'option_label',
         'en_correct_answer',
         'bn_correct_answer',
         'zh_correct_answer',
@@ -83,13 +84,15 @@ class Question extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         return $this->belongsTo('App\Quiz');
     }
 
-    public function mcqoption()
+    public function mcqoptions()
     {
-        return $this->hasOne('App\Mcqoption');
+        return $this->hasMany('App\Mcqoption');
     }
 
     public static function laratablesRowClass($question)
     {
         return $question->status=='1' ? 'text-dark' : 'text-danger';
     }
+
+    
 }

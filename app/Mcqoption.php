@@ -4,26 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mcqoption extends Model
+class Mcqoption extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
 {
+    use \Czim\Paperclip\Model\PaperclipTrait;
+
     protected $fillable = [  
         'question_id',
-        'en_option_a',
-        'en_option_b',
-        'en_option_c',
-        'en_option_d',
-        'bn_option_a',
-        'bn_option_b',
-        'bn_option_c',
-        'bn_option_d',
-        'zh_option_a',
-        'zh_option_b',
-        'zh_option_c',
-        'zh_option_d',
-        'ta_option_a',
-        'ta_option_b',
-        'ta_option_c',
-        'ta_option_d',
+        'type',
+        'language',
+        'option',
+        'value',
+        'attachment',
     ];
 
     protected $dates = [
@@ -31,8 +22,24 @@ class Mcqoption extends Model
         'created_at',
     ];
 
+    protected $appends = ['attachment_url'];
+
+    public function __construct( array $attributes = [] ) {
+        $this->hasAttachedFile('attachment');
+        parent::__construct($attributes);
+    }
+
+    public function getAttachmentUrlAttribute() {
+        return $this->attachment->url();
+    }
+
     public function question()
     {
         return $this->belongsTo('App\Question');
+    }
+
+    public function optionvalue($language, $option)
+    {
+        return $this->where('language', $language)->where('option', $option)->first();
     }
 }
