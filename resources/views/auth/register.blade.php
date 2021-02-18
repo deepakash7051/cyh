@@ -5,10 +5,7 @@
     $CountryCodesJson = file_get_contents(base_path('uploads/CountryCodes.json'));
     $CountryCodes = json_decode($CountryCodesJson);
 ?>
-<body class="login-page dots">
-<header class="header-type1">
-    <div class="logo-wrap"><a href=""><img src="{{ asset('images/logo.png') }}" alt=""></a></div>
-</header>
+
 <div class="login-wrap">
     <div class="container container-l">
         <div class="row">
@@ -95,5 +92,5 @@
         </div>
     </div>
 </div>
-</body>
+
 @endsection

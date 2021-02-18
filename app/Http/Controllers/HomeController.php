@@ -30,19 +30,4 @@ class HomeController extends Controller
         return view('home', compact('courses'));
     }
 
-    public function sendcode(Request $request){
-
-        $code = rand(1000, 9999);
-        $phone = $request->input('phone');
-        $isd_code = $request->get('isd_code');
-        $debug = false;
-        $mobile = $isd_code.$phone;
-
-        //$username = 'API8YR8ASWL8V';
-        //$password = 'API8YR8ASWL8V8YR8A';
-
-        $result = OnewaySms::send($mobile, $code, $debug);
-
-        print_r($result);
-    }
 }

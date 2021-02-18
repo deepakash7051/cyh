@@ -29,30 +29,24 @@ class OnewaySms
     public static function send($mobile, $message, $debug = false, $username = null, $password = null)
     {
 
+
         if (!$username) {
-            $username = env('ONEWAYSMS_AUTH_USER');
+            $username = 'API8YR8ASWL8V';
         }
-
-
 
         if (!$password) {
-            $password = env('ONEWAYSMS_AUTH_PASS');
+            $password = 'API8YR8ASWL8V8YR8A';
         }
 
+        $api = 'http://gateway.onewaysms.sg:10002';
 
-        if (!$username || !$password || !env('ONEWAYSMS_API')) {
+        if (!$username || !$password || !$api) {
             if ($debug) {
-                return '0000 - Auth credentials is not set';
+                return trans('global.onewaysms.credentials_not_set');
             } else {
                 return false;
             }
         }
-
-
-        $api = env('ONEWAYSMS_API');
-
-
-
         
         $client = new Client();
 
@@ -78,31 +72,31 @@ class OnewaySms
         if ($response_code > 0) {
             // Positive value – Success
             $response_status = true;
-            $response_message = 'Success';
+            $response_message = trans('global.onewaysms.success');
         } else {
             $response_status = false;
             switch ($response_code) {
                 case -100:
-                    $response_message = 'apipassname or apipassword is invalid';
+                    $response_message = trans('global.onewaysms.invalid_details');
                     break;
                 case -200:
-                    $response_message = 'senderid parameter is invalid';
+                    $response_message = trans('global.onewaysms.invalid_senderid');
                     break;
                 case -300:
-                    $response_message = 'mobileno parameter is invalid';
+                    $response_message = trans('global.onewaysms.invalid_phone');
                     break;
                 case -400:
-                    $response_message = 'languagetype is invalid';
+                    $response_message = trans('global.onewaysms.invalid_language_type');
                     break;
                 case -500:
-                    $response_message = 'Invalid characters in message';
+                    $response_message = trans('global.onewaysms.invalid_character');
                     break;
                 case -600:
-                    $response_message = 'Insufficient credit balance';
+                    $response_message = trans('global.onewaysms.low_balance');
                     break;
 
                 default:
-                    $response_message = 'Unknown reason';
+                    $response_message = trans('global.onewaysms.unknown');
                     break;
             }
         }

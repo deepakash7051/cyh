@@ -17,22 +17,23 @@
     @yield('styles')
     
 </head>
+<body class="login-page dots">
+    <input type="hidden" value="{{url('/')}}" id="base_url">
+    <header class="header-type1">
+        <div class="logo-wrap"><a href=""><img src="{{ asset('images/logo.png') }}" alt=""></a></div>
+    </header>
 
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/select2.full.min.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+    @yield('content')
 
-<script>
-    $(document).ready(function(){
-        $('.select2').select2()
-        $(".check-phone").hide();
-        $("#continue-btn").click(function(){
-            $(".check-phone").fadeToggle();
-        });
-    });
-</script>
-@yield('scripts')
+    <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
 
-@yield('content')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/select2.full.min.js') }}"></script>
+   <!--  <script src="{{ asset('js/main.js') }}"></script> -->
 
+    @yield('scripts')
+
+</body>
 </html>

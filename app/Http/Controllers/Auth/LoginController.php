@@ -7,6 +7,10 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use App\User;
+use Hash;
+use App\Libraries\OnewaySms;
+use App\SmsVerification;
 
 class LoginController extends Controller
 {
@@ -55,4 +59,65 @@ class LoginController extends Controller
         }
 
     }
+
+    public function sendcode(Request $request)
+    {
+
+        $email = $request->email;
+        $password = $request->password;
+
+        $query = User::where('email', $email);
+
+        if($query->count() > 0){
+            $user = $query->first();
+            if (Hash::check($password, $user->password))
+            {
+                $code = rand(1000, 9999);
+                $debug = false;
+                $mobile = $user->isd_code.$user->phone;
+                SmsVerification::create([
+                    'code' => $code, 
+                    'phone' => $mobile, 
+                    'status' => 'pending'
+                ]);
+
+                $message = trans('global.code_message').' '.$code;
+
+                $result = OnewaySms::send($mobile, $message, $debug);
+
+                if($result['status']){
+                    return redirect()->route('verifycode', $user->id);
+                } else {
+                    return redirect()->back()->with('error', trans('validation.password'));
+                }
+            } else {
+                return redirect()->back()->with('error', trans('validation.password'));
+            }
+        } else {
+            return redirect()->back()->with('error', trans('passwords.user'));
+        }
+
+    }
+
+    public function verifycode($id){
+        $user = User::find($id);
+        return view('auth.verifycode', compact('user'));
+    }
+
+    public function verifyusercode(Request $request){
+        $phone = $request->isd_code.$request->phone;
+        $code = $request->code;
+        $user_id = $request->user_id;
+
+        $message = SmsVerification::where('phone', $phone)->orderBy('id', 'desc')->first();
+        if($message->code==$code && $message->status=='pending'){
+            $message->update(['status' => 'verify']);
+            $user = User::find($user_id);
+            Auth::login($user);
+            return redirect('/home');
+        } else {
+            return back()->withErrors(['code' => [trans('global.pages.frontend.verifycode.invalid_code')]]);
+        }
+    }
+
 }

@@ -20,8 +20,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
     Route::get('/login', 'AuthController@getLogin');
     Route::post('/login', 'AuthController@Login')->name('login');
     
-    
-
     Route::middleware(['auth'])->group(function () {
     	Route::get('/home', 'HomeController@index')->name('home');
     	Route::get('/users/courses', 'UsersController@getCourses');
@@ -72,7 +70,9 @@ Auth::routes(['register' => false]);
 
 //Auth::routes();
 
-Route::post('/sendcode', 'HomeController@sendcode')->name('sendcode');
+Route::post('/sendcode', 'Auth\LoginController@sendcode')->name('sendcode');
+Route::get('/verifycode/{id}', 'Auth\LoginController@verifycode')->name('verifycode');
+Route::post('/verifyusercode', 'Auth\LoginController@verifyusercode')->name('verifyusercode');
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 });
