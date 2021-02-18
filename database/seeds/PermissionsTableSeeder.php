@@ -31,6 +31,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title'      => 'permission_access',
             ],
+
             [
                 'title'      => 'role_create',
             ],
@@ -46,6 +47,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title'      => 'role_access',
             ],
+
             [
                 'title'      => 'user_create',
             ],
@@ -61,6 +63,7 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title'      => 'user_access',
             ],
+
             [
                 'title'      => 'category_create',
             ],
@@ -76,6 +79,10 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title'      => 'category_access',
             ],
+
+            [
+                'title'      => 'course_access',
+            ],
             [
                 'title'      => 'course_create',
             ],
@@ -88,9 +95,71 @@ class PermissionsTableSeeder extends Seeder
             [
                 'title'      => 'course_delete',
             ],
+
             [
-                'title'      => 'course_access',
+                'title'      => 'slide_access',
+            ],
+            [
+                'title'      => 'slide_create',
+            ],
+            [
+                'title'      => 'slide_edit',
+            ],
+            [
+                'title'      => 'slide_show',
+            ],
+            [
+                'title'      => 'slide_delete',
+            ],
+
+            [
+                'title'      => 'video_access',
+            ],
+            [
+                'title'      => 'video_create',
+            ],
+            [
+                'title'      => 'video_edit',
+            ],
+            [
+                'title'      => 'video_show',
+            ],
+            [
+                'title'      => 'video_delete',
+            ],
+
+            [
+                'title'      => 'quiz_access',
+            ],
+            [
+                'title'      => 'quiz_create',
+            ],
+            [
+                'title'      => 'quiz_edit',
+            ],
+            [
+                'title'      => 'quiz_show',
+            ],
+            [
+                'title'      => 'quiz_delete',
+            ],
+
+            [
+                'title'      => 'question_access',
+            ],
+            [
+                'title'      => 'question_create',
+            ],
+            [
+                'title'      => 'question_edit',
+            ],
+            [
+                'title'      => 'question_show',
+            ],
+            [
+                'title'      => 'question_delete',
             ]
+            
         ];
 
         Permission::insert($permissions);
