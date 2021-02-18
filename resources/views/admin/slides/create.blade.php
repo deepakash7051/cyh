@@ -5,6 +5,9 @@
     $languages = config('panel.available_languages');
 ?>
 	<div class="dash-main">
+		<a href="{{ route('admin.courses.slides', $course_id)}}">
+            <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
+        </a>
 		<div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
                 {{ trans('global.create') }} {{ trans('global.slide.title_singular') }}

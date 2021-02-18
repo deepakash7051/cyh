@@ -7,6 +7,9 @@
 ?>
 
 <div class="dash-main">
+        <a href="{{ route('admin.quizzes.questions', $question->quiz_id)}}">
+            <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
+        </a>
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
                 {{ trans('global.show') }} {{ trans('global.question.title_singular') }}
@@ -212,7 +215,7 @@
                                 @foreach($languages as $key => $value)
                                     @php $correctanswer = $key.'_correct_answer'; @endphp
                                         <td>
-                                            {{trans('global.option')}} {{ucfirst($question->$correctanswer)}}
+                                            @if($question->type=='1'){{trans('global.option')}} @endif {{ucfirst($question->$correctanswer)}}
                                         </td>
                                 @endforeach
                             @endif
