@@ -68,7 +68,7 @@
 				</div>
 
 				<div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" id="visiblesec">
-					<label>{{ trans('global.question.fields.visible') }}</label>
+					<label>{{ trans('global.question.fields.visible') }}*</label>
 					@php 
 						$visiblity = ['image' => trans('global.image'), 'text' => trans('global.text') ];
 					@endphp
