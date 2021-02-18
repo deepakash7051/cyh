@@ -44,7 +44,7 @@
 				</div>
 
 				<div class="form-group mb-2 {{ $errors->has('type') ? 'has-error' : '' }}">
-					<label>{{ trans('global.question.fields.type') }}</label>
+					<label>{{ trans('global.question.fields.type') }}*</label>
 					@php 
 						$types = ['1' => trans('global.mcq'), '0' => trans('global.short_question') ];
 					@endphp
@@ -144,7 +144,7 @@
 
 	        	<div id="mcqoptlbl" style="display:{{old('type')=='1' ? 'block' : 'none'}};">
 		        	<div class="form-group mb-2 {{ $errors->has('option_label') ? 'has-error' : '' }}" >
-						<label>{{ trans('global.question.fields.option_label') }}</label>
+						<label>{{ trans('global.question.fields.option_label') }}*</label>
 						@php 
 							$visiblity = ['image' => trans('global.image'), 'text' => trans('global.text') ];
 						@endphp

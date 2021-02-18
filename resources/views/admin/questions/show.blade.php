@@ -86,14 +86,14 @@
                         @if(count($languages) > 0)
                             @foreach($languages as $key => $value)
                                 @php $fieldtitle = $key.'_title'; @endphp
-                                    <td>{{$value}}</td>
+                                    <td class="font-weight-bold">{{$value}}</td>
                             @endforeach
                         @endif
                     </tr>
 
                     @if($question->visible=='text')
                         <tr>
-                            <td>{{trans('global.question.fields.title')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.title')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $key => $value)
                                     @php $fieldtitle = $key.'_title'; @endphp
@@ -105,7 +105,7 @@
 
                     @if($question->visible=='image')
                         <tr>
-                            <td>{{trans('global.question.fields.title')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.title')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $key => $value)
                                     @php $attachment_url = $key.'_attachment_url'; @endphp
@@ -117,7 +117,7 @@
 
                     @if($question->type=='1' && $question->option_label=='text' && $question->mcqoptions()->exists())
                         <tr>
-                            <td>{{trans('global.question.fields.option_a')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_a')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -128,7 +128,7 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{trans('global.question.fields.option_b')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_b')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -139,7 +139,7 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{trans('global.question.fields.option_c')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_c')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -150,7 +150,7 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{trans('global.question.fields.option_d')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_d')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -164,7 +164,7 @@
 
                     @if($question->type=='1' && $question->option_label=='image' && $question->mcqoptions()->exists())
                         <tr>
-                            <td>{{trans('global.question.fields.option_a')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_a')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -175,7 +175,7 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{trans('global.question.fields.option_b')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_b')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -186,7 +186,7 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{trans('global.question.fields.option_c')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_c')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -197,7 +197,7 @@
                             @endif
                         </tr>
                         <tr>
-                            <td>{{trans('global.question.fields.option_d')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.option_d')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
@@ -210,7 +210,7 @@
                     @endif
 
                         <tr>
-                            <td>{{trans('global.question.fields.correct_answer')}}</td>
+                            <td class="font-weight-bold">{{trans('global.question.fields.correct_answer')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $key => $value)
                                     @php $correctanswer = $key.'_correct_answer'; @endphp
