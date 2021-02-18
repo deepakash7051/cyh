@@ -3,7 +3,8 @@
 
 <?php 
   $title = config('app.locale').'_title';
-  $attachment = config('app.locale').'_attachment_file_name';   
+  $attachment = config('app.locale').'_attachment_file_name';
+  $attachmenturl = config('app.locale').'_attachment_url';   
   $languages = config('panel.available_languages');
 ?>
 
@@ -36,7 +37,7 @@
                 @if($question->visible=='text')
                     {{$question->$title}} 
                 @else
-                {{$question->$attachment}}
+                    <a href="{{$question->$attachmenturl}}" target="_blank">{{$question->$attachment}}</a>
                 @endif
 
 
