@@ -175,7 +175,7 @@ $(function () {
     }).trigger('input'); // Initialise the `prevValue` data properties
 
     //$( "#sortable" ).sortable();
-    $( "#videosortable" ).disableSelection();
+    //$( "#videosortable" ).disableSelection();
     $('#videosortable').sortable({
         start: function(event, ui) {
             var start_pos = ui.item.index();
@@ -213,7 +213,7 @@ $(function () {
         }
     });
 
-    $( "#slidesortable" ).disableSelection();
+    //$( "#slidesortable" ).disableSelection();
     $('#slidesortable').sortable({
         start: function(event, ui) {
             var start_pos = ui.item.index();
@@ -251,7 +251,7 @@ $(function () {
         }
     });
 
-    $( "#quizsortable" ).disableSelection();
+    //$( "#quizsortable" ).disableSelection();
     $('#quizsortable').sortable({
         start: function(event, ui) {
             var start_pos = ui.item.index();
@@ -289,7 +289,7 @@ $(function () {
         }
     });
 
-    $( "#questionsortable" ).disableSelection();
+    //$( "#questionsortable" ).disableSelection();
     $('#questionsortable').sortable({
         start: function(event, ui) {
             var start_pos = ui.item.index();

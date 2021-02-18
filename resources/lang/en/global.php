@@ -19,6 +19,7 @@ return [
     'arrange'                              => 'Arrange',
     'dummy'                              => 'Dummy',
     'demo'                              => 'Demo',
+    'option'                              => 'Option',
     'use_same_video'  => 'Use same video for all languages',
     'use_same_slide'  => 'Use same slide for all languages',
     'use_same'  => 'Use same for all languages',

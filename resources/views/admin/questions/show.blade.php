@@ -112,15 +112,15 @@
                         </tr>
                     @endif
 
-                    @if($question->type=='1' && $question->visible=='text' && $question->mcqoption()->exists())
+                    @if($question->type=='1' && $question->option_label=='text' && $question->mcqoptions()->exists())
                         <tr>
                             <td>{{trans('global.question.fields.option_a')}}</td>
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
-                                        $fieldoption_a = $langKey.'_option_a';
+                                        $option_a = $question->mcqoptions()->where('language', $langKey)->where('option', 'a')->first()->value;
                                     @endphp
-                                        <td>{{$question->mcqoption->$fieldoption_a}}</td>
+                                        <td>{{$option_a}}</td>
                                 @endforeach
                             @endif
                         </tr>
@@ -129,9 +129,9 @@
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
-                                        $fieldoption_b = $langKey.'_option_b';
+                                        $option_b = $question->mcqoptions()->where('language', $langKey)->where('option', 'b')->first()->value;
                                     @endphp
-                                        <td>{{$question->mcqoption->$fieldoption_b}}</td>
+                                        <td>{{$option_b}}</td>
                                 @endforeach
                             @endif
                         </tr>
@@ -140,9 +140,9 @@
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
-                                        $fieldoption_c = $langKey.'_option_c';
+                                        $option_c = $question->mcqoptions()->where('language', $langKey)->where('option', 'c')->first()->value;
                                     @endphp
-                                        <td>{{$question->mcqoption->$fieldoption_c}}</td>
+                                        <td>{{$option_c}}</td>
                                 @endforeach
                             @endif
                         </tr>
@@ -151,9 +151,56 @@
                             @if(count($languages) > 0)
                                 @foreach($languages as $langKey => $value)
                                     @php 
-                                        $fieldoption_d = $langKey.'_option_d';
+                                        $option_d = $question->mcqoptions()->where('language', $langKey)->where('option', 'd')->first()->value;
                                     @endphp
-                                        <td>{{$question->mcqoption->$fieldoption_d}}</td>
+                                        <td>{{$option_d}}</td>
+                                @endforeach
+                            @endif
+                        </tr>
+                    @endif
+
+                    @if($question->type=='1' && $question->option_label=='image' && $question->mcqoptions()->exists())
+                        <tr>
+                            <td>{{trans('global.question.fields.option_a')}}</td>
+                            @if(count($languages) > 0)
+                                @foreach($languages as $langKey => $value)
+                                    @php 
+                                        $option_a = $question->mcqoptions()->where('language', $langKey)->where('option', 'a')->first();
+                                    @endphp
+                                        <td><img height="50" src="{{ $option_a->attachment_url }}"></td>
+                                @endforeach
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>{{trans('global.question.fields.option_b')}}</td>
+                            @if(count($languages) > 0)
+                                @foreach($languages as $langKey => $value)
+                                    @php 
+                                        $option_b = $question->mcqoptions()->where('language', $langKey)->where('option', 'b')->first();
+                                    @endphp
+                                        <td><img height="50" src="{{ $option_b->attachment_url }}"></td>
+                                @endforeach
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>{{trans('global.question.fields.option_c')}}</td>
+                            @if(count($languages) > 0)
+                                @foreach($languages as $langKey => $value)
+                                    @php 
+                                        $option_c = $question->mcqoptions()->where('language', $langKey)->where('option', 'c')->first();
+                                    @endphp
+                                        <td><img height="50" src="{{ $option_c->attachment_url }}"></td>
+                                @endforeach
+                            @endif
+                        </tr>
+                        <tr>
+                            <td>{{trans('global.question.fields.option_d')}}</td>
+                            @if(count($languages) > 0)
+                                @foreach($languages as $langKey => $value)
+                                    @php 
+                                        $option_d = $question->mcqoptions()->where('language', $langKey)->where('option', 'd')->first();
+                                    @endphp
+                                        <td><img height="50" src="{{ $option_d->attachment_url }}"></td>
                                 @endforeach
                             @endif
                         </tr>
@@ -164,7 +211,9 @@
                             @if(count($languages) > 0)
                                 @foreach($languages as $key => $value)
                                     @php $correctanswer = $key.'_correct_answer'; @endphp
-                                        <td>{{$question->$correctanswer}}</td>
+                                        <td>
+                                            {{trans('global.option')}} {{ucfirst($question->$correctanswer)}}
+                                        </td>
                                 @endforeach
                             @endif
                         </tr>

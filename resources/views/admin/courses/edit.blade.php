@@ -186,7 +186,7 @@
 	                    </em>
 	                @endif
 	                <p class="helper-block">
-	                    {{ trans('global.course.fields.image_helper') }}
+	                    <a href="{{$course->image->url()}}" target="_blank">{{$course->image_file_name}}</a>
 	                </p>
 	            </div>
 

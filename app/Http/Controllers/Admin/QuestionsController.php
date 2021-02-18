@@ -192,9 +192,6 @@ class QuestionsController extends Controller
 
         $params = $request->all();
 
-        /*echo '<pre>';
-        print_r($params);
-        exit();*/
 
         if($request->same_for_all=='1'){
             $params['bn_attachment'] = $request->en_attachment;
@@ -221,9 +218,12 @@ class QuestionsController extends Controller
             }
         }
 
+        /*echo '<pre>';
+        print_r($params);
+        exit();*/
+
         $quiz = Quiz::find($request->quiz_id);
         $question = Question::find($id);
-        $params = $request->all();
         $params['course_id'] = $quiz->course_id;
         $question->update($params);
 

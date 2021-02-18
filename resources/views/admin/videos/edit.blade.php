@@ -88,6 +88,7 @@
 	                @foreach($languages as $langKey => $langValue)
 	                    @php 
 	                        $fieldattachment = $langKey.'_attachment';
+	                        $attachmentname = $langKey.'_attachment_file_name';
 	                    @endphp
 	            <div class="form-group mb-2 {{ $errors->has($fieldattachment) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlang'}} @endif" style="display: @if($langKey!='en' && old('same_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
 	                <label for="{{$fieldattachment}}">{{ trans('global.video.fields.attachment') }} ({{$langValue}})*	@if($langKey=='en') 
@@ -102,7 +103,7 @@
 	                    </em>
 	                @endif
 	                <p class="helper-block">
-	                    {{ trans('global.video.fields.title_helper') }}
+	                    <a href="{{$coursevideo->$fieldattachment->url()}}" target="_blank">{{$coursevideo->$attachmentname}}</a>
 	                </p>
 	            </div>
 
