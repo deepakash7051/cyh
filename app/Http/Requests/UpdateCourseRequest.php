@@ -27,7 +27,7 @@ class UpdateCourseRequest extends FormRequest
         $validatefields = [];
         $validatefields['category_id'] = ['required'];
         $validatefields['ref_code'] = ['required'];
-        $validatefields['price'] = ['required'];
+        //$validatefields['price'] = ['required'];
         $validatefields['duration'] = ['required'];
         $validatefields['image'] = ['mimes:jpeg,jpg,png,gif'];
         $languages = config('panel.available_languages');
