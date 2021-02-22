@@ -28,7 +28,7 @@ class CreateCoursesTable extends Migration
             }
             $table->double('price', 8, 2)->default(0);
             $table->double('duration', 8, 2)->default(0);
-            $table->integer('seats')->default(0);
+            $table->integer('seats')->default(0)->nullable();
             $table->string('image_file_name')->nullable();
             $table->integer('image_file_size')->nullable();
             $table->string('image_content_type')->nullable();

@@ -63,14 +63,14 @@
 
                     @endif
 
-                    <tr>
+                    <!-- <tr>
                         <td>
                             {{ trans('global.course.fields.price') }}
                         </td>
                         <td>
                             {{ $course->price }}
                         </td>
-                    </tr>
+                    </tr> -->
 
                     <tr>
                         <td>
@@ -87,14 +87,14 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <!-- <tr>
                         <td>
                             {{ trans('global.course.fields.seats') }}
                         </td>
                         <td>
                             {{ $course->seats }}
                         </td>
-                    </tr>
+                    </tr> -->
 
                     <tr>
                         <td>

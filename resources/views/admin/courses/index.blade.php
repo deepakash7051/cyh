@@ -38,18 +38,18 @@
                         <th>
                             {{ trans('global.course.fields.ref_code') }}
                         </th>
-                        <th>
+                        <!-- <th>
                             {{ trans('global.course.fields.price') }}
-                        </th>
+                        </th> -->
                         <th>
                             {{ trans('global.course.fields.duration') }}
                         </th>
                         <th>
                             {{ trans('global.course.fields.duration_type') }}
                         </th>
-                        <th>
+                        <!-- <th>
                             {{ trans('global.course.fields.seats') }}
-                        </th>
+                        </th> -->
                         <th>
                             {{ trans('global.course.fields.status') }}
                         </th>
@@ -114,10 +114,10 @@
               { name: '{{$locale."_title"}}' },
               { name: 'category.{{$locale."_name"}}', orderable : false },
               { name: 'ref_code' },
-              { name: 'price' },
+              //{ name: 'price' },
               { name: 'duration' },
               { name: 'duration_type' },
-              { name: 'seats' },
+              //{ name: 'seats' },
               { name: 'status' },
               { name: 'action', orderable: false, searchable: false }
             ],

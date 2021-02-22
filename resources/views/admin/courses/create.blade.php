@@ -88,7 +88,7 @@
 	                @endforeach
 	            @endif
 
-	            <div class="form-group mb-2 {{ $errors->has('price') ? 'has-error' : '' }}">
+	            <!-- <div class="form-group mb-2 {{ $errors->has('price') ? 'has-error' : '' }}">
 					<label>{{ trans('global.course.fields.price') }}*</label>
 					<input class="frm-field decimalp2" type="text" id="price" name="price" value="{{ old('price', isset($course) ? $course->price : '') }}">
 					@if($errors->has('price'))
@@ -99,7 +99,7 @@
 	                <p class="helper-block">
 	                    {{ trans('global.course.fields.price_helper') }}
 	                </p>
-				</div>
+				</div> -->
 
 				<div class="form-group mb-2">
                     <div class="row">
@@ -143,7 +143,7 @@
                 </div>
 
 
-				<div class="form-group mb-2 {{ $errors->has('seats') ? 'has-error' : '' }}">
+				<!-- <div class="form-group mb-2 {{ $errors->has('seats') ? 'has-error' : '' }}">
 					<label>{{ trans('global.course.fields.seats') }}</label>
 					<input class="frm-field onlynumeric" type="text" id="seats" name="seats" value="{{ old('seats', isset($course) ? $course->seats : '') }}">
 					@if($errors->has('seats'))
@@ -154,7 +154,7 @@
 	                <p class="helper-block">
 	                    {{ trans('global.course.fields.seats_helper') }}
 	                </p>
-				</div>
+				</div> -->
 
 				<div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
 					<label>{{ trans('global.course.fields.status') }}</label>
