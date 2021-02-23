@@ -64,6 +64,38 @@
 	                @endforeach
 	            @endif
 
+	            <div class="form-group mb-2 {{ $errors->has('time_limit') ? 'has-error' : '' }}" >
+	                <label for="{{$fieldname}}">{{ trans('global.quiz.fields.time_limit') }}*</label>
+	                <div class="controls" style="position: relative">
+	                <input type="text" id="time_limit" name="time_limit" class="frm-field attempts" value="{{ old('time_limit', isset($quiz) ? $quiz->time_limit : '') }}" placeholder="hh:mm">
+	                @if($errors->has('time_limit'))
+	                    <em class="invalid-feedback">
+	                        {{ $errors->first('time_limit') }}
+	                    </em>
+	                @endif
+	            	</div>
+	                <p class="helper-block">
+	                    {{ trans('global.quiz.fields.time_limit_helper') }}
+	                </p>
+	            </div>
+
+	            <div class="form-group mb-2 {{ $errors->has('attempts') ? 'has-error' : '' }}">
+	                <label for="{{$fieldname}}">{{ trans('global.quiz.fields.attempts') }}* 
+	                	<span class="float-right"> 
+	                		<input type="checkbox" class="mr-2" name="unlimited_attempts" value="{{ old('unlimited_attempts', isset($quiz) ? $quiz->unlimited_attempts : '0') }}" id="unlimited_attempts"  {{ old('unlimited_attempts', isset($quiz)) && $quiz->unlimited_attempts== '1' ? 'checked="checked"' : '' }}>{{ trans('global.quiz.fields.unlimited_attempts') }}
+	                	</span>
+	                </label>
+	                <input type="text" id="attempts" name="attempts" class="frm-field " value="{{ old('attempts', isset($quiz) ? $quiz->attempts : '') }}">
+	                @if($errors->has('attempts'))
+	                    <em class="invalid-feedback">
+	                        {{ $errors->first('attempts') }}
+	                    </em>
+	                @endif
+	                <p class="helper-block">
+	                    {{ trans('global.quiz.fields.attempts_helper') }}
+	                </p>
+	            </div>
+
 	            <div class="form-group mb-2 {{ $errors->has('status') ? 'has-error' : '' }}">
 					<label>{{ trans('global.quiz.fields.status') }}</label>
 					@php 
@@ -95,8 +127,20 @@
 		</div>
 		
 	</div>
-@endsection
 @section('scripts')
 @parent
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#unlimited_attempts").click(function() {
+	    if (!$(this).is(':checked')) {
+	      $(this).val('0');
+	    } else {
+	    	$(this).val('1');
+	    }
+    });
+
+});
+</script>
+@endsection
 
 @endsection

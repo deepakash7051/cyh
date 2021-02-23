@@ -16,6 +16,9 @@ class Quiz extends Model
         'zh_title',
         'ta_title',
         'place',
+        'time_limit',
+        'attempts',
+        'unlimited_attempts',
         'status',
     ];
 

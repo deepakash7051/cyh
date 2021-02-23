@@ -30,8 +30,7 @@ class StoreUserRequest extends FormRequest
             ],
             'phone'    => [
                 'required',
-                'integer',
-                'digits:10',
+                'digits_between:8,12',
                 'unique:users',
             ],
             'password' => [

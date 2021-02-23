@@ -24,8 +24,13 @@ class UpdateQuizRequest extends FormRequest
      */
     public function rules()
     {
+        $unlimited_attempts =  $this->request->has('unlimited_attempts') ? $this->request->get('unlimited_attempts') : '0';
         $validatefields = [];
         $validatefields['course_id'] = ['required'];
+        $validatefields['time_limit'] = ['required'];
+        if($unlimited_attempts=='0'){
+            $validatefields['attempts'] = ['integer'];
+        }
         $languages = config('panel.available_languages');
         if(count($languages) > 0){
             foreach($languages as $key => $value){

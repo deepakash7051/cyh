@@ -42,6 +42,23 @@
                         @endforeach
                     @endif
 
+                    <tr>
+                        <td>
+                            {{ trans('global.quiz.fields.time_limit') }}
+                        </td>
+                        <td>
+                            {{ $quiz->time_limit }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            {{ trans('global.quiz.fields.attempts') }}
+                        </td>
+                        <td>
+                            @if($quiz->unlimited_attempts=='1') {{ trans('global.unlimited') }} @else {{ $quiz->attempts}} @endif
+                        </td>
+                    </tr>
 
                     <tr>
                         <td>

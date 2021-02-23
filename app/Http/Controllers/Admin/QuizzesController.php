@@ -73,6 +73,7 @@ class QuizzesController extends Controller
         abort_unless(\Gate::allows('quiz_create'), 403);
         
         $params = $request->all();
+        $params['unlimited_attempts'] = $request->has('unlimited_attempts') ? $request->get('unlimited_attempts') : '0';
         $quizcount = Quiz::where('course_id', $request->course_id)->count();
         $params['place'] = $quizcount+1;
         $quiz = Quiz::create($params);
@@ -122,6 +123,7 @@ class QuizzesController extends Controller
 
         $quiz = Quiz::find($id);
         $params = $request->all();
+        $params['unlimited_attempts'] = $request->has('unlimited_attempts') ? $request->get('unlimited_attempts') : '0';
         $quiz->update($params);
 
         //return redirect()->route('admin.quizzes.index');
