@@ -97,7 +97,7 @@
 		                        $fieldname = $langKey.'_title';
 		                    @endphp
 		            <div class="form-group mb-2 {{ $errors->has($fieldname) ? 'has-error' : '' }}">
-		                <label for="{{$fieldname}}">{{ trans('global.question.fields.title') }} ({{$langValue}})*</label>
+		                <label for="{{$fieldname}}">{{ trans('global.question.fields.title') }} ({{$langValue}})</label>
 		                <input type="text" id="{{$fieldname}}" name="{{$fieldname}}" class="frm-field" value="{{ old($fieldname, isset($question) ? $question->$fieldname : '') }}">
 		                @if($errors->has($fieldname))
 		                    <em class="invalid-feedback">
@@ -120,7 +120,7 @@
 	                        $fieldattachment = $langKey.'_attachment';
 	                    @endphp
 	            <div class="form-group mb-2 {{ $errors->has($fieldattachment) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlang'}} @endif" style="display: @if($langKey!='en' && old('same_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
-	                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})*	@if($langKey=='en') 
+	                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})	@if($langKey=='en') 
 	                	<span class="pull-right" style="float: right;">
 	                		<input type="checkbox" id="same_for_all" name="same_for_all" class="mr-2" value="1" {{ old('same_for_all') == '1' ? 'checked="checked"' : '' }}>{{trans('global.use_same')}}
 	                	</span>@endif

@@ -98,7 +98,7 @@
 		                        $fieldname = $langKey.'_title';
 		                    @endphp
 		            <div class="form-group mb-2 {{ $errors->has($fieldname) ? 'has-error' : '' }}">
-		                <label for="{{$fieldname}}">{{ trans('global.question.fields.title') }} ({{$langValue}})*</label>
+		                <label for="{{$fieldname}}">{{ trans('global.question.fields.title') }} ({{$langValue}})</label>
 		                <input type="text" id="{{$fieldname}}" name="{{$fieldname}}" class="frm-field" value="{{ old($fieldname, isset($question) ? $question->$fieldname : '') }}">
 		                @if($errors->has($fieldname))
 		                    <em class="invalid-feedback">
@@ -126,7 +126,7 @@
 		            <input type="hidden" id="{{$fieldoldattachment}}" name="{{$fieldoldattachment}}" value="{{$question->$fieldoldurl}}">
 
 		            <div class="form-group mb-2 {{ $errors->has($fieldattachment) ? 'has-error' : '' }}  @if($langKey!='en') {{'otherlang'}} @endif" style="display: @if($langKey!='en' && old('same_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
-		                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})*	
+		                <label for="{{$fieldattachment}}">{{ trans('global.question.fields.attachment') }} ({{$langValue}})	
 		                </label>
 		                @if($langKey=='en') 
 		                	<span class="pull-right" style="float: right;">
