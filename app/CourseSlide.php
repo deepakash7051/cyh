@@ -30,7 +30,7 @@ class CourseSlide extends Model implements \Czim\Paperclip\Contracts\AttachableI
         'deleted_at',
     ];
 
-    protected $appends = ['en_attachment_url', 'bn_attachment_url', 'zh_attachment_url'. 'ta_attachment_url'];
+    protected $appends = ['en_attachment_url', 'bn_attachment_url', 'zh_attachment_url', 'ta_attachment_url'];
 
     public function __construct( array $attributes = [] ) {
         $this->hasAttachedFile('en_attachment');

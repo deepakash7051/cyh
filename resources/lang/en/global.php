@@ -369,6 +369,12 @@ return [
             'home' => [
                 'title' => 'Choice favourite course from top category',
                 'category_button' => 'See all Categories',
+                'course_preview' => 'Course Preview',
+                'no_videos_found' => 'No videos found',
+                'no_slides_found' => 'No slides found',
+                'take_exam' => 'Take an Exam',
+                'more_videos' => 'More Videos',
+                'not_support_video' => 'Your browser does not support the video tag.',
             ],
             'login' =>  [
                 'hello' => 'Hello!',

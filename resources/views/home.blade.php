@@ -18,8 +18,10 @@
                     $fieldtitle = $locale.'_title';
                     $fielddescription = $locale.'_description';
                 @endphp
-            <a href="" class="cat-box">
-                <div class="cat-icon d-flex align-items-center justify-content-center"><img src="images/sicon1.png" alt=""></div>
+            <a style="cursor: pointer;" class="cat-box code-dialog" data-value="{{$course->id}}">
+                <div class="cat-icon d-flex align-items-center justify-content-center">
+                    <img src="{{$course->course_image_url}}" alt="">
+                </div>
                 <h3>{{$course->$fieldtitle}}</h3>
                 <p>{{$course->$fielddescription}}</p>
             </a>
@@ -29,4 +31,53 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade course-preview" id="CoursesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+@section('scripts')
+@parent
+<script >
+    $(document).ready(function() {
+
+        $(".code-dialog").click(function(){
+            var courseid = $(this).attr('data-value');
+            var videoid = '';
+            getvideos(courseid, videoid);
+            
+        });
+
+        $(document).on('click', '.playbtn', function() {
+            // Does some stuff and logs the event to the console
+            var videoid = $(this).closest('.vrow').attr('data-value');
+            var courseid = $(this).closest('.vrow').attr('data-course');
+            getvideos(courseid, videoid);
+        });
+
+        function getvideos(courseid, videoid){
+            $.ajax({
+                url: "{{url('/getcourse/')}}",
+                type: "GET",
+                data: {'course_id':courseid, 'video_id' : videoid},
+                //dataType: "json",
+                success:function(data) {
+                    //console.log(data);
+                    $('#CoursesModal').find('.modal-content').html(data); 
+                    $('#CoursesModal').modal('show'); 
+                }
+            });
+        }
+
+    });
+
+</script>
+@endsection
 @endsection

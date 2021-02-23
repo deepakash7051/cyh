@@ -73,8 +73,10 @@ Auth::routes(['register' => false]);
 Route::post('/sendcode', 'Auth\LoginController@sendcode')->name('sendcode');
 Route::get('/verifycode/{id}', 'Auth\LoginController@verifycode')->name('verifycode');
 Route::post('/verifyusercode', 'Auth\LoginController@verifyusercode')->name('verifyusercode');
+
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/getcourse', 'HomeController@getCourse')->name('getcourse');
 });
 
 

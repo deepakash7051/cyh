@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Czim\Paperclip\Providers\PaperclipServiceProvider::class,
+        Lakshmaji\Thumbnail\ThumbnailServiceProvider::class,
 
     ],
 
@@ -228,6 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Thumbnail' => Lakshmaji\Thumbnail\Facade\Thumbnail::class,
 
     ],
 
