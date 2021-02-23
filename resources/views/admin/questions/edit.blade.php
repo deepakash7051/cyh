@@ -301,10 +301,10 @@
 
 	                    @endphp
 
-	                    <input type="hidden" id="{{$oldoption_a}}" name="{{$oldoption_a}}" value="{{$attachment_a->attachment_file_name}}">
-	                    <input type="hidden" id="{{$oldoption_b}}" name="{{$oldoption_b}}" value="{{$attachment_b->attachment_file_name}}">
-	                    <input type="hidden" id="{{$oldoption_c}}" name="{{$oldoption_c}}" value="{{$attachment_c->attachment_file_name}}">
-	                    <input type="hidden" id="{{$oldoption_d}}" name="{{$oldoption_d}}" value="{{$attachment_d->attachment_file_name}}">
+	                    <input type="hidden" id="{{$oldoption_a}}" name="{{$oldoption_a}}" value="@if(!empty($attachment_a)){{$attachment_a->attachment_file_name}}@endif">
+	                    <input type="hidden" id="{{$oldoption_b}}" name="{{$oldoption_b}}" value="@if(!empty($attachment_b)){{$attachment_b->attachment_file_name}}@endif">
+	                    <input type="hidden" id="{{$oldoption_c}}" name="{{$oldoption_c}}" value="@if(!empty($attachment_c)){{$attachment_c->attachment_file_name}}@endif">
+	                    <input type="hidden" id="{{$oldoption_d}}" name="{{$oldoption_d}}" value="@if(!empty($attachment_d)){{$attachment_d->attachment_file_name}}@endif">
 	            
                     	<div class="form-group mb-2 @if($langKey!='en') {{'otherlangimgoption'}} @endif" style="display: @if($langKey!='en' && old('sameimgoption_for_all')=='1') {{'none'}} @else {{'block'}} @endif;">
 
@@ -319,7 +319,7 @@
 					                    </em>
 					                @endif
 					                <p class="helper-block">
-					                    <a href="{{$attachment_a->attachment_url}}" target="_blank">{{ $attachment_a->attachment_file_name }}</a>
+					                    <a href="@if(!empty($attachment_a)){{$attachment_a->attachment_url}}@endif" target="_blank">@if(!empty($attachment_a)){{$attachment_a->attachment_file_name}}@endif</a>
 					                </p>
 		                        </div>
 
@@ -333,7 +333,7 @@
 					                    </em>
 					                @endif
 					                <p class="helper-block">
-					                    <a href="{{$attachment_b->attachment_url}}" target="_blank">{{ $attachment_b->attachment_file_name }}</a>
+					                    <a href="@if(!empty($attachment_b)){{$attachment_b->attachment_url}}@endif" target="_blank">@if(!empty($attachment_b)){{$attachment_b->attachment_file_name}}@endif</a>
 					                </p>
 		                        </div>
 
@@ -347,7 +347,7 @@
 					                    </em>
 					                @endif
 					                <p class="helper-block">
-					                    <a href="{{$attachment_c->attachment_url}}" target="_blank">{{ $attachment_c->attachment_file_name }}</a>
+					                    <a href="@if(!empty($attachment_c)){{$attachment_c->attachment_url}}@endif" target="_blank">@if(!empty($attachment_c)){{$attachment_c->attachment_file_name}}@endif</a>
 					                </p>
 		                        </div>
 
@@ -361,7 +361,7 @@
 					                    </em>
 					                @endif
 					                <p class="helper-block">
-					                    <a href="{{$attachment_d->attachment_url}}" target="_blank">{{ $attachment_d->attachment_file_name }}</a>
+					                    <a href="@if(!empty($attachment_d)){{$attachment_d->attachment_url}}@endif" target="_blank">@if(!empty($attachment_d)){{$attachment_d->attachment_file_name}}@endif</a>
 					                </p>
 		                        </div>
 		                    </div> 
