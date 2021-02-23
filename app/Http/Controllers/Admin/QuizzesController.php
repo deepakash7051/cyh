@@ -45,7 +45,7 @@ class QuizzesController extends Controller
         abort_unless(\Gate::allows('question_edit'), 403);
 
         $quiz = Quiz::find($id);
-        $questions =  Question::where('quiz_id', $id)->where('status', '1')->orderBy('place')->get();
+        $questions =  Question::where('quiz_id', $id)->orderBy('place')->get();
         return view('admin.quizzes.questions', compact('questions', 'quiz'));
     }
 

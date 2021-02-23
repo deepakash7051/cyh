@@ -92,24 +92,15 @@ $(document).ready(function () {
         }
     });
 
-    $('#visible').change(function() {
-        var type = $("#type").val();
+    /*$('#visible').change(function() {
         if($(this).val()=='text') {
             $('#quesattachments').hide();
             $('#questitles').show();
-
-            /*if(type=='1'){
-                $('#ques_options').show();
-            } else {
-                $('#ques_options').hide();
-            }*/
-
         } else {
-            //$('#ques_options').hide();
             $('#quesattachments').show();
             $('#questitles').hide();
         }
-    });
+    });*/
 
     $('#type').change(function() {
         var visible = $("#visible").val();

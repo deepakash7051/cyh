@@ -34,11 +34,12 @@
             @foreach($questions as $question)
             <li class="ui-state-default" data-val="{{$question->id}}"> 
                 <i class="fas fa-arrows-alt"></i> 
-                @if($question->visible=='text')
+                    {{$question->$title}}
+                <!-- @if($question->visible=='text')
                     {{$question->$title}} 
                 @else
                     <a href="{{$question->$attachmenturl}}" target="_blank">{{$question->$attachment}}</a>
-                @endif
+                @endif -->
 
 
                 <span class="float-right">

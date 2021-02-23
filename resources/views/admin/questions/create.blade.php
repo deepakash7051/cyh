@@ -67,13 +67,12 @@
 	                </p>
 				</div>
 
-				<div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" id="visiblesec">
+				<!-- <div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" id="visiblesec">
 					<label>{{ trans('global.question.fields.visible') }}*</label>
 					@php 
-						$visiblity = ['image' => trans('global.image'), 'text' => trans('global.text') ];
+						$visiblity = ['text' => trans('global.text'), 'image' => trans('global.image') ];
 					@endphp
 					<select class="frm-field " name="visible" id="visible" >
-						<option value="">{{trans('global.pleaseSelect')}}</option>
                         @foreach($visiblity as $vbkey => $vbvalue)
                         	<option value="{{$vbkey}}"
                         		{{ old('visible') ==$vbkey ? 'selected="selected"' : '' }}
@@ -89,10 +88,9 @@
 	                <p class="helper-block">
 	                    {{ trans('global.question.fields.visible_helper') }}
 	                </p>
-				</div>
+				</div> -->
 
-
-				<div id="questitles" style="display:{{old('visible')=='text' ? 'block' : 'none'}};">
+				<div id="questitles">
 					@if(count($languages) > 0)
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 
@@ -115,7 +113,7 @@
 		            @endif
 	        	</div>
 
-				<div id="quesattachments" style="display:{{old('visible')=='image' ? 'block' : 'none'}};">
+				<div id="quesattachments">
 	            @if(count($languages) > 0)
 	                @foreach($languages as $langKey => $langValue)
 	                    @php 
@@ -381,10 +379,10 @@
 	                </label>
 	                <select id="{{$fieldcorrectanswer}}" name="{{$fieldcorrectanswer}}" class="frm-field" >
 	                	<option value="">{{trans('global.pleaseSelect')}}</option> 
-	                	<option value="a">{{trans('global.question.fields.option_a')}}</option>
-	                	<option value="b">{{trans('global.question.fields.option_b')}}</option>
-	                	<option value="c">{{trans('global.question.fields.option_c')}}</option>
-	                	<option value="d">{{trans('global.question.fields.option_d')}}</option>
+	                	<option value="a" {{ old($fieldcorrectanswer, isset($question))=='a' ? 'selected="selected"' : '' }} >{{trans('global.question.fields.option_a')}}</option>
+	                	<option value="b" {{ old($fieldcorrectanswer, isset($question))=='b' ? 'selected="selected"' : '' }} >{{trans('global.question.fields.option_b')}}</option>
+	                	<option value="c" {{ old($fieldcorrectanswer, isset($question))=='c' ? 'selected="selected"' : '' }} >{{trans('global.question.fields.option_c')}}</option>
+	                	<option value="d" {{ old($fieldcorrectanswer, isset($question))=='d' ? 'selected="selected"' : '' }} >{{trans('global.question.fields.option_d')}}</option>
 	                </select>
 	                
 	                @if($errors->has($fieldcorrectanswer))

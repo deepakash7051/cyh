@@ -67,7 +67,7 @@
 	                </p>
 				</div>
 
-				<div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" id="visiblesec">
+				<!-- <div class="form-group mb-2 {{ $errors->has('visible') ? 'has-error' : '' }}" id="visiblesec">
 					<label>{{ trans('global.question.fields.visible') }}*</label>
 					@php 
 						$visiblity = ['image' => trans('global.image'), 'text' => trans('global.text') ];
@@ -89,9 +89,9 @@
 	                <p class="helper-block">
 	                    {{ trans('global.question.fields.visible_helper') }}
 	                </p>
-				</div>
+				</div> -->
 
-				<div id="questitles" style="display:{{$question->visible=='text' ? 'block' : 'none' }};">
+				<div id="questitles" >
 					@if(count($languages) > 0)
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 
@@ -114,7 +114,7 @@
 		            @endif
 	        	</div>
 
-	        	<div id="quesattachments" style="display:{{$question->visible=='image' ? 'block' : 'none' }};">
+	        	<div id="quesattachments" >
 		            @if(count($languages) > 0)
 		                @foreach($languages as $langKey => $langValue)
 		                    @php 

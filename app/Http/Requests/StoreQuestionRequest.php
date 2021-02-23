@@ -40,7 +40,7 @@ class StoreQuestionRequest extends FormRequest
         $validatefields = [];
         $validatefields['quiz_id'] = ['required'];
         $validatefields['type'] = ['required'];
-        $validatefields['visible'] = ['required'];
+        //$validatefields['visible'] = ['required'];
         $languages = config('panel.available_languages');
         if(count($languages) > 0){
             foreach($languages as $key => $value){
@@ -51,7 +51,7 @@ class StoreQuestionRequest extends FormRequest
                         $validatefields[$key.'_correct_answer'] = ['required'];
                     }
 
-                    if($visible=='text'){
+                    /*if($visible=='text'){
                         $validatefields[$key.'_title'] = ['required'];
                     } else {
                         if($same_for_all=='1'){
@@ -59,7 +59,7 @@ class StoreQuestionRequest extends FormRequest
                         } else {
                              $validatefields[$key.'_attachment'] = ['required', 'mimes:jpeg,jpg,png,gif'];
                         }
-                    }
+                    }*/
 
                 } else {
                     $validatefields['option_label'] = ['required'];
@@ -70,7 +70,7 @@ class StoreQuestionRequest extends FormRequest
                         $validatefields[$key.'_mcqcorrect_answer'] = ['required'];
                     }
 
-                    if($visible=='text'){
+                    /*if($visible=='text'){
                         $validatefields[$key.'_title'] = ['required'];
                     } else {
                         if($same_for_all=='1'){
@@ -78,7 +78,7 @@ class StoreQuestionRequest extends FormRequest
                         } else {
                              $validatefields[$key.'_attachment'] = !empty($this->request->get($key.'_oldattachment')) ? ['mimes:jpeg,jpg,png,gif'] : ['required', 'mimes:jpeg,jpg,png,gif'];
                         }
-                    }
+                    }*/
 
                     if($option_label=='text'){
                         if($sametextoption_for_all=='1'){

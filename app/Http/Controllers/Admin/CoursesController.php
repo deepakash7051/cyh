@@ -38,7 +38,7 @@ class CoursesController extends Controller
         abort_unless(\Gate::allows('video_edit'), 403);
 
         $course = Course::find($id);
-        $coursevideos =  CourseVideo::where('course_id', $id)->where('status', '1')->orderBy('place')->get();
+        $coursevideos =  CourseVideo::where('course_id', $id)->orderBy('place')->get();
         return view('admin.courses.videos', compact('coursevideos', 'course'));
     }
 
@@ -48,7 +48,7 @@ class CoursesController extends Controller
         abort_unless(\Gate::allows('slide_edit'), 403);
 
         $course = Course::find($id);
-        $courseslides =  CourseSlide::where('course_id', $id)->where('status', '1')->orderBy('place')->get();
+        $courseslides =  CourseSlide::where('course_id', $id)->orderBy('place')->get();
         return view('admin.courses.slides', compact('courseslides', 'course'));
     }
 
@@ -58,7 +58,7 @@ class CoursesController extends Controller
         abort_unless(\Gate::allows('slide_edit'), 403);
 
         $course = Course::find($id);
-        $quizzes =  Quiz::where('course_id', $id)->where('status', '1')->orderBy('place')->get();
+        $quizzes =  Quiz::where('course_id', $id)->orderBy('place')->get();
         return view('admin.courses.quizzes', compact('quizzes', 'course'));
     }
 
