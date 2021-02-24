@@ -391,6 +391,9 @@ return [
                 'invalid_code' => 'Invalid Code',
                 'submit' => 'Submit',
             ],
+            'exam' => [
+                'enter_answer' => 'Enter Your Answer',
+            ],
         ],
     ],
     'userManagement'                       => [

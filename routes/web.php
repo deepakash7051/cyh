@@ -77,6 +77,11 @@ Route::post('/verifyusercode', 'Auth\LoginController@verifyusercode')->name('ver
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/getcourse', 'HomeController@getCourse')->name('getcourse');
+
+	Route::group(['namespace' => 'Frontend'], function () {
+		Route::get('/exam/{id}', 'ExamsController@index')->name('takeexam');
+	});
+	
 });
 
 

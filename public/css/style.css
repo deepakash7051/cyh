@@ -551,6 +551,19 @@ table.table-custom{
 .pull-right:{
 	float: right;
 }
+.main-font-color{
+	color: #6267ed;
+}
+.sorting_order {
+	padding: 2px 8px;
+	background-color: #34354c;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 50%;
+}
+.optionimg {
+	height: 180px;
+}
 
 /*--Responsive style--*/
 

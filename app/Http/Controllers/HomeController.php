@@ -31,7 +31,7 @@ class HomeController extends Controller
             $query->where('status', '1');
         }])->where('status', '1')->get();
         
-        return view('home', compact('courses'));
+        return view('frontend.home', compact('courses'));
     }
 
     public function getCourse(Request $request)
@@ -66,8 +66,9 @@ class HomeController extends Controller
         <video width="320" height="240" controls>
           <source src="'.$video_attachment_url.'" type="'.$video_content_type.'">'.trans('global.pages.frontend.home.not_support_video').'
         </video>
-        </div>
-        <div class="more-videos">
+        </div>';
+        if($course->course_videos()->count() > 1){
+      $html .=  '<div class="more-videos">
             <h4>'.trans('global.pages.frontend.home.more_videos').'</h4>
             <div class="morevideos">
                 <div class="mvideo-box">';
@@ -78,7 +79,7 @@ class HomeController extends Controller
                                 <div class="vthumb"><img src="'.asset('images/video-thumb.jpg').'" alt=""></div>
                                 <div class="vcon">
                                     <h5>'.$video->$title.'</h5>
-                                    <p>3:50</p>
+                                    <p></p>
                                 </div>
                                 <div class="vbtn">
                                     <button class="playbtn" type="button"><img src="'.asset('images/playbtn.png').'"></button>
@@ -90,10 +91,12 @@ class HomeController extends Controller
                     
         $html .= '</div>
             </div>
-        </div>
-      </div>
+        </div>';
+      }
+
+      $html .= '</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btnn">'.trans('global.pages.frontend.home.take_exam').'</button>
+        <a href="'.route('takeexam', $course->id).'" class="btn btn-primary btnn">'.trans('global.pages.frontend.home.take_exam').'</a>
       </div>';
     } else {
         $html = '<div class="modal-header">
@@ -109,7 +112,7 @@ class HomeController extends Controller
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btnn">'.trans('global.pages.frontend.home.take_exam').'</button>
+        <a href="'.route('takeexam', $course->id).'" class="btn btn-primary btnn">'.trans('global.pages.frontend.home.take_exam').'</a>
       </div>';
     }
 

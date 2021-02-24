@@ -47,4 +47,9 @@ class Quiz extends Model
     {
         return $quiz->status=='1' ? 'text-dark' : 'text-danger';
     }
+
+    public function questions()
+    {
+        return $this->hasMany('App\Question');
+    }
 }
