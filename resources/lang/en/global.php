@@ -18,6 +18,7 @@ return [
         'success' => 'Success',
     ],
     'code_message' => 'Your SWALMS OTP is',
+    'error_message' => 'Some problem exists. Please try again.',
     'add'                                  => 'Add',
     'create'                               => 'Create',
     'list'                                 => 'List',
@@ -393,6 +394,7 @@ return [
             ],
             'exam' => [
                 'enter_answer' => 'Enter Your Answer',
+                'attempt_successfully' => 'You have successfully attempt exam.',
             ],
         ],
     ],

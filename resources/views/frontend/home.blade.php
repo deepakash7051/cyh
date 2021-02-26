@@ -7,6 +7,24 @@
 ?>
 <div class="category-wrap py-5 my-2">
     <div class="container">
+        @if (\Session::has('success'))
+            <div class="alert alert-success mb-4">
+                {!! \Session::get('success') !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if (\Session::has('error'))
+            <div class="alert alert-error mb-4">
+                {!! \Session::get('error') !!}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+
         <div class="d-flex justify-content-between align-items-center mb-4 cat-head">
             <h2>{{ trans('global.pages.frontend.home.title') }}</h2>
             <a href="" class="btnn">{{ trans('global.pages.frontend.home.category_button') }}</a>

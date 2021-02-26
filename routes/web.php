@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::group(['namespace' => 'Frontend'], function () {
 		Route::get('/exam/{id}', 'ExamsController@index')->name('takeexam');
+		Route::resource('attempts', 'AttemptsController');
 	});
 	
 });
