@@ -54,7 +54,11 @@ class CoursesController extends Controller
         if($query->count() > 0){
             $resume_module = $query->first()->resume_module;
         } else {
-            $resume_module = $course->modules()->first()->id;
+            if($course->modules->count() > 0){
+                $resume_module = $course->modules()->first()->id;
+            } else {
+                $resume_module = '';
+            }
         }
 
         return view('frontend.courses.show', compact('course', 'resume_module'));
@@ -101,11 +105,22 @@ class CoursesController extends Controller
             'course_id' => $request->course_id
         );
 
-        $sentemail = CourseAttempt::updateOrCreate($match, [
-            'resume_module' => $request->resume_module
-        ]);
+        if(!empty($request->resume_module)){
+            $courseattempt = CourseAttempt::updateOrCreate($match, [
+                'resume_module' => $request->resume_module
+            ]);
+            return redirect()->route('modules.show', $request->resume_module);
+        } else {
+            $course = Course::with(['quiz.questions' => function($query){
+                $query->where('questions.status', '1')->orderBy('place', 'asc');
+            }])->whereHas('quiz', function($query){
+                $query->where('status', '1');
+            })->find($request->course_id);
 
-        return redirect()->route('modules.show', $request->resume_module);
+            return view('frontend.exams.index', compact('course'));
+
+        }
+
     }
 
     public function examrules($id){

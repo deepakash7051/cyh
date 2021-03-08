@@ -22,7 +22,7 @@ $scoremsg = str_replace('{total}', $total, $scoremsg);
                     </div>
                     <h6 class="mb-3">{{$scoremsg}} </h6>
                     <div>
-                        <a href="route('courses.show', $quiz->course_id)">
+                        <a href="{{route('courses.show', $quiz->course_id)}}">
                         <button class="btn btn-info">
                         {{ trans('global.pages.frontend.exam.start_course_again') }}
                         </button>
