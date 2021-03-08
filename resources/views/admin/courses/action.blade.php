@@ -1,4 +1,9 @@
-@can('video_access')
+@can('module_access')
+    <a class="btn btn-xs btn-primary" href="{{ route('admin.courses.modules', $course->id) }}">
+        {{ trans('global.module.title') }}
+    </a>
+@endcan
+<!-- @can('video_access')
     <a class="btn btn-xs btn-primary" href="{{ route('admin.courses.videos', $course->id) }}">
         {{ trans('global.video.title') }}
     </a>
@@ -7,10 +12,10 @@
     <a class="btn btn-xs btn-info" href="{{ route('admin.courses.slides', $course->id) }}">
         {{ trans('global.slide.title') }}
     </a>
-@endcan
+@endcan -->
 @can('quiz_access')
     <a class="btn btn-xs btn-success" href="{{ route('admin.courses.quizzes', $course->id) }}">
-        {{ trans('global.quiz.title') }}
+        {{ trans('global.quiz.title_singular') }}
     </a>
 @endcan
 @can('course_show')

@@ -565,6 +565,64 @@ table.table-custom{
 	height: 180px;
 }
 
+.course-modules li {
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+.btn-info:hover {
+	color: #fff;
+}
+
+/*-----------------------------------------*/
+
+label.radio {
+    cursor: pointer;
+    width: 100%;
+}
+
+label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+
+label.radio span {
+	padding: 4px 0px;
+	border: 1px solid #afbaf1;
+	display: inline-block;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	margin-top: 7px;
+	text-transform: uppercase;
+	background-color: #afbaf1;
+	width: 100%;
+}
+
+label.radio input:checked+span {
+    border-color: #435fef;;
+    background-color: #435fef;;
+    color: #fff;
+    width: 100%
+}
+
+.ans {
+    margin-left: 36px !important
+}
+
+.btn:focus {
+    outline: 0 !important;
+    box-shadow: none !important
+}
+
+.btn:active {
+    outline: 0 !important;
+    box-shadow: none !important
+}
+
 /*--Responsive style--*/
 
 @media all and (max-width: 1366px){

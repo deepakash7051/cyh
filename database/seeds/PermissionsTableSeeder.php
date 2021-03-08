@@ -145,7 +145,7 @@ class PermissionsTableSeeder extends Seeder
             ],
 
             [
-                'title'      => 'question_access',
+                'title'      => 'module_access',
             ],
             [
                 'title'      => 'question_create',
@@ -158,6 +158,22 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'title'      => 'question_delete',
+            ],
+
+            [
+                'title'      => 'module_access',
+            ],
+            [
+                'title'      => 'module_create',
+            ],
+            [
+                'title'      => 'module_edit',
+            ],
+            [
+                'title'      => 'module_show',
+            ],
+            [
+                'title'      => 'module_delete',
             ]
             
         ];

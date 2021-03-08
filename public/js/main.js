@@ -92,6 +92,32 @@ $(document).ready(function () {
         }
     });
 
+    $('#same_video_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlangvideo').hide();
+        } else {
+            $('.otherlangvideo').show();
+        }
+    });
+
+    $('#same_slide_for_all').change(function() {
+        if($(this).is(":checked")) {
+            $('.otherlangslide').hide();
+        } else {
+            $('.otherlangslide').show();
+        }
+    });
+
+    $("input[type=radio][name=link_attachment]").change(function() {
+        if($(this).val()=='video') {
+            $('#slidesection').hide();
+            $('#videosection').show();
+        } else {
+            $('#slidesection').show();
+            $('#videosection').hide();
+        }
+    });
+
     /*$('#visible').change(function() {
         if($(this).val()=='text') {
             $('#quesattachments').hide();
@@ -322,5 +348,44 @@ $(function () {
             });
         }
     });
+
+    $('#modulesortable').sortable({
+        start: function(event, ui) {
+            var start_pos = ui.item.index();
+            ui.item.data('start_pos', start_pos);
+        },
+        change: function(event, ui) {
+            var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();
+            if (start_pos < index) {
+                $('#modulesortable li:nth-child(' + index + ')').addClass('highlights');
+            } else {
+                $('#modulesortable li:eq(' + (index + 1) + ')').addClass('highlights');
+            }
+        },
+        update: function(event, ui) {
+            $('#modulesortable li').removeClass('highlights');
+        },
+        stop: function(event, ui) {  
+            //var total = $('#videosortable li').length;
+            //console.log(total);
+            var moduleplaces = [];
+            $('#modulesortable li').each(function (index, key) {
+                moduleplaces.push(key.dataset.val);
+            });
+            $.ajax(
+            {
+                type:'post',
+                url: $("#base_url").val() +"/admin/arrangemodules",
+                data: {_token: _token, 'moduleplaces' : moduleplaces},
+                success:function(result)
+                {
+                    console.log(result);
+                }
+            });
+        }
+    });
+
+    
 
 });

@@ -67,7 +67,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Czim\Paperclip\Providers\PaperclipServiceProvider::class,
-        Lakshmaji\Thumbnail\ThumbnailServiceProvider::class,
+        'Cohensive\Embed\EmbedServiceProvider',
 
     ],
 
@@ -229,7 +231,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Thumbnail' => Lakshmaji\Thumbnail\Facade\Thumbnail::class,
+        'Embed' => 'Cohensive\Embed\Facades\Embed'
 
     ],
 

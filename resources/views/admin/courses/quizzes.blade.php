@@ -12,8 +12,9 @@
         </a>
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ $course->$title }} {{ trans('global.quiz.title') }}
+                {{ $course->$title }} {{ trans('global.quiz.title_singular') }}
             </h2>
+            @if($course->quiz()->count()==0)
             <div>
                 @can('quiz_create')
                 <a href="{{ url('admin/quizzes/create/?course_id='.$course->id)}}" class="btnn btnn-s">
@@ -21,6 +22,7 @@
                 </a>
                 @endcan
             </div>
+            @endif
         </div>
 
         <div class="search-wrp">

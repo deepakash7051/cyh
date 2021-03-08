@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::get('/courses/{id}/videos', 'CoursesController@videos')->name('courses.videos');
 	    Route::get('/courses/{id}/slides', 'CoursesController@slides')->name('courses.slides');
 	    Route::get('/courses/{id}/quizzes', 'CoursesController@quizzes')->name('courses.quizzes');
+	    Route::get('/courses/{id}/modules', 'CoursesController@modules')->name('courses.modules');
 	    Route::get('/quizzes/{id}/questions', 'QuizzesController@questions')->name('quizzes.questions');
 	    Route::get('/videos/list', 'CourseVideosController@list')->name('videos.list');
 	    Route::post('/arrangevideos', 'CourseVideosController@arrange')->name('videos.arrange');
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::post('/arrangeslides', 'CourseSlidesController@arrange')->name('slides.arrange');
 	    Route::get('/quizzes/list', 'QuizzesController@list')->name('quizzes.list');
 	    Route::post('/arrangequizzes', 'QuizzesController@arrange')->name('quizzes.arrange');
+	    Route::get('/modules/list', 'ModulesController@list')->name('modules.list');
+	    Route::post('/arrangemodules', 'ModulesController@arrange')->name('modules.arrange');
 	    Route::post('/arrangequestions', 'QuestionsController@arrange')->name('questions.arrange');
 	    Route::get('/import/users', 'ImportsController@users')->name('import.users');
 	    Route::post('/import/parseusers', 'ImportsController@parseusers')->name('import.parseusers');
@@ -59,6 +62,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::resource('slides', 'CourseSlidesController');
 	    Route::resource('quizzes', 'QuizzesController');
 	    Route::resource('questions', 'QuestionsController');
+	    Route::resource('modules', 'ModulesController');
     });
 });
 
@@ -79,8 +83,12 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/getcourse', 'HomeController@getCourse')->name('getcourse');
 
 	Route::group(['namespace' => 'Frontend'], function () {
-		Route::get('/exam/{id}', 'ExamsController@index')->name('takeexam');
+		Route::get('/exam/{id}', 'ExamsController@index');
 		Route::resource('attempts', 'AttemptsController');
+		Route::resource('courses', 'CoursesController');
+		Route::post('attemptcourse', 'CoursesController@attemptcourse')->name('attemptcourse');
+		Route::get('examrules/{id}', 'CoursesController@examrules');
+		Route::resource('modules', 'ModulesController');
 	});
 	
 });

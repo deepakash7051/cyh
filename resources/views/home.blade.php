@@ -18,7 +18,7 @@
                     $fieldtitle = $locale.'_title';
                     $fielddescription = $locale.'_description';
                 @endphp
-            <a style="cursor: pointer;" class="cat-box code-dialog" data-value="{{$course->id}}">
+            <a style="cursor: pointer;" class="cat-box" data-value="{{$course->id}}">
                 <div class="cat-icon d-flex align-items-center justify-content-center">
                     <img src="{{$course->course_image_url}}" alt="">
                 </div>

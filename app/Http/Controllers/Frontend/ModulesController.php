@@ -4,23 +4,16 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\QuizAttempt;
-use App\Question;
-use App\Quiz;
+use App\Module;
+use App\Course;
 
-class AttemptsController extends Controller
+class ModulesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         //
@@ -44,42 +37,7 @@ class AttemptsController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->user();
-        $params = $request->all();
-        unset($params['quiz_id']);
-        unset($params['_token']);
-
-        $attempt = QuizAttempt::create([
-            'user_id' => $user->id,
-            'quiz_id' => $request->quiz_id,
-            'attempt_result' => json_encode($params)
-        ]);
-
-        $quiz = Quiz::find($request->quiz_id);
-
-        $score = 0;
-        $total = count($params);
-        $correct_answer = config('app.locale').'_correct_answer';
-        foreach ($params as $key => $value) {
-            $ques = explode('_', $key);
-            $question = Question::find($ques[1]);
-            $answer = trim($value);
-            if(strtolower($answer)== strtolower($question->$correct_answer)){
-                $score++;
-            }
-        }
-
-        if($attempt){
-            if($score==$total){
-                return redirect('/home')->with('success', trans('global.pages.frontend.exam.attempt_successfully'));
-            } else {
-                return view('frontend.exams.scores', compact('quiz', 'score', 'total'));
-            }
-            
-        } else {
-            return redirect('/home')->with('error', trans('global.error_message'));
-        }
-
+        //
     }
 
     /**
@@ -90,7 +48,16 @@ class AttemptsController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = auth()->user();
+        $module = Module::find($id);
+        $query = Module::where('course_id', $module->course_id)->where('status', '1')->where('place', '>', $module->place)->orderBy('place', 'asc');
+        if($query->count() > 0){
+            $resume_module = $query->first()->id;
+        } else {
+            $resume_module = '';
+        }
+        $course = Course::with(['modules'])->find($module->course_id);
+        return view('frontend.modules.show', compact('module', 'course' , 'resume_module'));
     }
 
     /**

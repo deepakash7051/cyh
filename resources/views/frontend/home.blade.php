@@ -36,12 +36,18 @@
                     $fieldtitle = $locale.'_title';
                     $fielddescription = $locale.'_description';
                 @endphp
-            <a style="cursor: pointer;" class="cat-box code-dialog" data-value="{{$course->id}}">
+            <a href="{{ route('courses.show', $course->id)}}" class="cat-box code-dialog" data-value="{{$course->id}}">
                 <div class="cat-icon d-flex align-items-center justify-content-center">
                     <img src="{{$course->course_image_url}}" alt="">
                 </div>
                 <h3>{{$course->$fieldtitle}}</h3>
-                <p>{{$course->$fielddescription}}</p>
+                <p>
+                    @if(strlen($course->$fielddescription) > 100)
+                        {{substr($course->$fielddescription, 0 , 100).'...'}}
+                    @else
+                        {{$course->$fielddescription}}
+                    @endif
+                </p>
             </a>
                 @endforeach
             @endif
@@ -64,7 +70,7 @@
 <script >
     $(document).ready(function() {
 
-        $(".code-dialog").click(function(){
+        /*$(".code-dialog").click(function(){
             var courseid = $(this).attr('data-value');
             var videoid = '';
             getvideos(courseid, videoid);
@@ -72,7 +78,6 @@
         });
 
         $(document).on('click', '.playbtn', function() {
-            // Does some stuff and logs the event to the console
             var videoid = $(this).closest('.vrow').attr('data-value');
             var courseid = $(this).closest('.vrow').attr('data-course');
             getvideos(courseid, videoid);
@@ -83,14 +88,12 @@
                 url: "{{url('/getcourse/')}}",
                 type: "GET",
                 data: {'course_id':courseid, 'video_id' : videoid},
-                //dataType: "json",
                 success:function(data) {
-                    //console.log(data);
                     $('#CoursesModal').find('.modal-content').html(data); 
                     $('#CoursesModal').modal('show'); 
                 }
             });
-        }
+        }*/
 
     });
 

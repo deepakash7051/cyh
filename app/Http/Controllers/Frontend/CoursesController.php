@@ -4,23 +4,16 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\QuizAttempt;
-use App\Question;
-use App\Quiz;
+use App\Course;
+use App\CourseAttempt;
 
-class AttemptsController extends Controller
+class CoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         //
@@ -44,42 +37,7 @@ class AttemptsController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth()->user();
-        $params = $request->all();
-        unset($params['quiz_id']);
-        unset($params['_token']);
-
-        $attempt = QuizAttempt::create([
-            'user_id' => $user->id,
-            'quiz_id' => $request->quiz_id,
-            'attempt_result' => json_encode($params)
-        ]);
-
-        $quiz = Quiz::find($request->quiz_id);
-
-        $score = 0;
-        $total = count($params);
-        $correct_answer = config('app.locale').'_correct_answer';
-        foreach ($params as $key => $value) {
-            $ques = explode('_', $key);
-            $question = Question::find($ques[1]);
-            $answer = trim($value);
-            if(strtolower($answer)== strtolower($question->$correct_answer)){
-                $score++;
-            }
-        }
-
-        if($attempt){
-            if($score==$total){
-                return redirect('/home')->with('success', trans('global.pages.frontend.exam.attempt_successfully'));
-            } else {
-                return view('frontend.exams.scores', compact('quiz', 'score', 'total'));
-            }
-            
-        } else {
-            return redirect('/home')->with('error', trans('global.error_message'));
-        }
-
+        //
     }
 
     /**
@@ -90,7 +48,16 @@ class AttemptsController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = auth()->user();
+        $course = Course::with(['modules', 'course_videos', 'course_slides'])->find($id);
+        $query = CourseAttempt::where('course_id', $id)->where('user_id', $user->id);
+        if($query->count() > 0){
+            $resume_module = $query->first()->resume_module;
+        } else {
+            $resume_module = $course->modules()->first()->id;
+        }
+
+        return view('frontend.courses.show', compact('course', 'resume_module'));
     }
 
     /**
@@ -125,5 +92,26 @@ class AttemptsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function attemptcourse(Request $request){
+        $user = auth()->user();
+        $match = array(
+            'user_id' => $user->id, 
+            'course_id' => $request->course_id
+        );
+
+        $sentemail = CourseAttempt::updateOrCreate($match, [
+            'resume_module' => $request->resume_module
+        ]);
+
+        return redirect()->route('modules.show', $request->resume_module);
+    }
+
+    public function examrules($id){
+        $user = auth()->user();
+        $course = Course::find($id);
+
+        return view('frontend.exams.rules', compact('course'));
     }
 }

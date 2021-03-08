@@ -12,6 +12,7 @@ use App\CourseVideo;
 use App\CourseSlide;
 use App\Category;
 use App\Quiz;
+use App\Module;
 
 class CoursesController extends Controller
 {
@@ -54,12 +55,22 @@ class CoursesController extends Controller
 
     public function quizzes(Request $resquest, $id)
     {
-        abort_unless(\Gate::allows('slide_access'), 403);
-        abort_unless(\Gate::allows('slide_edit'), 403);
+        abort_unless(\Gate::allows('quiz_access'), 403);
+        abort_unless(\Gate::allows('quiz_edit'), 403);
 
-        $course = Course::find($id);
+        $course = Course::with(['quiz'])->find($id);
         $quizzes =  Quiz::where('course_id', $id)->orderBy('place')->get();
         return view('admin.courses.quizzes', compact('quizzes', 'course'));
+    }
+
+    public function modules(Request $resquest, $id)
+    {
+        abort_unless(\Gate::allows('module_access'), 403);
+        abort_unless(\Gate::allows('module_edit'), 403);
+
+        $course = Course::find($id);
+        $modules =  Module::where('course_id', $id)->orderBy('place')->get();
+        return view('admin.courses.modules', compact('modules', 'course'));
     }
 
     /**

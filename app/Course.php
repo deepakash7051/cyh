@@ -71,14 +71,24 @@ class Course extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         return $this->hasMany('App\CourseSlide');
     }
 
-    public function quizzes()
+    /*public function quizzes()
     {
         return $this->hasMany('App\Quiz');
+    }*/
+
+    public function quiz()
+    {
+        return $this->hasOne('App\Quiz');
     }
 
     public function questions()
     {
         return $this->hasMany('App\Question');
+    }
+
+    public function modules()
+    {
+        return $this->hasMany('App\Module');
     }
 
     public static function laratablesRowClass($course)
