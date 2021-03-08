@@ -105,22 +105,11 @@ class CoursesController extends Controller
             'course_id' => $request->course_id
         );
 
-        if(!empty($request->resume_module)){
-            $courseattempt = CourseAttempt::updateOrCreate($match, [
-                'resume_module' => $request->resume_module
-            ]);
-            return redirect()->route('modules.show', $request->resume_module);
-        } else {
-            $course = Course::with(['quiz.questions' => function($query){
-                $query->where('questions.status', '1')->orderBy('place', 'asc');
-            }])->whereHas('quiz', function($query){
-                $query->where('status', '1');
-            })->find($request->course_id);
+        $attempt = CourseAttempt::updateOrCreate($match, [
+            'resume_module' => $request->resume_module
+        ]);
 
-            return view('frontend.exams.index', compact('course'));
-
-        }
-
+        return redirect()->route('modules.show', $request->resume_module);
     }
 
     public function examrules($id){

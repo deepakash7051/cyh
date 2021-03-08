@@ -25,11 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $courses = Course::with(['course_videos' => function($query){
+
+        $courses = Course::with(['quiz.questions' => function($query){
+            $query->where('questions.status', '1')->orderBy('place', 'asc');
+        }, 'modules'])->whereHas('quiz', function($query){
             $query->where('status', '1');
-        }, 'course_slides' => function($query){
+        })->whereHas('modules', function($query){
             $query->where('status', '1');
-        }])->where('status', '1')->get();
+        })->where('status', '1')->get();
         
         return view('frontend.home', compact('courses'));
     }
