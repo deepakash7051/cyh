@@ -14,7 +14,11 @@ $scoremsg = str_replace('{total}', $total, $scoremsg);
         <div class="d-flex justify-content-center row mb-5">
             <div class="col-md-12 col-lg-12">
                 <div class="text-center bg-white p-3">
+                    @if($total==$score)
+                    <img src="{{ asset('images/congrats.png') }}">
+                    @else
                     <img src="{{ asset('images/try_again.png') }}">
+                    @endif
                     <h4>{{ trans('global.pages.frontend.exam.completed_quiz') }}</h4>
                     <div class="btn-group btn-group-lg border rounded mb-3">
                         <button class="btn btn-success">{{$score}}</button>
@@ -22,11 +26,19 @@ $scoremsg = str_replace('{total}', $total, $scoremsg);
                     </div>
                     <h6 class="mb-3">{{$scoremsg}} </h6>
                     <div>
+                        @if($total!=$score)
                         <a href="{{route('courses.show', $quiz->course_id)}}">
-                        <button class="btn btn-info">
-                        {{ trans('global.pages.frontend.exam.start_course_again') }}
-                        </button>
+                            <button class="btnn btnn-s btn-info">
+                            {{ trans('global.pages.frontend.exam.start_course_again') }}
+                            </button>
                         </a>
+                        @else
+                        <a href="{{url('/home')}}">
+                            <button class="btnn btnn-s btn-info">
+                            {{ trans('global.back_to_home') }}
+                            </button>
+                        </a>
+                        @endif
                     </div>
 
                 </div>

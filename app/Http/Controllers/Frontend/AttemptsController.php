@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\QuizAttempt;
+use App\CourseAttempt;
 use App\Question;
 use App\Quiz;
 
@@ -69,12 +70,17 @@ class AttemptsController extends Controller
             }
         }
 
+        if($score==$total){
+            CourseAttempt::where('user_id', $user->id)->where('course_id', $quiz->course_id)->update(['completed_at' => date('Y-m-d H:i:s')]);
+        }
+
         if($attempt){
-            if($score==$total){
+            /*if($score==$total){
                 return redirect('/home')->with('success', trans('global.pages.frontend.exam.attempt_successfully'));
             } else {
                 return view('frontend.exams.scores', compact('quiz', 'score', 'total'));
-            }
+            }s*/
+            return view('frontend.exams.scores', compact('quiz', 'score', 'total'));
             
         } else {
             return redirect('/home')->with('error', trans('global.error_message'));

@@ -23,7 +23,7 @@
                 <tbody>
 
                     <tr>
-                        <td>
+                        <td class="font-weight-bold">
                             {{ trans('global.course.title_singular') }}
                         </td>
                         <td>
@@ -33,7 +33,7 @@
 
 
                     <tr>
-                        <td>
+                        <td class="font-weight-bold">
                             {{ trans('global.sorting_order') }}
                         </td>
                         <td>
@@ -42,7 +42,7 @@
                     </tr>
 
                     <tr>
-                        <td>
+                        <td class="font-weight-bold">
                             {{ trans('global.module.fields.link_attachment') }}
                         </td>
                         <td>
@@ -54,25 +54,32 @@
                         @foreach($languages as $key => $value)
                             @php 
                                 $video_url = $key.'_video_url';
-                                $slide_url = $key.'_slide_url'; 
+                                $slide_url = $key.'_slide_url';
+                                $videocontenttype = $key.'_video_content_type'; 
                                 $title = $key.'_title'; 
+                                $videohtml = $key.'_video_html';
+                                $videolink = $key.'_video_link';
                             @endphp
                             
                             @if($module->link_attachment=='video')
                             <tr>
-                                <td>
+                                <td class="font-weight-bold">
                                     {{ trans('global.module.fields.video')}} ({{$value}})
                                 </td>
                                 <td>
-                                    <video width="320" height="240" controls>
-                                      <source src="{{ $module->$video_url }}" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
+                                    @if(!empty($module->$videolink))
+                                        {!! $module->$videohtml !!}
+                                    @else
+                                        <video width="320" height="240" controls>
+                                          <source src="{{ $module->$video_url }}" type="{{$module->$videocontenttype}}">
+                                          Your browser does not support the video tag.
+                                        </video>
+                                    @endif
                                 </td>
                             </tr>
                             @else
                             <tr>
-                                <td>
+                                <td class="font-weight-bold">
                                     {{ trans('global.module.fields.slide')}} ({{$value}})
                                 </td>
                                 <td>
