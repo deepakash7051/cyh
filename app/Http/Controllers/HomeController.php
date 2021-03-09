@@ -28,11 +28,7 @@ class HomeController extends Controller
 
         $courses = Course::with(['quiz.questions' => function($query){
             $query->where('questions.status', '1')->orderBy('place', 'asc');
-        }, 'modules'])->whereHas('quiz', function($query){
-            $query->where('status', '1');
-        })->whereHas('modules', function($query){
-            $query->where('status', '1');
-        })->where('status', '1')->get();
+        }, 'modules'])->where('status', '1')->get();
         
         return view('frontend.home', compact('courses'));
     }

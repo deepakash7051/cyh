@@ -12,10 +12,6 @@ class ExamsController extends Controller
     public function index(Request $request, $id)
     {
 
-    	/*$course = Course::with(['quiz.questions' => function($query){
-    		$query->where('questions.status', '1')->orderBy('place', 'asc');
-    	}])->find($id);*/
-
         $course = Course::with(['quiz.questions' => function($query){
             $query->where('questions.status', '1')->orderBy('place', 'asc');
         }])->whereHas('quiz', function($query){

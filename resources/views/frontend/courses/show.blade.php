@@ -36,20 +36,22 @@
             </p>
             <p>{{$course->$description}}</p>
 
-            @if($course->modules()->exists() && $course->modules()->first()->id==$resume_module)
-            <form method="post" action="{{ route('attemptcourse')}}">
-                @csrf
-                <input type="hidden" name="resume_module" value="{{$resume_module}}">
-                <input type="hidden" name="course_id" value="{{$course->id}}">
-                <input class="btnn btnn-s" type="submit" value="{{trans('global.pages.frontend.login.start')}}">
-            </form>
-            @else
-            <form method="post" action="{{ route('attemptcourse')}}">
-                @csrf
-                <input type="hidden" name="resume_module" value="{{$resume_module}}">
-                <input type="hidden" name="course_id" value="{{$course->id}}">
-                <input class="btnn btnn-s" type="submit" value="{{trans('global.pages.frontend.login.continue')}}">
-            </form>
+            @if($course->modules()->exists())
+                @if($course->modules()->first()->id==$resume_module)
+                    <form method="post" action="{{ route('attemptcourse')}}">
+                        @csrf
+                        <input type="hidden" name="resume_module" value="{{$resume_module}}">
+                        <input type="hidden" name="course_id" value="{{$course->id}}">
+                        <input class="btnn btnn-s" type="submit" value="{{trans('global.pages.frontend.login.start')}}">
+                    </form>
+                @else
+                    <form method="post" action="{{ route('attemptcourse')}}">
+                        @csrf
+                        <input type="hidden" name="resume_module" value="{{$resume_module}}">
+                        <input type="hidden" name="course_id" value="{{$course->id}}">
+                        <input class="btnn btnn-s" type="submit" value="{{trans('global.pages.frontend.login.continue')}}">
+                    </form>
+                @endif
             @endif
         </div>
 

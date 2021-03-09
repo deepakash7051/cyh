@@ -39,16 +39,18 @@
             <input class="btnn btnn-s" type="submit" value="{{trans('global.pages.frontend.login.continue')}}">
         </form>
         @else
+          @if($course->quiz()->exists() && $course->quiz->questions()->exists())
           <div>
             <a href="{{url('/examrules/'.$course->id)}}" class="btnn btnn-s">
               {{trans('global.pages.frontend.home.take_exam')}}
             </a>
           </div>
+          @endif
         @endif
 
       </div>
 
-      @if($course->modules()->exists())
+      @if($course->modules()->exists() && $course->modules()->count() > 1)
         <h3 class="my-4">{{trans('global.related')}} {{trans('global.module.title')}}</h3>
         
         <div class="course-preview">

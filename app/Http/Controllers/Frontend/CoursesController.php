@@ -49,16 +49,12 @@ class CoursesController extends Controller
     public function show($id)
     {
         $user = auth()->user();
-        $course = Course::with(['modules', 'course_videos', 'course_slides'])->find($id);
+        $course = Course::with(['modules'])->find($id);
         $query = CourseAttempt::where('course_id', $id)->where('user_id', $user->id);
         if($query->count() > 0){
             $resume_module = $query->first()->resume_module;
         } else {
-            if($course->modules->count() > 0){
-                $resume_module = $course->modules()->first()->id;
-            } else {
-                $resume_module = '';
-            }
+            $resume_module = $course->modules()->first()->id;
         }
 
         return view('frontend.courses.show', compact('course', 'resume_module'));
