@@ -47,7 +47,7 @@
 <header class="header-type2">
     <div class="d-flex align-items-center justify-content-between">
         <div class="logo-wrap"><a href="">
-            <img src="{{ asset('images/logo.png') }}" alt=""></a>
+            <img src="{{ asset('images/SWA-Logo.png') }}" alt=""></a>
         </div>
         <div class="head-right d-flex align-items-center">
             <div class="user-wrap d-flex align-items-center">

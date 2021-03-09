@@ -6,7 +6,7 @@
     <div class="container">
 
       <div class="text-center">
-        <h2 class="font-weight-bold "> Instructions</h2>
+        <h2 class="font-weight-bold "> {{trans('global.pages.frontend.exam.instructions')}}</h2>
         <p class="">
             {{trans('global.pages.frontend.exam.small_quiz_topic_understanding')}}
         </p>

@@ -21,7 +21,7 @@
 	                        <h4>{{$course->$title}} {{ trans('global.quiz.title_singular') }}</h4>
 	                        <span id="demo"></span>
 	                        <span>
-	                        	<button class="btn btn-primary d-flex align-items-center btn-danger" id="exitQuiz">Exit</button>
+	                        	<button class="btn btn-primary d-flex align-items-center btn-danger" id="exitQuiz">{{ trans('global.exit') }}</button>
 	                        </span>
 	                    </div>
 	                </div>

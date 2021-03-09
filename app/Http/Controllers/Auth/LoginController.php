@@ -48,7 +48,7 @@ class LoginController extends Controller
     {
 
         $user = auth()->user();
-        if ($user->roles->contains('2') || $user->roles->contains('1')) {
+        if ($user->roles->contains('3') || $user->roles->contains('2') || $user->roles->contains('1')) {
             $request->session()->flush();
             $request->session()->regenerate();
             return redirect('/admin');
