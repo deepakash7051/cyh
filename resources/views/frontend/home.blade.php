@@ -27,16 +27,34 @@
 
         <div class="d-flex justify-content-between align-items-center mb-4 cat-head">
             <h2>{{ trans('global.pages.frontend.home.title') }}</h2>
-            <a href="" class="btnn">{{ trans('global.pages.frontend.home.category_button') }}</a>
+            <a href="{{route('categories.index')}}" class="btnn">{{ trans('global.pages.frontend.home.category_button') }}</a>
         </div>
-        <div class="d-flex align-items-center justify-content-center flex-wrap cat-main">
+        <div class="d-flex justify-content-center flex-wrap cat-main">
             @if(count($courses) > 0)
                 @foreach($courses as $course)
                 @php 
                     $fieldtitle = $locale.'_title';
                     $fielddescription = $locale.'_description';
+                    $courseAttempt = $user->course_attempts()->where('course_id', $course->id);
+
+                    $courseurl = ($courseAttempt->count() > 0 && !empty($courseAttempt->first()->completed_at))  ? '#' : url('courses/'.$course->id) ;
                 @endphp
-            <a href="{{ route('courses.show', $course->id)}}" class="cat-box code-dialog" data-value="{{$course->id}}">
+            <a href="{{ $courseurl}}" class="cat-box code-dialog" data-value="{{$course->id}}">
+                @if($courseAttempt->count() > 0)
+                    @if(!empty($courseAttempt->first()->completed_at))
+                        <div class="status-wrp status-complete">
+                            {{ strtoupper(trans('global.pages.frontend.login.completed')) }}
+                        </div>
+                    @else
+                        <div class="status-wrp status-pending">
+                            {{ strtoupper(trans('global.pages.frontend.login.continue')) }}
+                        </div>
+                    @endif
+                @else
+                <div class="status-wrp status-start">
+                    {{ strtoupper(trans('global.pages.frontend.login.start')) }}
+                </div>
+                @endif
                 <div class="cat-icon d-flex align-items-center justify-content-center">
                     <img src="{{$course->course_image_url}}" alt="">
                 </div>
@@ -50,11 +68,14 @@
                 </p>
             </a>
                 @endforeach
+            @else
+                <h5>{{trans('global.pages.frontend.home.no_course_msg')}}</h5>
             @endif
 
         </div>
     </div>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade course-preview" id="CoursesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

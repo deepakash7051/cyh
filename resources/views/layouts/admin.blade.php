@@ -92,7 +92,7 @@
     {{ csrf_field() }}
 </form>
 
-
+    
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -111,10 +111,13 @@
     <script src="{{ asset('js/dataTables.select.min.js') }}"></script>
     <script src="{{ asset('js/ckeditor.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+    
     <script src="{{ asset('js/select2.full.min.js') }}"></script>
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
+
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
     <script>
 
     $(document).ready(function(){

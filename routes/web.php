@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/exam/{id}', 'ExamsController@index');
 		Route::resource('attempts', 'AttemptsController');
 		Route::resource('courses', 'CoursesController');
+		Route::resource('categories', 'CategoriesController');
 		Route::post('attemptcourse', 'CoursesController@attemptcourse')->name('attemptcourse');
 		Route::get('examrules/{id}', 'CoursesController@examrules');
 		Route::resource('modules', 'ModulesController');

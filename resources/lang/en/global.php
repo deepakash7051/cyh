@@ -383,6 +383,7 @@ return [
                 'start_exam' => 'Start Exam',
                 'more_videos' => 'More Videos',
                 'not_support_video' => 'Your browser does not support the video tag.',
+                'no_course_msg' => 'Sorry there are currently no courses in this category'
             ],
             'login' =>  [
                 'hello' => 'Hello!',
@@ -391,6 +392,10 @@ return [
                 'resend'    => 'Resend',
                 'continue'  =>  'Continue',
                 'start'  =>  'Start',
+                'completed'  =>  'Completed',
+            ],
+            'category' =>  [
+                'all_categories' => 'All Categories',
             ],
             'verifycode' =>  [
                 'check_mobile' => 'Check your mobile!',

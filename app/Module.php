@@ -118,7 +118,7 @@ class Module extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         if(!empty($this->bn_video_link)){
             $embed = Embed::make($this->bn_video_link)->parseUrl();
             if (!$embed) return '';
-            $embed->setAttribute(['width' => 400]);
+            $embed->setAttribute(['width' => 800, 'height' => 500]);
             return $embed->getHtml();
         } else {
             return '';
@@ -130,7 +130,7 @@ class Module extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         if(!empty($this->zh_video_link)){
             $embed = Embed::make($this->zh_video_link)->parseUrl();
             if (!$embed) return '';
-            $embed->setAttribute(['width' => 400]);
+            $embed->setAttribute(['width' => 800, 'height' => 500]);
             return $embed->getHtml();
         } else {
             return '';
@@ -144,7 +144,7 @@ class Module extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
             $embed = Embed::make($this->ta_video_link)->parseUrl();
             if (!$embed) return '';
 
-            $embed->setAttribute(['width' => 400]);
+            $embed->setAttribute(['width' => 800, 'height' => 500]);
             return $embed->getHtml();
         } else {
             return '';

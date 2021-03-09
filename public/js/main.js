@@ -24,7 +24,17 @@ $(document).ready(function () {
 
   $('.attempts').datetimepicker({
     format: 'HH:mm',
-  }).val('01:00');
+    icons: {
+        time: "fa fa-clock-o",
+        date: "fa fa-calendar",
+        up: "fa fa-angle-up",
+        down: "fa fa-angle-down",
+        previous: "fa fa-chevron-left",
+        next: "fa fa-chevron-right",
+        today: "fa fa-clock-o",
+        clear: "fa fa-trash-o"
+    }
+  });
 
   $('.select-all').click(function () {
     let $select2 = $(this).parent().siblings('.select2')

@@ -623,6 +623,28 @@ label.radio input:checked+span {
     box-shadow: none !important
 }
 
+.cat-box{
+    position: relative;
+}
+.status-wrp{
+    position: absolute;
+    top: 35px;
+    right: 25px;
+    font-size: 18px;
+}
+.status-start{
+    color: #635aee;
+}
+.status-pending{
+    color: #8917d7;
+}
+.status-complete{
+    color: #0eaa3c;
+}
+.cat-box:hover .status-wrp{
+    color: #fff;
+}
+
 /*--Responsive style--*/
 
 @media all and (max-width: 1366px){

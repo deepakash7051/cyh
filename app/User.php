@@ -104,6 +104,10 @@ class User extends Authenticatable
         return $this->hasMany('App\RoleUser');
     }
 
+    public function course_attempts(){
+        return $this->hasMany('App\CourseAttempt');
+    }
+
     public static function laratablesCustomRoles($user)
     {
         return view('admin.users.roles', compact('user'))->render();

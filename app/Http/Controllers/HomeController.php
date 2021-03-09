@@ -23,14 +23,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $courses = Course::with(['quiz.questions' => function($query){
+        $user = auth()->user();
+        $category_id = $request->has('category_id') ? $request->get('category_id') : '';
+        $query = Course::with(['quiz.questions' => function($query){
             $query->where('questions.status', '1')->orderBy('place', 'asc');
-        }, 'modules'])->where('status', '1')->get();
+        }, 'modules'])->where('status', '1');
+
+        if(!empty($category_id)){
+          $query = $query->where('category_id', $category_id);
+        }
+
+        $courses = $query->get();
+
+        $user->load('course_attempts');
         
-        return view('frontend.home', compact('courses'));
+        return view('frontend.home', compact('courses', 'user'));
     }
 
     public function getCourse(Request $request)
