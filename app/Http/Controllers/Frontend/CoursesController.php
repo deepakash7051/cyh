@@ -54,7 +54,11 @@ class CoursesController extends Controller
         if($query->count() > 0){
             $resume_module = $query->first()->resume_module;
         } else {
-            $resume_module = $course->modules()->first()->id;
+            if($course->modules->count() > 0){
+                $resume_module = $course->modules()->first()->id;
+            } else {
+                $resume_module = '';
+            }
         }
 
         return view('frontend.courses.show', compact('course', 'resume_module'));
