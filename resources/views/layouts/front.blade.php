@@ -35,10 +35,19 @@
 <body class="">
 <header class="header-type2">
   <div class="d-flex align-items-center justify-content-between">
-    <div class="logo-wrap"><a href="{{url('/home')}}"><img src="{{ asset('images/SWA-Logo.png') }}" alt=""></a></div>
+    <div class="logo-wrap">
+      <a href="{{url('/home')}}"><img src="{{ asset('images/SWA-Logo.png') }}" alt=""></a>
+    </div>
+    <div class="head-menu">
+      <ul>
+        <li><a href="{{route('home')}}">Home</a></li>
+        <li><a href="{{route('categories.index')}}">Categories</a></li>
+      </ul>
+    </div>
+
     <div class="head-right d-flex align-items-center">
       <div class="user-wrap d-flex align-items-center">
-        <p>{{Auth::user()->name}}</p>
+        <p>{{ trans('global.pages.frontend.login.hello') }} {{ucfirst(Auth::user()->name)}}</p>
         <img src="{{ asset('images/dp.png') }}" alt="">
       </div>
 

@@ -645,6 +645,19 @@ label.radio input:checked+span {
     color: #fff;
 }
 
+.head-menu a {
+	color: #222;
+	text-decoration: none;
+	font-size: 18px;
+}
+.head-menu li {
+	display: inline-block;
+	margin: 0 20px;
+}
+.head-menu ul {
+	margin: 0;
+}
+
 /*--Responsive style--*/
 
 @media all and (max-width: 1366px){
