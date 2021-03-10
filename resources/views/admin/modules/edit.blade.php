@@ -91,11 +91,11 @@
 					
 					<div class="row border p-1 m-1">
 						<div class="col-md-3 p-1">
-							<input type="radio" class="m-1" name="link_attachment" value="video" {{ old('link_attachment') != 'slide' ? 'checked="checked"' : '' }}>
+							<input type="radio" class="m-1" name="link_attachment" value="video" {{ $module->link_attachment == 'video' ? 'checked="checked"' : '' }}>
 							{{ trans('global.module.fields.video') }}
 						</div>
 						<div class="col-md-3 p-1">
-							<input type="radio" class="m-1" name="link_attachment" value="slide" {{ old('link_attachment') == 'slide' ? 'checked="checked"' : '' }}>
+							<input type="radio" class="m-1" name="link_attachment" value="slide" {{ $module->link_attachment == 'slide' ? 'checked="checked"' : '' }}>
 							{{ trans('global.module.fields.slide') }}
 						</div>
 						<div class="col-md-6"></div>
@@ -111,7 +111,7 @@
 	                </p>
 				</div>
 
-				<div id="videosection" style="display: @if(old('link_attachment')!='slide') {{'block'}} @else {{'none'}} @endif;">
+				<div id="videosection" style="display: @if($module->link_attachment!='slide') {{'block'}} @else {{'none'}} @endif;">
 	            @if(count($languages) > 0)
 	                @foreach($languages as $langKey => $langValue)
 	                    @php 
@@ -151,7 +151,7 @@
 	            @endif
 	        	</div>
 
-	        	<div id="slidesection" style="display: @if(old('link_attachment')=='slide') {{'block'}} @else {{'none'}} @endif;">
+	        	<div id="slidesection" style="display: @if($module->link_attachment=='slide') {{'block'}} @else {{'none'}} @endif;">
 	            @if(count($languages) > 0)
 	                @foreach($languages as $langKey => $langValue)
 	                    @php 

@@ -77,7 +77,7 @@
         
       @endif -->
 
-      @if($course->modules()->exists() && $course->modules()->count() > 1)
+      @if($course->modules()->exists() && $course->modules()->count() > 0)
       <div class="more-videos px-xl-2 px-md-3 ">
         <h3>{{trans('global.all')}} {{trans('global.module.title')}}</h3>
         <div class="morevideos">
