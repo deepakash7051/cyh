@@ -412,7 +412,7 @@ return [
                 'finish_confirm' => 'Are you sure you want to submit this quiz?',
                 'exit_confirm' => 'Are you sure you want to exit?',
                 'completed_quiz' => 'You have completed the quiz.',
-                'score_message' => 'You got {score} out of {total} questions',
+                'score_message' => 'You got {score} out of {total}',
                 'start_course_again' => 'Start course again',
                 'instructions' => 'Instructions',
             ],

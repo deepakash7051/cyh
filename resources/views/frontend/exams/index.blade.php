@@ -8,7 +8,9 @@
     $filename = config('app.locale').'_attachment_file_name';
     $attachmenturl = config('app.locale').'_attachment_url';
     $time_limit = explode(':', $course->quiz->time_limit);
-    $timer =  date('F d, Y H:i:s', strtotime('+'.$time_limit[0].' hour +'.$time_limit[1].' minutes', strtotime(date('Y-m-d H:i:s'))));
+    $timer =  date('F d, Y H:i:s', strtotime('+'.$time_limit[0].' hour +'.$time_limit[1].' minutes', strtotime(date('F d, Y H:i:s'))));
+
+    $now = date('Y-m-d H:i:s');
 
 ?>
 <div class="category-wrap py-5 my-2">
@@ -171,15 +173,17 @@ $(document).ready(function() {
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("{{$timer}}").getTime();
-
+var now = new Date("{{$now}}").getTime();
+var distance = countDownDate - now;
+//alert(countDownDate)
 // Update the count down every 1 second
 var x = setInterval(function() {
-
+distance = distance - 1000;
   // Get today's date and time
-  var now = new Date().getTime();
 
+  //alert(now)
   // Find the distance between now and the count down date
-  var distance = countDownDate - now;
+ 
 
   // Time calculations for days, hours, minutes and seconds
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));

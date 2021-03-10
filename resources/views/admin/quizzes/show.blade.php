@@ -47,7 +47,7 @@
                             {{ trans('global.quiz.fields.time_limit') }}
                         </td>
                         <td>
-                            {{ $quiz->time_limit }}
+                            {{ $quiz->time_limit }} {{trans('global.hour')}}
                         </td>
                     </tr>
 
