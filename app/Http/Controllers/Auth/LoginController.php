@@ -32,8 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
+    //protected $redirectTo = RouteServiceProvider::HOME;
     /**
      * Create a new controller instance.
      *
@@ -43,6 +42,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /*public function redirectTo() {
+        $user = auth()->user(); 
+        if ($user->roles->contains('3') || $user->roles->contains('2') || $user->roles->contains('1')) {
+            return redirect('/admin/login');
+        } else {
+            return redirect('/login');
+        }
+    }*/
 
     public function logout(Request $request)
     {
@@ -75,7 +83,7 @@ class LoginController extends Controller
                 $code = rand(1000, 9999);
                 $debug = false;
                 $mobile = $user->isd_code.$user->phone;
-                SmsVerification::create([
+                $smsverify = SmsVerification::create([
                     'code' => $code, 
                     'phone' => $mobile, 
                     'status' => 'pending'
@@ -83,9 +91,10 @@ class LoginController extends Controller
 
                 $message = trans('global.code_message').' '.$code;
 
-                $result = OnewaySms::send($mobile, $message, $debug);
+                //$result = OnewaySms::send($mobile, $message, $debug);
 
-                if($result['status']){
+                //if($result['status']){
+                if($smsverify){
                     return redirect()->route('verifycode', $user->id);
                 } else {
                     return redirect()->back()->with('error', trans('validation.password'));
@@ -101,7 +110,10 @@ class LoginController extends Controller
 
     public function verifycode($id){
         $user = User::find($id);
-        return view('auth.verifycode', compact('user'));
+
+        $phone = $user->isd_code.$user->phone;
+        $message = SmsVerification::where('phone', $phone)->orderBy('id', 'desc')->first();
+        return view('auth.verifycode', compact('user', 'message'));
     }
 
     public function verifyusercode(Request $request){

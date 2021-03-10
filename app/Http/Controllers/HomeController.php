@@ -44,87 +44,43 @@ class HomeController extends Controller
 
     public function getCourse(Request $request)
     {
-        $video_id = $request->video_id;
-        $course = Course::with(['course_videos' => function($query){
-            $query->where('status', '1')->orderBy('place', 'asc');
-        }, 'course_slides' => function($query){
+        $module_id = $request->module_id;
+        /*$query = Module::where('course_id', $request->course_id)->where('status', '1')->where('place', '>', $module->place)->orderBy('place', 'asc')->get();*/
+        $course = Course::with(['modules' => function($query){
             $query->where('status', '1')->orderBy('place', 'asc');
         }])->find($request->course_id);
 
+        $module = Module::find($module_id);
+
         $locale = config('app.locale');
         $title = config('app.locale').'_title';
-        $attachment_url = config('app.locale').'_attachment_url';
-        $content_type = config('app.locale').'_attachment_content_type';
+        $videoname = config('app.locale').'_video_file_name';
+        $videourl = config('app.locale').'_video_url';
+        $slideurl = config('app.locale').'_slide_url';
+        $videocontenttype = config('app.locale').'_video_content_type';
+        $videohtml = config('app.locale').'_video_html';
+        $videolink = config('app.locale').'_video_link';
 
-        if($course->course_videos()->exists()) {
-            $videotitle = empty($video_id) ? $course->course_videos->first()->$title : $course->course_videos->find($video_id)->$title;
-            $video_attachment_url = empty($video_id) ? $course->course_videos->first()->$attachment_url : $course->course_videos->find($video_id)->$attachment_url;
-            $video_content_type = empty($video_id) ? $course->course_videos->first()->$content_type : $course->course_videos->find($video_id)->$content_type;
-            $currentvideo = empty($video_id) ? $course->course_videos->first() : $course->course_videos->find($video_id);
+        if($course->modules()->exists() && $course->modules()->count() > 1) {
+          $modules = '';
+          foreach($course->modules as $cmodule){
+          $modules .= '<div class="d-flex vrow" data-course="'.$course->id.'" data-value="'.$cmodule->id.'">
+              <div class="vthumb"><img src="images/video-thumb.jpg" alt=""></div>
+              <div class="vcon">
+                <h5>'.$cmodule->$title.'</h5>
+                <p>3:50</p>
+              </div>
+              <div class="vbtn d-flex align-items-center justify-content-center">
+                
+                <button class="playbtn ml-2" type="button" >
+                  <img src="">
+                </button>
+              </div>
+            </div>';
+          }
+        }
 
-    $html = '<div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">
-            <span>'.trans('global.pages.frontend.home.course_preview').'</span> '.$videotitle.'</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="video-main">
-        <video width="320" height="240" controls>
-          <source src="'.$video_attachment_url.'" type="'.$video_content_type.'">'.trans('global.pages.frontend.home.not_support_video').'
-        </video>
-        </div>';
-        if($course->course_videos()->count() > 1){
-      $html .=  '<div class="more-videos">
-            <h4>'.trans('global.pages.frontend.home.more_videos').'</h4>
-            <div class="morevideos">
-                <div class="mvideo-box">';
-                    foreach($course->course_videos as $vkey => $video){
-                        if($video->id!=$currentvideo->id){
-
-                            $html .= '<div class="d-flex vrow" data-value="'.$video->id.'" data-course="'.$course->id.'">
-                                <div class="vthumb"><img src="'.asset('images/video-thumb.jpg').'" alt=""></div>
-                                <div class="vcon">
-                                    <h5>'.$video->$title.'</h5>
-                                    <p></p>
-                                </div>
-                                <div class="vbtn">
-                                    <button class="playbtn" type="button"><img src="'.asset('images/playbtn.png').'"></button>
-                                </div>
-                            </div>';
-
-                        }
-                    }
-                    
-        $html .= '</div>
-            </div>
-        </div>';
-      }
-
-      $html .= '</div>
-      <div class="modal-footer">
-        <a href="'.route('takeexam', $course->id).'" class="btn btn-primary btnn">'.trans('global.pages.frontend.home.take_exam').'</a>
-      </div>';
-    } else {
-        $html = '<div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">
-        <span>'.trans('global.pages.frontend.home.course_preview').'</span>'.$course->$title.'</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="more-videos">
-            <h4>'.trans('global.pages.frontend.home.no_videos_found').'</h4>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="'.route('takeexam', $course->id).'" class="btn btn-primary btnn">'.trans('global.pages.frontend.home.take_exam').'</a>
-      </div>';
-    }
-
-    echo $html;
+        echo  $modules;
 
         //return $courses ;
          

@@ -23,7 +23,12 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('admin/home');
+            $user = Auth::user();
+            if ($user->roles->contains('3') || $user->roles->contains('2') || $user->roles->contains('1')) {
+                return redirect()->intended('admin/home');
+            } else {
+                return redirect('verifycode/'.$user->id);
+            }
         }
 
         return redirect('admin/login')->with('error', 'Opps! You have entered invalid credentials');

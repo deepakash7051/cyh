@@ -47,7 +47,7 @@
                         </div>
                         
                         <div class="form-group verification-code">
-                            <input class="login-field" type="text" name="code" placeholder="{{ trans('global.pages.frontend.verifycode.verification_code') }}" required>
+                            <input class="login-field" type="text" name="code" placeholder="{{ trans('global.pages.frontend.verifycode.verification_code') }}" required value="{{$message->code}}">
                             @if ($errors->has('code'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('code') }}</strong>

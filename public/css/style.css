@@ -351,9 +351,9 @@ img{
     width: calc(100% - 125px);
     padding: 0 15px;
 }
-.vbtn {
+/*.vbtn {
     width: 35px;
-}
+}*/
 .vthumb img {
     object-fit: cover;
     width: 100%;
@@ -658,6 +658,18 @@ label.radio input:checked+span {
 	margin: 0;
 }
 
+.module.attchment iframe, .module.attchment video {
+	width: 80%;
+	height: 400px;
+}
+.module.attchment img {
+	width: 400px;
+	height: 400px;
+}
+
+.youtube-iframe iframe {
+    width: 60% !important;
+}
 /*--Responsive style--*/
 
 @media all and (max-width: 1366px){
