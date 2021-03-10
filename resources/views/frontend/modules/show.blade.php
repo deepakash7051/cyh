@@ -79,7 +79,7 @@
 
       @if($course->modules()->exists() && $course->modules()->count() > 1)
       <div class="more-videos px-xl-2 px-md-3 ">
-        <h3>{{trans('global.related')}} {{trans('global.module.title')}}</h3>
+        <h3>{{trans('global.all')}} {{trans('global.module.title')}}</h3>
         <div class="morevideos">
           <div class="mvideo-box" id="course-modules">
             @foreach($course->modules as $cmodule)
@@ -101,9 +101,9 @@
                 </a>
                 @endif
 
-                <button class="playbtn ml-2" type="button">
+                <!-- <button class="playbtn ml-2" type="button">
                   <img src="{{ asset('images/tick2.png') }}">
-                </button>
+                </button> -->
                 
               </div>
             </div>
