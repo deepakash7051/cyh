@@ -36,9 +36,13 @@
           </video>
           @endif
         @else
-          <div>
+
+        <div style="overflow: hidden;" class="mb-3">
+          <div id="resolte-contaniner" style="overflow: auto;"></div>
+        </div>
+          <!-- <div>
             <a href="{{$module->$slideurl}}"><img src="{{ asset('images/Powerpoint.png') }}"></a>
-          </div>
+          </div> -->
           
         @endif
         </div>
@@ -96,9 +100,11 @@
                   <img src="{{ asset('images/playbtn.png') }}">
                 </a>
                 @else
-                <a href="{{$cmodule->$slideurl}}" class="playbtn ml-2" type="button" >
+                <!-- <a href="{{$cmodule->$slideurl}}" class="playbtn ml-2" type="button" >
                   <img src="{{ asset('images/download.png') }}">
-                </a>
+                </a> -->
+
+                <a href="{{route('modules.show', $cmodule->id)}}" class="playbtn ml-2" data-file="{{$cmodule->$slideurl}}"><img src="{{ asset('images/playbtn.png') }}"></a>
                 @endif
 
                 <!-- <button class="playbtn ml-2" type="button">
@@ -119,10 +125,41 @@
     </div>
     <!-- /.container -->
 </div>
+@section('styles')
+<link href="{{ asset('PPTXjs/css/pptxjs.css') }}" rel="stylesheet" />
+<link href="{{ asset('PPTXjs/css/nv.d3.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/officeToHtml.css') }}" rel="stylesheet" />
+@parent
+@endsection
+
 @section('scripts')
 @parent
-<script >
+
+
+
+<script type="text/javascript" src="{{ asset('PPTXjs/js/filereader.js') }}"></script>
+<script type="text/javascript" src="{{ asset('PPTXjs/js/d3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('PPTXjs/js/nv.d3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('PPTXjs/js/pptxjs.js') }}"></script>
+<script type="text/javascript" src="{{ asset('PPTXjs/js/divs2slides.js') }}"></script>
+<script src="{{ asset('js/officeToHtml.js') }}"></script>
+
+<script>
 $(document).ready(function() {
+
+  @if($module->link_attachment=='slide')
+  $("#resolte-contaniner").html("");
+  $("#resolte-contaniner").show();
+  var file_path = $(this).data("file");
+
+  $("#resolte-contaniner").officeToHtml({
+    url: "{{$module->$slideurl}}",
+    pdfSetting: {
+      setLang: "",
+      setLangFilesPath: "" /*"include/pdf/lang/locale" - relative to app path*/
+    }
+  });
+  @endif
 
   /*$(document).on('click', '.playbtn', function() {
       var moduleid = $(this).closest('.vrow').attr('data-value');
@@ -142,6 +179,16 @@ $(document).ready(function() {
   }*/
 
 });
+</script>
+<script>
+  (function ($) {
+    $(".module_ppts").on("click", function (e) {
+      e.preventDefault();
+
+      
+
+    });
+  }(jQuery));
 </script>
 @endsection
 

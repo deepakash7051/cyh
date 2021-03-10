@@ -47,9 +47,9 @@ class StoreModuleRequest extends FormRequest
 
                 } else {
                     if($same_slide_for_all=='1'){
-                        $validatefields['en_slide'] =['mimes:ppt,pptx','required'];
+                        $validatefields['en_slide'] =['mimes:pptx','required'];
                     } else {
-                        $validatefields[$key.'_slide'] =['mimes:ppt,pptx','required'];
+                        $validatefields[$key.'_slide'] =['mimes:pptx','required'];
                     }
                 }
             }

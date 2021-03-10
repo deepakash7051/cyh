@@ -658,12 +658,8 @@ label.radio input:checked+span {
 	margin: 0;
 }
 
-.module.attchment iframe, .module.attchment video {
+.module.attchment iframe, .module.attchment video, #resolte-contaniner .slide {
 	width: 80%;
-	height: 400px;
-}
-.module.attchment img {
-	width: 400px;
 	height: 400px;
 }
 

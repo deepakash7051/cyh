@@ -49,10 +49,10 @@ class UpdateModuleRequest extends FormRequest
 
                 } else {
                     if($same_slide_for_all=='1'){
-                        $validates = !empty($this->request->get('en_old_slide')) ? ['mimes:ppt,pptx'] : ['mimes:ppt,pptx','required']  ;
+                        $validates = !empty($this->request->get('en_old_slide')) ? ['mimes:pptx'] : ['mimes:ppt,pptx','required']  ;
                         $validatefields['en_slide'] = $validates;
                     } else {
-                        $validates = !empty($this->request->get($key.'_old_slide')) ? ['mimes:ppt,pptx'] : ['mimes:ppt,pptx','required']  ;
+                        $validates = !empty($this->request->get($key.'_old_slide')) ? ['mimes:pptx'] : ['mimes:ppt,pptx','required']  ;
                         $validatefields[$key.'_slide'] = $validates;
                     }
                 }
