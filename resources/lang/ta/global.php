@@ -628,8 +628,8 @@ return [
   ],
 
   'course'                              => [
-        'title'          => 'Courses',
-        'title_singular' => 'Course',
+        'title' => 'படிப்புகள்',
+        'title_singular' => 'பாடநெறி',
         'fields'         => [
             'id' => 'ஐடி',
             'id_helper'          => '',

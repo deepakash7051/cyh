@@ -188,35 +188,24 @@ $(document).ready(function() {
   });
   @endif
 
-  /*$(document).on('click', '.playbtn', function() {
-      var moduleid = $(this).closest('.vrow').attr('data-value');
-      var courseid = $(this).closest('.vrow').attr('data-course');
-      getvideos(courseid, moduleid);
+  $('video').on('ended',function(){
+    console.log('Video has ended!');
   });
-
-  function getvideos(courseid, moduleid){
-      $.ajax({
-          url: "{{url('/getcourse/')}}",
-          type: "GET",
-          data: {'course_id':courseid, 'module_id' : moduleid},
-          success:function(data) {
-              $('#course-modules').html(data); 
-          }
-      });
-  }*/
 
 });
 </script>
+
+
 <script>
   (function ($) {
     $(".module_ppts").on("click", function (e) {
       e.preventDefault();
-
-      
-
     });
   }(jQuery));
+
+
 </script>
+
 @endsection
 
 @endsection

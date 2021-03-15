@@ -104,7 +104,7 @@
 	            <div class="form-group mb-2 {{ $errors->has('time_limit') ? 'has-error' : '' }}" >
 	                <label for="{{$fieldname}}">{{ trans('global.quiz.fields.time_limit') }} ({{ trans('global.hour') }})*</label>
 	                <div class="controls" style="position: relative">
-	                <input type="text" id="time_limit" name="time_limit" class="frm-field attempts" value="{{ old('time_limit', isset($quiz) ? $quiz->time_limit : '') }}" placeholder="hh:mm">
+	                <input type="text" id="time_limit" name="time_limit" class="frm-field attempts" value="{{ old('time_limit', isset($quiz) ? $quiz->time_limit : '00:00 AM') }}" placeholder="hh:mm">
 	                @if($errors->has('time_limit'))
 	                    <em class="invalid-feedback">
 	                        {{ $errors->first('time_limit') }}
