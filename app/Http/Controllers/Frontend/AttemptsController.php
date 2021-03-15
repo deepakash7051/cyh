@@ -8,6 +8,7 @@ use App\QuizAttempt;
 use App\CourseAttempt;
 use App\Question;
 use App\Quiz;
+use App\Module;
 
 class AttemptsController extends Controller
 {
@@ -74,13 +75,23 @@ class AttemptsController extends Controller
             CourseAttempt::where('user_id', $user->id)->where('course_id', $quiz->course_id)->update(['completed_at' => date('Y-m-d H:i:s')]);
         }
 
-        if($attempt){
-            /*if($score==$total){
-                return redirect('/home')->with('success', trans('global.pages.frontend.exam.attempt_successfully'));
+        if(!empty($quiz->module_id)){
+            $module = Module::find($quiz->module_id);
+            $query = Module::where('course_id', $module->course_id)->where('status', '1')->where('place', '>', $module->place)->orderBy('place', 'asc');
+            if($query->count() > 0){
+                $resume_module = $query->first()->id;
             } else {
-                return view('frontend.exams.scores', compact('quiz', 'score', 'total'));
-            }s*/
-            return view('frontend.exams.scores', compact('quiz', 'score', 'total'));
+                $resume_module = '';
+            }
+            $finalquiz = Quiz::where('course_id', $module->course_id)->first();
+        } else {
+             $finalquiz = $quiz;
+             $resume_module = '';
+        }
+
+
+        if($attempt){
+            return view('frontend.exams.scores', compact('quiz', 'score', 'total', 'resume_module', 'finalquiz'));
             
         } else {
             return redirect('/home')->with('error', trans('global.error_message'));

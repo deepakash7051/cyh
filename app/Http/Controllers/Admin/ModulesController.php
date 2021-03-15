@@ -8,8 +8,9 @@ use App\Http\Requests\StoreModuleRequest;
 use App\Http\Requests\UpdateModuleRequest;
 use Freshbitsweb\Laratables\Laratables;
 use Validator;
-use App\Course;
+use App\Quiz;
 use App\Module;
+use App\Course;
 
 class ModulesController extends Controller
 {
@@ -36,6 +37,16 @@ class ModulesController extends Controller
         foreach($moduleplaces as $key => $value){
             Module::where('id', $value)->update(['place'=>$key+1]);
         }
+    }
+
+    public function quizzes(Request $request, $id)
+    {
+        abort_unless(\Gate::allows('quiz_access'), 403);
+        abort_unless(\Gate::allows('quiz_edit'), 403);
+
+        $module = Module::with(['quiz'])->find($id);
+        $quizzes =  Quiz::where('module_id', $id)->orderBy('place')->get();
+        return view('admin.modules.quizzes', compact('quizzes', 'module'));
     }
 
     /**

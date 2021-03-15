@@ -1,13 +1,20 @@
 @extends('layouts.admin')
 @section('content')
 <?php 
-	$coursename = config('app.locale').'_title';
+	$title = config('app.locale').'_title';
     $languages = config('panel.available_languages');
 ?>
 	<div class="dash-main">
+		@if(!empty($course_id))
 		<a href="{{ route('admin.courses.quizzes', $course_id)}}">
             <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
         </a>
+        @endif
+        @if(!empty($module_id))
+        <a href="{{ route('admin.modules.quizzes', $module_id)}}">
+            <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
+        </a>
+        @endif
 		<div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
                 {{ trans('global.create') }} {{ trans('global.quiz.title_singular') }}
@@ -17,6 +24,7 @@
 			<form action="{{ route('admin.quizzes.store') }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				
+				@if(!empty($course_id))
 				<div class="form-group mb-2 {{ $errors->has('course_id') ? 'has-error' : '' }}">
 					<label>{{ trans('global.course.title_singular') }}*</label>
 
@@ -25,9 +33,9 @@
 	                    @if(count($courses) > 0)
 	                        @foreach($courses as $course)
 	                            <option value="{{$course->id}}" 
-	                            		{{ old('course_id', isset($slide)) || $course_id == $course->id ? 'selected="selected"' : '' }}
+	                            		{{ old('course_id', isset($quiz)) || $course_id == $course->id ? 'selected="selected"' : '' }}
 	                            	>
-	                                {{$course->$coursename}}
+	                                {{$course->$title}}
 	                            </option>
 	                        @endforeach
 	                    @endif
@@ -42,6 +50,35 @@
 	                    {{ trans('global.quiz.fields.course_id_helper') }}
 	                </p>
 				</div>
+				@endif
+
+				@if(!empty($module_id))
+				<div class="form-group mb-2 {{ $errors->has('module_id') ? 'has-error' : '' }}">
+					<label>{{ trans('global.module.title_singular') }}*</label>
+
+					<select class="frm-field select2" name="module_id" id="module_id" >
+                        <option value="">{{ trans('global.pleaseSelect') }}</option>
+	                    @if(count($modules) > 0)
+	                        @foreach($modules as $module)
+	                            <option value="{{$module->id}}" 
+	                            		{{ old('module_id', isset($quiz)) || $module_id == $module->id ? 'selected="selected"' : '' }}
+	                            	>
+	                                {{$module->$title}}
+	                            </option>
+	                        @endforeach
+	                    @endif
+                    </select>
+
+					@if($errors->has('module_id'))
+                    <em class="invalid-feedback">
+	                        {{ $errors->first('module_id') }}
+	                    </em>
+	                @endif
+	                <p class="helper-block">
+	                    {{ trans('global.quiz.fields.module_id_helper') }}
+	                </p>
+				</div>
+				@endif
 
 				@if(count($languages) > 0)
 	                @foreach($languages as $langKey => $langValue)

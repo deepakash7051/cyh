@@ -12,13 +12,17 @@ class ExamsController extends Controller
     public function index(Request $request, $id)
     {
 
-        $course = Course::with(['quiz.questions' => function($query){
+        /*$course = Course::with(['quiz.questions' => function($query){
             $query->where('questions.status', '1')->orderBy('place', 'asc');
         }])->whereHas('quiz', function($query){
             $query->where('status', '1');
-        })->find($id);
+        })->find($id);*/
 
-        return view('frontend.exams.index', compact('course'));
+        $quiz = Quiz::with(['questions' => function($query){
+        	$query->where('questions.status', '1')->orderBy('place', 'asc');
+        }])->find($id);
+
+        return view('frontend.exams.index', compact('quiz'));
 
     }
 }

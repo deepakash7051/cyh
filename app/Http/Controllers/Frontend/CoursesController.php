@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Course;
+use App\Quiz;
 use App\CourseAttempt;
 
 class CoursesController extends Controller
@@ -114,8 +115,8 @@ class CoursesController extends Controller
 
     public function examrules($id){
         $user = auth()->user();
-        $course = Course::find($id);
+        $quiz = Quiz::find($id);
 
-        return view('frontend.exams.rules', compact('course'));
+        return view('frontend.exams.rules', compact('quiz'));
     }
 }

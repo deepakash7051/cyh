@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateQuizRequest;
 use Freshbitsweb\Laratables\Laratables;
 use Validator;
 use App\Course;
+use App\Module;
 use App\Quiz;
 use App\Question;
 
@@ -58,8 +59,10 @@ class QuizzesController extends Controller
     {
         abort_unless(\Gate::allows('quiz_create'), 403);
         $courses = Course::where('status', '1')->get();
-        $course_id = $request->course_id;
-        return view('admin.quizzes.create', compact('courses', 'course_id'));
+        $modules = Module::where('status', '1')->get();
+        $course_id = $request->has('course_id') ? $request->course_id : '';
+        $module_id = $request->has('module_id') ? $request->module_id : '';
+        return view('admin.quizzes.create', compact('courses', 'modules', 'course_id', 'module_id'));
     }
 
     /**
@@ -74,12 +77,16 @@ class QuizzesController extends Controller
         
         $params = $request->all();
         $params['unlimited_attempts'] = $request->has('unlimited_attempts') ? $request->get('unlimited_attempts') : '0';
-        $quizcount = Quiz::where('course_id', $request->course_id)->count();
-        $params['place'] = $quizcount+1;
+        //$quizcount = Quiz::where('course_id', $request->course_id)->count();
+        //$params['place'] = $quizcount+1;
         $quiz = Quiz::create($params);
 
-        //return redirect()->route('admin.quizzes.index');
-        return redirect()->route('admin.courses.quizzes', ['id' => $request->course_id]);
+        if($request->has('module_id')){
+            return redirect()->route('admin.modules.quizzes', ['id' => $request->module_id]);
+        } else {
+            return redirect()->route('admin.courses.quizzes', ['id' => $request->course_id]);
+        }
+        
     }
 
     /**
@@ -106,8 +113,9 @@ class QuizzesController extends Controller
     {
         abort_unless(\Gate::allows('quiz_edit'), 403);
         $courses = Course::where('status', '1')->get();
+        $modules = Module::where('status', '1')->get();
         $quiz = Quiz::find($id);
-        return view('admin.quizzes.edit', compact('quiz','courses'));
+        return view('admin.quizzes.edit', compact('quiz','courses','modules'));
     }
 
     /**
@@ -126,8 +134,11 @@ class QuizzesController extends Controller
         $params['unlimited_attempts'] = $request->has('unlimited_attempts') ? $request->get('unlimited_attempts') : '0';
         $quiz->update($params);
 
-        //return redirect()->route('admin.quizzes.index');
-        return redirect()->route('admin.courses.quizzes', ['id' => $request->course_id]);
+        if($request->has('module_id')){
+            return redirect()->route('admin.modules.quizzes', ['id' => $request->module_id]);
+        } else {
+            return redirect()->route('admin.courses.quizzes', ['id' => $request->course_id]);
+        }
     }
 
     /**

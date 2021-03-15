@@ -26,7 +26,12 @@ class UpdateQuizRequest extends FormRequest
     {
         $unlimited_attempts =  $this->request->has('unlimited_attempts') ? $this->request->get('unlimited_attempts') : '0';
         $validatefields = [];
-        $validatefields['course_id'] = ['required'];
+        if($this->request->has('course_id')){
+            $validatefields['course_id'] = ['required'];
+        }
+        if($this->request->has('module_id')){
+            $validatefields['module_id'] = ['required'];
+        }
         $validatefields['time_limit'] = ['required'];
         if($unlimited_attempts=='0'){
             $validatefields['attempts'] = ['integer'];

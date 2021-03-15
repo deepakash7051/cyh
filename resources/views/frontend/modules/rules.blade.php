@@ -14,7 +14,7 @@
             {{trans('global.pages.frontend.exam.choose_carefully_chosen_not_change')}}
         </p>
         <div class="">
-            <a href="{{url('/exam/'.$quiz->id)}}" class="btnn btnn-s">
+            <a href="{{url('/exam/'.$module->id)}}" class="btnn btnn-s">
               {{trans('global.pages.frontend.home.start_exam')}}
             </a>
         </div>

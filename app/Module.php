@@ -161,6 +161,11 @@ class Module extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         return $this->belongsTo('App\Course');
     }
 
+    public function quiz()
+    {
+        return $this->hasOne('App\Quiz');
+    }
+
     public static function laratablesRowClass($module)
     {
         return $module->status=='1' ? 'text-dark' : 'text-danger';

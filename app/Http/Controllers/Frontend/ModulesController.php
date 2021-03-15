@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Module;
 use App\Course;
+use App\CourseAttempt;
+use FFMpeg\FFMpeg;
 
 class ModulesController extends Controller
 {
@@ -16,7 +18,12 @@ class ModulesController extends Controller
      */
     public function index()
     {
-        //
+        /*$ffmpeg = \FFMpeg\FFMpeg::create([
+            'ffmpeg.binaries' => '/usr/bin/ffmpeg',
+            'fprobe.binaries' => '/usr/bin/ffmpeg',
+        ]);
+
+        $video = $ffmpeg->open('http://localhost:8000/storage/App/CourseVideo/000/000/002/en_attachment/original/5c67b35650633.mp4');*/
     }
 
     /**
@@ -56,6 +63,16 @@ class ModulesController extends Controller
         } else {
             $resume_module = '';
         }
+
+        $match = array(
+            'user_id' => $user->id, 
+            'course_id' => $module->course_id
+        );
+
+        $attempt = CourseAttempt::updateOrCreate($match, [
+            'resume_module' => $module->id
+        ]);
+
         $course = Course::with(['modules'])->find($module->course_id);
         return view('frontend.modules.show', compact('module', 'course' , 'resume_module'));
     }

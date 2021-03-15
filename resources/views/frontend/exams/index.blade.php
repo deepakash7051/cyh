@@ -7,7 +7,7 @@
     $title = config('app.locale').'_title';
     $filename = config('app.locale').'_attachment_file_name';
     $attachmenturl = config('app.locale').'_attachment_url';
-    $time_limit = explode(':', $course->quiz->time_limit);
+    $time_limit = explode(':', $quiz->time_limit);
     $timer =  date('F d, Y H:i:s', strtotime('+'.$time_limit[0].' hour +'.$time_limit[1].' minutes', strtotime(date('F d, Y H:i:s'))));
 
     $now = date('Y-m-d H:i:s');
@@ -20,7 +20,7 @@
     			<div class="border">
 					<div class="question bg-white p-3 border-bottom">
 	                    <div class="d-flex flex-row justify-content-between align-items-center mcq">
-	                        <h4>{{$course->$title}} {{ trans('global.quiz.title_singular') }}</h4>
+	                        <h4>{{$quiz->$title}} {{ trans('global.quiz.title_singular') }}</h4>
 	                        <span id="demo"></span>
 	                        <span>
 	                        	<button class="btn btn-primary d-flex align-items-center btn-danger" id="exitQuiz">{{ trans('global.exit') }}</button>
@@ -33,14 +33,14 @@
 
     	<form method="post" action="{{ route('attempts.store') }}" id="saveQuiz">
     		@csrf
-			<input type="hidden" name="quiz_id" value="{{$course->quiz->id}}">
+			<input type="hidden" name="quiz_id" value="{{$quiz->id}}">
 	    <div class="d-flex justify-content-center row" id="quizQuestions">
-	    	@if($course->quiz()->count() > 0 && $course->quiz->questions()->count() > 0)
+	    	@if($quiz->questions()->count() > 0)
 	    	@php 
 	    	$q = 1; 
-	    	$firstQuestion = $course->quiz->questions()->first();
+	    	$firstQuestion = $quiz->questions()->first();
 	    	@endphp
-	    	@foreach($course->quiz->questions as $question)
+	    	@foreach($quiz->questions as $question)
 	        <div class="col-md-12 col-lg-12 questiongroup" id="Question_{{$question->id}}"  f="{{$firstQuestion->id}}" Q="{{$question->id}}" >
 	            <div class="border">
 	                <div class="question bg-white p-3 border-bottom">
@@ -100,11 +100,11 @@
 	                	<button class="btn btn-primary d-flex align-items-center btn-info backQuestion" type="button"><i class="fa fa-angle-left mt-1 mr-1"></i>&nbsp;{{ trans('global.back') }}</button>
 	                	@endif
 
-	                	@if($course->quiz->questions()->count() != $q)
+	                	@if($quiz->questions()->count() != $q)
 	                	<button class="btn btn-primary border-success align-items-center btn-success nextQuestion float-right" type="button">{{ trans('global.next') }}<i class="fa fa-angle-right ml-2"></i></button>
 	                	@endif
 
-	                	@if($course->quiz->questions()->count() == $q)
+	                	@if($quiz->questions()->count() == $q)
 	                	<button class="btn btn-primary border-success align-items-center btn-success float-right" type="button" id="finishQuiz">{{ trans('global.finish') }}</button>
 	                	@endif
 

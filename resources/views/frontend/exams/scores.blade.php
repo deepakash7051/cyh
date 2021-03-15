@@ -26,18 +26,47 @@ $scoremsg = str_replace('{total}', $total, $scoremsg);
                     </div>
                     <h6 class="mb-3">{{$scoremsg}} </h6>
                     <div>
-                        @if($total!=$score)
-                        <a href="{{route('courses.show', $quiz->course_id)}}">
-                            <button class="btnn btnn-s btn-info">
-                            {{ trans('global.pages.frontend.exam.start_course_again') }}
-                            </button>
-                        </a>
+                        @if(!empty($quiz->course_id))
+
+                            @if($total!=$score)
+                            <a href="{{route('courses.show', $quiz->course_id)}}">
+                                <button class="btnn btnn-s btn-info">
+                                {{ trans('global.pages.frontend.exam.learn_course_again') }}
+                                </button>
+                            </a>
+                            @else
+                            <a href="{{url('/home')}}">
+                                <button class="btnn btnn-s btn-info">
+                                {{ trans('global.back_to_home') }}
+                                </button>
+                            </a>
+                            @endif
+
                         @else
-                        <a href="{{url('/home')}}">
-                            <button class="btnn btnn-s btn-info">
-                            {{ trans('global.back_to_home') }}
-                            </button>
-                        </a>
+
+                            @if($total!=$score)
+                            <a href="{{route('modules.show', $quiz->module_id)}}">
+                                <button class="btnn btnn-s btn-info">
+                                {{ trans('global.pages.frontend.exam.learn_module_again') }}
+                                </button>
+                            </a>
+                            @else
+                            @if(!empty($resume_module))
+                                <a href="{{route('modules.show', $resume_module)}}">
+                                    <button class="btnn btnn-s btn-info">
+                                    {{ trans('global.next') }} {{ trans('global.module.title_singular') }}
+                                    </button>
+                                </a>
+                            @else
+                                <a href="{{ url('/examrules/'.$finalquiz->id)}}">
+                                <button class="btnn btnn-s btn-info">
+                                {{ trans('global.pages.frontend.exam.final_assessment') }}
+                                </button>
+                            </a>
+                            @endif
+                            @endif
+
+
                         @endif
                     </div>
 

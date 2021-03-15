@@ -34,6 +34,11 @@
             <li class="ui-state-default" data-val="{{$module->id}}"> 
                 <i class="fas fa-arrows-alt"></i> {{$module->$title}}
                 <span class="float-right">
+                    @can('quiz_access')
+                        <a class="btn btn-xs btn-success" href="{{ route('admin.modules.quizzes', $module->id) }}">
+                            {{ trans('global.quiz.title_singular') }}
+                        </a>
+                    @endcan
                     @can('module_show')
                         <a class="btn btn-xs btn-primary" href="{{ route('admin.modules.show', $module->id) }}">
                             {{ trans('global.view') }}

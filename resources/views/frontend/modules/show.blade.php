@@ -47,7 +47,7 @@
         @endif
         </div>
 
-        @if(!empty($resume_module))
+       <!--  @if(!empty($resume_module))
         <form method="post" action="{{ route('attemptcourse')}}" class="text-right">
             @csrf
             <input type="hidden" name="resume_module" value="{{$resume_module}}">
@@ -62,6 +62,33 @@
             </a>
           </div>
           @endif
+        @endif -->
+
+        @if($module->quiz()->exists())
+            <div class="text-right">
+              <a href="{{url('/examrules/'.$module->quiz->id)}}" class="btnn btnn-s">
+                {{trans('global.pages.frontend.home.take_exam')}}
+              </a>
+            </div>
+        @else
+
+        @if(!empty($resume_module))
+        <form method="post" action="{{ route('attemptcourse')}}" class="text-right">
+            @csrf
+            <input type="hidden" name="resume_module" value="{{$resume_module}}">
+            <input type="hidden" name="course_id" value="{{$course->id}}">
+            <input class="btnn btnn-s mt-3" type="submit" value="{{trans('global.next')}}">
+        </form>
+        @else
+          @if($course->quiz()->exists() && $course->quiz->questions()->exists())
+          <div class="text-right">
+            <a href="{{url('/examrules/'.$course->quiz->id)}}" class="btnn btnn-s">
+              {{trans('global.pages.frontend.exam.final_assesment')}}
+            </a>
+          </div>
+          @endif
+        @endif
+
         @endif
 
       </div>

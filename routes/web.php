@@ -31,6 +31,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 	    Route::get('/courses/{id}/slides', 'CoursesController@slides')->name('courses.slides');
 	    Route::get('/courses/{id}/quizzes', 'CoursesController@quizzes')->name('courses.quizzes');
 	    Route::get('/courses/{id}/modules', 'CoursesController@modules')->name('courses.modules');
+	    Route::get('/modules/{id}/quizzes', 'ModulesController@quizzes')->name('modules.quizzes');
 	    Route::get('/quizzes/{id}/questions', 'QuizzesController@questions')->name('quizzes.questions');
 	    Route::get('/videos/list', 'CourseVideosController@list')->name('videos.list');
 	    Route::post('/arrangevideos', 'CourseVideosController@arrange')->name('videos.arrange');

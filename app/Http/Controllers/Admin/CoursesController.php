@@ -33,7 +33,7 @@ class CoursesController extends Controller
         return Laratables::recordsOf(Course::class);
     }
 
-    public function videos(Request $resquest, $id)
+    public function videos(Request $request, $id)
     {
         abort_unless(\Gate::allows('video_access'), 403);
         abort_unless(\Gate::allows('video_edit'), 403);
@@ -43,7 +43,7 @@ class CoursesController extends Controller
         return view('admin.courses.videos', compact('coursevideos', 'course'));
     }
 
-    public function slides(Request $resquest, $id)
+    public function slides(Request $request, $id)
     {
         abort_unless(\Gate::allows('slide_access'), 403);
         abort_unless(\Gate::allows('slide_edit'), 403);
@@ -53,7 +53,7 @@ class CoursesController extends Controller
         return view('admin.courses.slides', compact('courseslides', 'course'));
     }
 
-    public function quizzes(Request $resquest, $id)
+    public function quizzes(Request $request, $id)
     {
         abort_unless(\Gate::allows('quiz_access'), 403);
         abort_unless(\Gate::allows('quiz_edit'), 403);
@@ -63,7 +63,7 @@ class CoursesController extends Controller
         return view('admin.courses.quizzes', compact('quizzes', 'course'));
     }
 
-    public function modules(Request $resquest, $id)
+    public function modules(Request $request, $id)
     {
         abort_unless(\Gate::allows('module_access'), 403);
         abort_unless(\Gate::allows('module_edit'), 403);

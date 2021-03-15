@@ -9,9 +9,16 @@
 ?>
 
 <div class="dash-main">
+        @if(!empty($quiz->course_id))
         <a href="{{ route('admin.courses.quizzes', $quiz->course_id)}}">
             <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
         </a>
+        @endif
+        @if(!empty($quiz->module_id))
+        <a href="{{ route('admin.modules.quizzes', $quiz->module_id)}}">
+            <i class="fas fa-arrow-left"></i> {{ trans('global.back') }}
+        </a>
+        @endif
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
                 {{ $quiz->$title }} {{ trans('global.question.title') }}
