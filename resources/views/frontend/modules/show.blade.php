@@ -83,7 +83,7 @@
           @if($course->quiz()->exists() && $course->quiz->questions()->exists())
           <div class="text-right">
             <a href="{{url('/examrules/'.$course->quiz->id)}}" class="btnn btnn-s">
-              {{trans('global.pages.frontend.exam.final_assesment')}}
+              {{trans('global.pages.frontend.exam.final_assessment')}}
             </a>
           </div>
           @endif

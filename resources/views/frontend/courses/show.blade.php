@@ -65,7 +65,7 @@
             @foreach($course->modules as $module)
                 <li> {{$module->$title}} </li>
             @endforeach
-                <li>{{trans('global.pages.frontend.exam.final_assesment')}}</li>
+                <li>{{trans('global.pages.frontend.exam.final_assessment')}}</li>
             </ol>
         </div>
         
