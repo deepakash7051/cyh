@@ -60,27 +60,6 @@
                         @endforeach
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        {{ trans('global.user.fields.categories') }}
-                    </td>
-                    <td>
-                        @foreach($user->categories as $id => $categories)
-                            <span class="badge badge-info">{{ $categories->$categoryname }}</span>
-                            <!-- <span class="label label-info label-many">{{ $roles->title }}</span> -->
-                        @endforeach
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {{ trans('global.user.fields.courses') }}
-                    </td>
-                    <td>
-                        @foreach($user->courses as $id => $courses)
-                            <span class="badge badge-info">{{ $courses->$coursename }}</span>
-                        @endforeach
-                    </td>
-                </tr>
             </tbody>
                 
             </table>

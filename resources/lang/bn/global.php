@@ -362,7 +362,7 @@ return [
     'deselect_all'                         => 'Deselect all',
     'team-management'                      => 'Teams',
     'team-management-singular'             => 'Team',
-    'site_title'                           => 'SWA LMS',
+    'site_title'                           => 'CYH',
     'active'    => 'Active',
     'inactive'  => 'Inactive',
     'mcq'    => 'MCQ',

@@ -47,7 +47,7 @@
 <header class="header-type2">
     <div class="d-flex align-items-center justify-content-between">
         <div class="logo-wrap"><a href="">
-            <img src="{{ asset('images/SWA-Logo.png') }}" alt=""></a>
+            <img src="{{ asset('images/CYH-Logo.png') }}" alt=""></a>
         </div>
         <div class="head-right d-flex align-items-center">
             <div class="user-wrap d-flex align-items-center">
@@ -56,7 +56,7 @@
             </div>
 
             <!-- <div class="dropdown show"> -->
-              <button type="button" class="btn btn-primary dropdown-toggle actions-wrp" data-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- <button type="button" class="btn btn-primary dropdown-toggle actions-wrp" data-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span></span>
                   <span></span>
                   <span></span>
@@ -67,7 +67,7 @@
                         <a class="dropdown-item" href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
                     @endforeach
                 @endif
-              </div>
+              </div> -->
               
             <!-- </div> -->
         </div>

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'v1',
+    'namespace' => 'Api\v1'
+
+], function ($router) {
+	Route::post('register', 'RegisterController@register');
+	Route::post('login', 'LoginController@login');
+    Route::post('forgotpassword', 'LoginController@forgotpassword');
+
+    //Route::post('login/{provider}/callback','SocialController@Callback');
+});
+
+Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\v1' ], function ($router) {
+
+   // Route::get('email/resend', 'VerificationController@resend');
+
+    Route::post('logout', 'LoginController@logout');
+    Route::get('refresh', 'RegisterController@refresh');
+   // Route::post('editdetails', 'UsersController@editdetails');
+    //Route::post('saveimages', 'UsersController@saveimages');
+
 });

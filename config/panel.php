@@ -6,8 +6,8 @@ return [
     'primary_language'    => 'en',
     'available_languages' => [
         'en' => 'English',
-        'bn' => 'Bengali',
-        'zh' => 'Mandarin',
-        'ta' => 'Tamil',
+        //'bn' => 'Bengali',
+        // 'zh' => 'Mandarin',
+        // 'ta' => 'Tamil',
     ],
 ];

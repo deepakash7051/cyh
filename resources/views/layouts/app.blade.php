@@ -20,7 +20,7 @@
 <body class="login-page dots">
     <input type="hidden" value="{{url('/')}}" id="base_url">
     <header class="header-type1">
-        <div class="logo-wrap"><a href=""><img src="{{ asset('images/SWA-Logo.png') }}" alt=""></a></div>
+        <div class="logo-wrap"><a href=""><img src="{{ asset('images/CYH-Logo.png') }}" alt=""></a></div>
     </header>
 
     @yield('content')

@@ -37,7 +37,7 @@ img{
     padding: 8vh 4vw;
 }
 .login-form {
-    background-color: #625dee;
+    background-color: #7532a4;
     border-radius: 60px;
     padding: 70px 60px;
     color: #fff;
@@ -103,7 +103,7 @@ img{
 	padding: 15px;
 	text-decoration: none;
 	color: #fff;
-	background-color: #625eee;
+	background-color: #7532a4;
 	border: none;
 }
 .btnn-s {
@@ -420,7 +420,7 @@ img{
 	top: 101px;
 	left: 0;
 	bottom: 0;
-	background-color: #6267ed;
+	background-color: #7532a4;
 	width: 300px;
 	z-index: 9999;
 }
@@ -453,7 +453,7 @@ img{
 .dash-main {
     background-color: #fff;
     padding: 30px;
-    border-top: 4px solid #6267ed;
+    border-top: 4px solid #7532a4;
     box-shadow: 0 0 20px #ddd;
 }
 table.table-custom th {
@@ -552,7 +552,7 @@ table.table-custom{
 	float: right;
 }
 .main-font-color{
-	color: #6267ed;
+	color: #7532a4;
 }
 .sorting_order {
 	padding: 2px 8px;

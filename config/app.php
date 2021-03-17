@@ -180,6 +180,8 @@ return [
         Czim\Paperclip\Providers\PaperclipServiceProvider::class,
         'Cohensive\Embed\EmbedServiceProvider',
 
+        'Tymon\JWTAuth\Providers\LaravelServiceProvider',
+
     ],
 
     /*
@@ -231,7 +233,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Embed' => 'Cohensive\Embed\Facades\Embed'
+        'Embed' => 'Cohensive\Embed\Facades\Embed',
+
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 
     ],
 

@@ -28,13 +28,15 @@
 			<div class="d-flex justify-content-between"></div>
 		</div>
 		<div class="table-responsive table-responsive-md">
+    
 			<table class="table table-hover table-custom datatable" id="category_table">
 				<thead>
                     <tr>
                         <th>
                             {{ trans('global.category.fields.id') }}
                         </th>
-                          @if(count($languages) > 0)
+                          {{ trans('global.category.fields.name') }}
+                          <!-- @if(count($languages) > 0)
                           
                             @foreach($languages as $langKey => $langValue)
                             <th>
@@ -42,7 +44,7 @@
                               </th>
                             @endforeach
 
-                          @endif
+                          @endif -->
                         <th>
                             {{ trans('global.category.fields.status') }}
                         </th>
@@ -106,9 +108,9 @@
             columns: [
               { name: 'id' },
               { name: 'en_name' },
-              { name: 'bn_name' },
-              { name: 'zh_name' },
-              { name: 'ta_name' },
+              // { name: 'bn_name' },
+              // { name: 'zh_name' },
+              // { name: 'ta_name' },
               { name: 'status' },
               { name: 'action', orderable: false, searchable: false }
             ],

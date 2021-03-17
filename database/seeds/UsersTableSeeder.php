@@ -14,13 +14,13 @@ class UsersTableSeeder extends Seeder
     {
         User::create([
             'name'      => "Superadmin",
-            'email'     => "superadmin@swalms.com",
+            'email'     => "superadmin@cyh.com",
             'password'  => Hash::make("superadmin@123"),
             'email_verified_at' => date('Y-m-d H:i:s'),
           ]);
         User::create([
             'name'      => "Admin",
-            'email'     => "admin@swalms.com",
+            'email'     => "admin@cyh.com",
             'password'  => Hash::make("admin@123"),
             'email_verified_at' => date('Y-m-d H:i:s'),
           ]);

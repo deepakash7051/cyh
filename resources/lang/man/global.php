@@ -320,7 +320,7 @@ return [
     'deselect_all'                         => 'Deselect all',
     'team-management'                      => 'Teams',
     'team-management-singular'             => 'Team',
-    'site_title'                           => 'SWA',
+    'site_title'                           => 'CYH',
     'userManagement'                       => [
         'title'          => '用戶管理',
         'title_singular' => '用戶管理',

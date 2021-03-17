@@ -22,7 +22,6 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_access'), 403);
 
         $users = User::all();
-
         return view('admin.users.index');
     }
 
@@ -57,20 +56,14 @@ class UsersController extends Controller
     }
 
     public function create()
-    {
+    { 
         abort_unless(\Gate::allows('user_create'), 403);
 
         $user = auth()->user();
         $roleid = RoleUser::where('user_id', $user->id)->min('role_id');
         $roles = Role::where('id', '>', $roleid)->pluck('title', 'id');
 
-        $categoryname = config('app.locale').'_name';
-        $categories = Category::where('status', '1')->pluck($categoryname, 'id');
-
-        $coursetitle = config('app.locale').'_title';
-        $courses = Course::where('status', '1')->get();
-
-        return view('admin.users.create', compact('roles', 'categories', 'courses'));
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(StoreUserRequest $request)
@@ -79,8 +72,8 @@ class UsersController extends Controller
 
         $user = User::create($request->all());
         $user->roles()->sync($request->input('role'));
-        $user->categories()->sync($request->input('categories', []));
-        $user->courses()->sync($request->input('courses', []));
+       // $user->categories()->sync($request->input('categories', []));
+       // $user->courses()->sync($request->input('courses', []));
 
         return redirect()->route('admin.users.index');
     }
@@ -93,27 +86,28 @@ class UsersController extends Controller
         $roleid = RoleUser::where('user_id', $authuser->id)->min('role_id');
         $roles = Role::where('id', '>', $roleid)->pluck('title', 'id');
 
-        $categoryname = config('app.locale').'_name';
-        $categories = Category::where('status', '1')->pluck($categoryname, 'id');
+        // $categoryname = config('app.locale').'_name';
+        // $categories = Category::where('status', '1')->pluck($categoryname, 'id');
 
-        $coursetitle = config('app.locale').'_title';
-        $courses = Course::where('status', '1')->get();
+        // $coursetitle = config('app.locale').'_title';
+        // $courses = Course::where('status', '1')->get();
 
-        $user->load('courses');
-        $user->load('roles');
-        $user->load('categories');
+        // $user->load('courses');
+        // $user->load('roles');
+        // $user->load('categories');
         
-        return view('admin.users.edit', compact('roles', 'user', 'categories', 'courses'));
+        // return view('admin.users.edit', compact('roles', 'user', 'categories', 'courses'));
+        return view('admin.users.edit', compact('roles', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
-    {
+    { 
         abort_unless(\Gate::allows('user_edit'), 403);
 
         $user->update($request->all());
         $user->roles()->sync($request->input('role'));
-        $user->categories()->sync($request->input('categories', []));
-        $user->courses()->sync($request->input('courses', []));
+        // $user->categories()->sync($request->input('categories', []));
+        // $user->courses()->sync($request->input('courses', []));
 
         return redirect()->route('admin.users.index');
     }
@@ -123,7 +117,6 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_show'), 403);
 
         $user->load('roles');
-
         return view('admin.users.show', compact('user'));
     }
 

@@ -18,7 +18,8 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "php-ffmpeg/php-ffmpeg": "^0.17.0"
+        "php-ffmpeg/php-ffmpeg": "^0.17.0",
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

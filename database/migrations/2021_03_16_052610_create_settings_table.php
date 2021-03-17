@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNewfieldsToQuizzesTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddNewfieldsToQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            $table->string('module_id')->after('course_id')->nullable();
+        Schema::create('settings', function (Blueprint $table) {
+            $table->id();
+            $table->string('meta_key')->nullable();
+            $table->longText('meta_value')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,8 +29,6 @@ class AddNewfieldsToQuizzesTable extends Migration
      */
     public function down()
     {
-        Schema::table('quizzes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('settings');
     }
 }

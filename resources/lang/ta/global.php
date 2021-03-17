@@ -408,7 +408,7 @@ return [
   'deselect_all' => 'அனைத்து தெரிவுகளையும் நிராகரி',
   'team-management' => 'அணிகள்',
   'team-management-singular' => 'அணி',
-  'site_title' => 'SWA LMS',
+  'site_title' => 'CYH',
   'active' => 'செயலில்',
   'inactive' => 'செயலற்றது',
   'mcq' => 'MCQ',

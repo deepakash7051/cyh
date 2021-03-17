@@ -24,24 +24,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
     	Route::get('/home', 'HomeController@index')->name('home');
     	Route::get('/users/courses', 'UsersController@getCourses');
     	Route::get('/users/list', 'UsersController@list')->name('users.list');
-	    Route::get('/permissions/list', 'PermissionsController@list')->name('permissions.list');
-	    Route::get('/categories/list', 'CategoriesController@list')->name('categories.list');
-	    Route::get('/courses/list', 'CoursesController@list')->name('courses.list');
-	    Route::get('/courses/{id}/videos', 'CoursesController@videos')->name('courses.videos');
-	    Route::get('/courses/{id}/slides', 'CoursesController@slides')->name('courses.slides');
-	    Route::get('/courses/{id}/quizzes', 'CoursesController@quizzes')->name('courses.quizzes');
-	    Route::get('/courses/{id}/modules', 'CoursesController@modules')->name('courses.modules');
-	    Route::get('/modules/{id}/quizzes', 'ModulesController@quizzes')->name('modules.quizzes');
-	    Route::get('/quizzes/{id}/questions', 'QuizzesController@questions')->name('quizzes.questions');
-	    Route::get('/videos/list', 'CourseVideosController@list')->name('videos.list');
-	    Route::post('/arrangevideos', 'CourseVideosController@arrange')->name('videos.arrange');
-	    Route::get('/slides/list', 'CourseSlidesController@list')->name('slides.list');
-	    Route::post('/arrangeslides', 'CourseSlidesController@arrange')->name('slides.arrange');
-	    Route::get('/quizzes/list', 'QuizzesController@list')->name('quizzes.list');
-	    Route::post('/arrangequizzes', 'QuizzesController@arrange')->name('quizzes.arrange');
-	    Route::get('/modules/list', 'ModulesController@list')->name('modules.list');
-	    Route::post('/arrangemodules', 'ModulesController@arrange')->name('modules.arrange');
-	    Route::post('/arrangequestions', 'QuestionsController@arrange')->name('questions.arrange');
 	    Route::get('/import/users', 'ImportsController@users')->name('import.users');
 	    Route::post('/import/parseusers', 'ImportsController@parseusers')->name('import.parseusers');
 	    Route::post('/import/saveusers', 'ImportsController@saveusers')->name('import.saveusers');
@@ -54,16 +36,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
 	    Route::resource('users', 'UsersController');
 	    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-
-	    Route::resource('categories', 'CategoriesController');
-	    Route::delete('categories/destroy', 'CategoriesController@massDestroy')->name('categories.massDestroy');
-
-	    Route::resource('courses', 'CoursesController');
-	    Route::resource('videos', 'CourseVideosController');
-	    Route::resource('slides', 'CourseSlidesController');
-	    Route::resource('quizzes', 'QuizzesController');
-	    Route::resource('questions', 'QuestionsController');
-	    Route::resource('modules', 'ModulesController');
     });
 });
 
@@ -79,21 +51,9 @@ Route::post('/sendcode', 'Auth\LoginController@sendcode')->name('sendcode');
 Route::get('/verifycode/{id}', 'Auth\LoginController@verifycode')->name('verifycode');
 Route::post('/verifyusercode', 'Auth\LoginController@verifyusercode')->name('verifyusercode');
 
-Route::group(['middleware' => ['auth']], function () {
-	Route::get('/home', 'HomeController@index')->name('home');
-	Route::get('/getcourse', 'HomeController@getCourse')->name('getcourse');
 
-	Route::group(['namespace' => 'Frontend'], function () {
-		Route::get('/exam/{id}', 'ExamsController@index');
-		Route::resource('attempts', 'AttemptsController');
-		Route::resource('courses', 'CoursesController');
-		Route::resource('categories', 'CategoriesController');
-		Route::post('attemptcourse', 'CoursesController@attemptcourse')->name('attemptcourse');
-		Route::get('examrules/{id}', 'CoursesController@examrules');
-		Route::resource('modules', 'ModulesController');
-	});
-	
-});
+
+Auth::routes(['verify' => true]);
 
 
 
