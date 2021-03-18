@@ -8,7 +8,9 @@ class UserImage extends Model
 {
     protected $fillable = [  
         'user_id',
-        'image_name'
+        'image_name',
+        "image_url",
+        'mime'
     ];
 
     protected $hidden = [  

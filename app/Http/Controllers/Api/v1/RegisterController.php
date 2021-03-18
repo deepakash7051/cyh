@@ -36,7 +36,7 @@ class RegisterController extends ApiController
 	            'phone' => 'required|digits:10|integer',
 	            'password'=> 'required',
 	            'role' => 'required',
-                'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
+                //'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
 	        ]);
 	        if ($validator->fails()) {
 	            $errors = $validator->errors()->toArray();
@@ -60,15 +60,6 @@ class RegisterController extends ApiController
 	            return $this->payload(['StatusCode' => '422', 'message' => 'Phone number already exist', 'result' => new \stdClass],201);
 	        }
 
-            $uploadFolder = 'users';
-            $image = $request->file('image');
-            $image_uploaded_path = $image->store($uploadFolder, 'public');
-            $uploadedImageResponse = array(
-                "image_name" => basename($image_uploaded_path),
-                "image_url" => Storage::disk('public')->url($image_uploaded_path),
-                "mime" => $image->getClientMimeType()
-             );
-
 	        $user = User::create([
 	            'name' => $request->get('name'),
 	            'email' => $request->get('email'),
@@ -76,15 +67,30 @@ class RegisterController extends ApiController
 	            'password' => bcrypt($request->get('password')),
 	            'isd_code' => $request->get('isd_code')
 	        ]);
-            
-            UserImage::create([
-                'user_id' => $user->id,
-                'image_name' => basename($image_uploaded_path),
-                "image_url" => Storage::disk('public')->url($image_uploaded_path),
-                "mime" => $image->getClientMimeType()
-            ]);
-	       // $user->sendEmailVerificationNotification();
+	       
+            if($request->file('image')){
+                $uploadFolder = 'users';
+                $image = $request->file('image');
+                $image_uploaded_path = $image->store($uploadFolder, 'public');
+                $uploadedImageResponse = array(
+                    "image_name" => basename($image_uploaded_path),
+                    "image_url" => Storage::disk('public')->url($image_uploaded_path),
+                    "mime" => $image->getClientMimeType()
+                 );
 
+                 $arr = UserImage::create([
+                    'user_id' => $user->id,
+                    'image_name' => basename($image_uploaded_path),
+                    "image_url" => Storage::disk('public')->url($image_uploaded_path),
+                    "mime" => $image->getClientMimeType()
+                ]);
+
+            }else{
+                $uploadedImageResponse = (object)[];
+            }
+            
+            // $user->sendEmailVerificationNotification();
+            
 	        $role = RoleUser::create([
 	            'user_id' => $user->id,
 	            'role_id' => $request->get('role')
