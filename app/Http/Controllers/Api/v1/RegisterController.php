@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Api\v1\ApiController;
-use Illuminate\Http\Request;
-
+use JWTAuth;
 use App\User;
-use App\RoleUser;
 
-use Validator;
 use Response;
-use App\Http\Requests;
+use Validator;
 
 use JWTFactory;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use App\RoleUser;
+use App\UserImage;
 
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+
+use Illuminate\Support\Facades\Storage;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Controllers\Api\v1\ApiController;
 
 class RegisterController extends ApiController
 {
@@ -26,15 +28,15 @@ class RegisterController extends ApiController
     }
 
     public function register(Request $request)
-    {
+    { 
         try{
-//print_r($request->all());exit;
 	        $validator = Validator::make($request->all(), [
 	            'email' => 'required|string|email|max:255',
 	            'name' => 'required',
 	            'phone' => 'required|digits:10|integer',
 	            'password'=> 'required',
-	            'role' => 'required'
+	            'role' => 'required',
+                'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
 	        ]);
 	        if ($validator->fails()) {
 	            $errors = $validator->errors()->toArray();
@@ -58,6 +60,15 @@ class RegisterController extends ApiController
 	            return $this->payload(['StatusCode' => '422', 'message' => 'Phone number already exist', 'result' => new \stdClass],201);
 	        }
 
+            $uploadFolder = 'users';
+            $image = $request->file('image');
+            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            $uploadedImageResponse = array(
+                "image_name" => basename($image_uploaded_path),
+                "image_url" => Storage::disk('public')->url($image_uploaded_path),
+                "mime" => $image->getClientMimeType()
+             );
+
 	        $user = User::create([
 	            'name' => $request->get('name'),
 	            'email' => $request->get('email'),
@@ -65,7 +76,13 @@ class RegisterController extends ApiController
 	            'password' => bcrypt($request->get('password')),
 	            'isd_code' => $request->get('isd_code')
 	        ]);
-
+            
+            UserImage::create([
+                'user_id' => $user->id,
+                'image_name' => basename($image_uploaded_path),
+                "image_url" => Storage::disk('public')->url($image_uploaded_path),
+                "mime" => $image->getClientMimeType()
+            ]);
 	       // $user->sendEmailVerificationNotification();
 
 	        $role = RoleUser::create([
@@ -76,6 +93,7 @@ class RegisterController extends ApiController
 	        $token = JWTAuth::fromUser($user);
 	        //$user = $user->load(['roles', 'user_detail']);
 	        $user->token = $token;
+            $user->image = $uploadedImageResponse;
 
 	        return $this->payload(['StatusCode' => '200', 'message' => 'Register successful and Email verification link sent on your email id', 'result' => array('user' => $user)],200);
         } catch(Exception $e) {

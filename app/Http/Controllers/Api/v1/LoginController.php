@@ -74,11 +74,13 @@ class LoginController extends ApiController
         //         'result' => new \stdClass
         //     ],200);
         // }
-
+        
             $user->token = $token;
             $total_login = $user->total_login + 1;
             $user->total_login = $total_login;
             $user->last_login = date('Y-m-d H:i:s');
+            $user->image = $user->image;
+            $user->image = 'wd';
 
         return $this->payload([
             'StatusCode' => '200', 
