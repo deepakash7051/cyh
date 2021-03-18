@@ -110,7 +110,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\CourseAttempt');
     }
 
-    public function image(){
+    public function user_image(){
         return $this->hasOne('App\UserImage');
     }
 

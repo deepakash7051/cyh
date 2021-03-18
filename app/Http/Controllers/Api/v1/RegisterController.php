@@ -68,25 +68,11 @@ class RegisterController extends ApiController
 	            'isd_code' => $request->get('isd_code')
 	        ]);
 	       
-            if($request->file('image')){
-                $uploadFolder = 'users';
-                $image = $request->file('image');
-                $image_uploaded_path = $image->store($uploadFolder, 'public');
-                $uploadedImageResponse = array(
-                    "image_name" => basename($image_uploaded_path),
-                    "image_url" => Storage::disk('public')->url($image_uploaded_path),
-                    "mime" => $image->getClientMimeType()
-                 );
+            if($request->file('attachment')){
 
-                UserImage::create([
-                    'user_id' => $user->id,
-                    'image_name' => basename($image_uploaded_path),
-                    "image_url" => Storage::disk('public')->url($image_uploaded_path),
-                    "mime" => $image->getClientMimeType()
-                ]);
+                $user->user_image()->create(['attachment' => $request->file('attachment')]);
+                
 
-            }else{
-                $uploadedImageResponse = (object)[];
             }
             // $user->sendEmailVerificationNotification();
             
@@ -96,9 +82,9 @@ class RegisterController extends ApiController
 	        ]);
 
 	        $token = JWTAuth::fromUser($user);
-	        //$user = $user->load(['roles', 'user_detail']);
+            
 	        $user->token = $token;
-            $user->image = $uploadedImageResponse;
+            $user->load(['user_image']);
 
 	        return $this->payload(['StatusCode' => '200', 'message' => 'Register successful and Email verification link sent on your email id', 'result' => array('user' => $user)],200);
         } catch(Exception $e) {

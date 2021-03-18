@@ -2,33 +2,38 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Api\v1\ApiController;
+use JWTAuth;
+use App\User;
+
+use Response;
+use Validator;
+use JWTFactory;
+
+use App\PinReset;
+use App\RoleUser;
+use Notification;
+
+use App\Http\Requests;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-use App\User;
-use App\RoleUser;
-use App\PinReset;
-
-use Validator;
-use Response;
-use App\Http\Requests;
-
-use JWTFactory;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-
-use App\Http\Requests\ResetPasswordRequest;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-
-use Notification;
 use App\Notifications\ForgotPin;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Password;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Controllers\Api\v1\ApiController;
 
 class LoginController extends ApiController
 {
+    protected $uploadPath;
+
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'forgotpassword']]);
+        $this->uploadPath = URL::to('/').Storage::url('users/');
     }
 
     public function login(Request $request){
@@ -79,8 +84,7 @@ class LoginController extends ApiController
             $total_login = $user->total_login + 1;
             $user->total_login = $total_login;
             $user->last_login = date('Y-m-d H:i:s');
-            $user->image = $user->image;
-            $user->image = 'wd';
+            $user->load(['user_image']);
 
         return $this->payload([
             'StatusCode' => '200', 

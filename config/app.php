@@ -182,6 +182,7 @@ return [
 
         'Tymon\JWTAuth\Providers\LaravelServiceProvider',
 
+        Czim\Paperclip\Providers\PaperclipServiceProvider::class,
     ],
 
     /*
