@@ -36,7 +36,7 @@ class RegisterController extends ApiController
 	            'phone' => 'required|digits:10|integer',
 	            'password'=> 'required',
 	            'role' => 'required',
-                //'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
 	        ]);
 	        if ($validator->fails()) {
 	            $errors = $validator->errors()->toArray();
@@ -78,7 +78,7 @@ class RegisterController extends ApiController
                     "mime" => $image->getClientMimeType()
                  );
 
-                 $arr = UserImage::create([
+                UserImage::create([
                     'user_id' => $user->id,
                     'image_name' => basename($image_uploaded_path),
                     "image_url" => Storage::disk('public')->url($image_uploaded_path),
@@ -88,7 +88,6 @@ class RegisterController extends ApiController
             }else{
                 $uploadedImageResponse = (object)[];
             }
-            
             // $user->sendEmailVerificationNotification();
             
 	        $role = RoleUser::create([
