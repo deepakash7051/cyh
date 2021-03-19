@@ -573,7 +573,9 @@ table.table-custom{
 .btn-info:hover {
 	color: #fff;
 }
-
+.login-wrap .col-lg-8 {
+    text-align: center;
+}
 /*-----------------------------------------*/
 
 label.radio {

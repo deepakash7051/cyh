@@ -54,7 +54,3 @@ Route::post('/verifyusercode', 'Auth\LoginController@verifyusercode')->name('ver
 
 
 Auth::routes(['verify' => true]);
-
-
-
-

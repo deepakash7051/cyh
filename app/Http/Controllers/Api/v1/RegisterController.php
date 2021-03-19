@@ -82,7 +82,7 @@ class RegisterController extends ApiController
 	        ]);
 
 	        $token = JWTAuth::fromUser($user);
-            
+
 	        $user->token = $token;
             $user->load(['user_image']);
 

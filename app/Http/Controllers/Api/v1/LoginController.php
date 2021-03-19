@@ -28,12 +28,10 @@ use App\Http\Controllers\Api\v1\ApiController;
 
 class LoginController extends ApiController
 {
-    protected $uploadPath;
 
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'forgotpassword']]);
-        $this->uploadPath = URL::to('/').Storage::url('users/');
     }
 
     public function login(Request $request){
@@ -84,8 +82,12 @@ class LoginController extends ApiController
             $total_login = $user->total_login + 1;
             $user->total_login = $total_login;
             $user->last_login = date('Y-m-d H:i:s');
-            $user->load(['user_image']);
-
+            //$user->load(['user_image']);
+            if( !empty($user->user_image->attachment_url) ){
+                $user->attachment_url = $user->user_image->attachment_url;
+            }else{
+                $user->attachment_url = "";
+            }
         return $this->payload([
             'StatusCode' => '200', 
             'message' => 'Login successful!', 

@@ -21,7 +21,7 @@ Route::group([
     'namespace' => 'Api\v1'
 
 ], function ($router) {
-	Route::post('register', 'RegisterController@register');
+    Route::post('register', 'RegisterController@register');
 	Route::post('login', 'LoginController@login');
     Route::post('forgotpassword', 'LoginController@forgotpassword');
 
@@ -36,5 +36,5 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::get('refresh', 'RegisterController@refresh');
    // Route::post('editdetails', 'UsersController@editdetails');
     //Route::post('saveimages', 'UsersController@saveimages');
-
+    Route::apiResource('/user', 'UserController');
 });

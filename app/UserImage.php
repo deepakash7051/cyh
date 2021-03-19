@@ -17,10 +17,11 @@ class UserImage extends Model implements \Czim\Paperclip\Contracts\AttachableInt
         'id',
         'user_id',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'user_image'
     ];
 
-    protected $appends = ['attachment_url'];
+    //protected $appends = ['attachment_url'];
 
     public function __construct( array $attributes = [] ) {
         $this->hasAttachedFile('attachment');
