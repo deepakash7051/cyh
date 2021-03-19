@@ -23,7 +23,7 @@
                             {!! \Session::get('error') !!}
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('sendcode') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group">

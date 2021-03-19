@@ -120,7 +120,7 @@ class UserController extends ApiController
             ];
 
             if( !empty($request->password) ){
-                $data['pass'] = $request->password;
+                $data['password'] = $request->password;
             }
 
             $user->update( $data );

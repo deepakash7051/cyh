@@ -30,7 +30,6 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-    
 
     @yield('styles')
 
@@ -113,7 +112,7 @@
     <script src="{{ asset('js/moment.min.js') }}"></script>
     
     <script src="{{ asset('js/select2.full.min.js') }}"></script>
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
+    
 
     <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>

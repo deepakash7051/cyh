@@ -36,6 +36,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
 	    Route::resource('users', 'UsersController');
 	    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+
+		Route::get('image/upload','ImageUploadController@fileCreate')->name('designs');
+		Route::post('image/upload/store','ImageUploadController@fileStore');
+		Route::post('image/delete','ImageUploadController@fileDestroy');
     });
 });
 
@@ -44,13 +48,3 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register' => false]);
-
-//Auth::routes();
-
-Route::post('/sendcode', 'Auth\LoginController@sendcode')->name('sendcode');
-Route::get('/verifycode/{id}', 'Auth\LoginController@verifycode')->name('verifycode');
-Route::post('/verifyusercode', 'Auth\LoginController@verifyusercode')->name('verifyusercode');
-
-
-
-Auth::routes(['verify' => true]);

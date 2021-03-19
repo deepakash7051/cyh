@@ -8,6 +8,10 @@
         <a href="{{ route('admin.users.index') }}"><i class="fas fa-user"></i> {{ trans('global.user.title') }}</a>
     </li>
     @endcan
+
+    <li class="{{ request()->is('admin/designs') || request()->is('admin/designs*') ? 'active' : '' }}">
+        <a href="{{ route('admin.designs') }}"><i class="fas fa-file"></i> Images</a>
+    </li>
     
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
