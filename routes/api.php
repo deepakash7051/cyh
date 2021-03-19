@@ -37,4 +37,5 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
    // Route::post('editdetails', 'UsersController@editdetails');
     //Route::post('saveimages', 'UsersController@saveimages');
     Route::apiResource('/user', 'UserController');
+    Route::post('/user-update', 'UserController@update');
 });

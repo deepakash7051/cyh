@@ -6,6 +6,7 @@ use App\User;
 use App\UserImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class UserController extends ApiController
 {
@@ -30,7 +31,7 @@ class UserController extends ApiController
             return $this->payload([
                 'StatusCode' => '200', 
                 'message' => 'User Details', 
-                'result' => $user
+                'result' => array('user' => $user)
             ], 200);
         } catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass], 200);
@@ -87,21 +88,57 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         try{
-            $user = User::where('id',$id)->first();
-            $user->update( $request->all() );
+            $validator = Validator::make($request->all(), [
+	            'email' => 'required|string|email|max:255',
+	            'name' => 'required',
+	            'phone' => 'required|digits:10|integer',
+	            //'role' => 'required',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
+	        ]);
+
+            if ($validator->fails()) {
+	            $errors = $validator->errors()->toArray();
+	            $message = "";
+	            foreach($errors as $key  => $values){
+	                foreach($values as $value){
+	                    $message .= $value . "\n";
+	                }
+	            }
+
+	            return $this->payload(['StatusCode' => '422', 'message' => $message, 'result' => new \stdClass],200);
+	        }
+
+            $user = auth()->user();
+            
+            $data = [
+                'name'  => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone
+            ];
+
+            if( !empty($request->password) ){
+                $data['pass'] = $request->password;
+            }
+
+            $user->update( $data );
 
             if( !empty($request->attachment) ){
                 UserImage::updateOrCreate(['user_id' => $user->id], ['attachment' => $request->file('attachment')]);
             }
-
+            //return $user->user_image;
+            if( !empty($user->user_image) ){
+                $user->attachment_url = $user->user_image->attachment_url;
+            }else{
+                $user->attachment_url = "";
+            }
             if($user){
                 return $this->payload([
                     'StatusCode' => '200', 
                     'message' => 'User Details Updated Successfully', 
-                    'result' => ''
+                    'result' => array('user'=>$user)
                 ], 200);
             }
         } catch(Exception $e) {
