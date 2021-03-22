@@ -36,10 +36,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
 	    Route::resource('users', 'UsersController');
 	    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
-
-		Route::get('image/upload','ImageUploadController@fileCreate')->name('designs');
-		Route::post('image/upload/store','ImageUploadController@fileStore');
-		Route::post('image/delete','ImageUploadController@fileDestroy');
+		
+		Route::resource('designs','DesignController');
+		Route::get('designlist','DesignController@list')->name('designlist');
+		//Route::get('designs','ImageUploadController@index')->name('designs');
+		//Route::get('designs/list','ImageUploadController@list')->name('designs.list');
+		// Route::get('image/upload','ImageUploadController@fileCreate');
+		// Route::post('image/upload/store','ImageUploadController@fileStore');
+		// Route::post('image/delete','ImageUploadController@fileDestroy');
     });
 });
 

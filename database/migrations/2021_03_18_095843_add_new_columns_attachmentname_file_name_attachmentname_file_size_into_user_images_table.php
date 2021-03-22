@@ -14,14 +14,14 @@ class AddNewColumnsAttachmentnameFileNameAttachmentnameFileSizeIntoUserImagesTab
     public function up()
     {
         Schema::table('user_images', function (Blueprint $table) {
-            $table->string('attachment_file_name')->nullable()->after('mime');
+            $table->string('attachment_file_name')->nullable()->after('user_id');
             $table->integer('attachment_file_size')->nullable()->after('attachment_file_name');
             $table->string('attachment_content_type')->nullable()->after('attachment_file_size');
             $table->timestamp('attachment_updated_at')->nullable()->after('attachment_content_type');
             
-            $table->dropColumn('image_name');
-            $table->dropColumn('image_url');
-            $table->dropColumn('mime');
+            // $table->dropColumn('image_name');
+            // $table->dropColumn('image_url');
+            // $table->dropColumn('mime');
         });
     }
 

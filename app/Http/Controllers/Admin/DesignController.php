@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Validator;
 use App\ImageUpload;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Freshbitsweb\Laratables\Laratables;
+use Validator;
 
-class ImageUploadController extends Controller
+class DesignController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,22 +19,22 @@ class ImageUploadController extends Controller
     {
         $user_id = auth()->user()->id;
         $data = ImageUpload::where('user_id',$user_id)->get();
-        return view('admin.designs.index')->with('designs',$data);
+        return view('admin.designs.index');
     }
 
     public function list()
     {
-        return Laratables::recordsOf(ImageUpload::class);
+       return Laratables::recordsOf(ImageUpload::class);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('admin.designs.imageupload');
     }
 
     /**
@@ -45,7 +45,29 @@ class ImageUploadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/admin/designs/create')->with('error', 'All fields are required');
+        }
+
+        $images = $request->file('file');
+        
+        foreach( $images as $image ){
+            $imageName = $image->getClientOriginalName();
+            $image->move(public_path('images'),$imageName);
+
+            $imageUpload = new ImageUpload();
+            $imageUpload->title = $request->input('title');
+            $imageUpload->user_id = auth()->user()->id;
+            $imageUpload->filename = $imageName;
+            $imageUpload->save();
+        }
+        
+        return redirect('/admin/designs/create')->with('sussces', 'Image has been uploaded');   
     }
 
     /**
@@ -56,7 +78,7 @@ class ImageUploadController extends Controller
      */
     public function show($id)
     {
-        //
+        return Laratables::recordsOf(ImageUpload::class);
     }
 
     /**
@@ -91,48 +113,5 @@ class ImageUploadController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function fileCreate()
-    {
-        return view('admin.designs.imageupload');
-    }
-
-    public function fileStore(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/admin/image/upload')->with('error', 'All fields are required');
-        }
-
-        $images = $request->file('file');
-        
-        foreach( $images as $image ){
-            $imageName = $image->getClientOriginalName();
-            $image->move(public_path('images'),$imageName);
-
-            $imageUpload = new ImageUpload();
-            $imageUpload->title = $request->input('title');
-            $imageUpload->user_id = auth()->user()->id;
-            $imageUpload->filename = $imageName;
-            $imageUpload->save();
-        }
-        
-        return redirect('/admin/image/upload')->with('sussces', 'Image has been uploaded');
-    }
-
-    public function fileDestroy(Request $request)
-    {
-        $filename =  $request->get('filename');
-        ImageUpload::where('filename',$filename)->delete();
-        $path=public_path().'/images/'.$filename;
-        if (file_exists($path)) {
-            unlink($path);
-        }
-        return $filename;  
     }
 }
