@@ -10,7 +10,7 @@
     @endcan
 
     <li class="{{ request()->is('admin/designs') || request()->is('admin/designs*') ? 'active' : '' }}">
-        <a href="{{ route('admin.designs.index') }}"><i class="fas fa-file"></i> Images</a>
+        <a href="{{ route('admin.designs.index') }}"><i class="fas fa-images"></i> Images</a>
     </li>
     
     <li>

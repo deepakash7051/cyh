@@ -72,7 +72,6 @@ class RegisterController extends ApiController
 
                 $user->user_image()->create(['attachment' => $request->file('attachment')]);
                 
-
             }
             // $user->sendEmailVerificationNotification();
             

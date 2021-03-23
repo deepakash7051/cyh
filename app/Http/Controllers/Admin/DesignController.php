@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Validator;
 use App\ImageUpload;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DesignRequest;
 use Freshbitsweb\Laratables\Laratables;
-use Validator;
+use App\Http\Requests\DesignEditRequest;
 
 class DesignController extends Controller
 {
@@ -34,7 +36,7 @@ class DesignController extends Controller
      */
     public function create(Request $request)
     {
-        return view('admin.designs.imageupload');
+        return view('admin.designs.create');
     }
 
     /**
@@ -43,22 +45,14 @@ class DesignController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DesignRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
 
-        if ($validator->fails()) {
-            return redirect('/admin/designs/create')->with('error', 'All fields are required');
-        }
-
-        $images = $request->file('file');
+        $images = $request->file('image');
         
         foreach( $images as $image ){
             $imageName = $image->getClientOriginalName();
-            $image->move(public_path('images'),$imageName);
+            $image->move(public_path('designs'),$imageName);
 
             $imageUpload = new ImageUpload();
             $imageUpload->title = $request->input('title');
@@ -67,7 +61,7 @@ class DesignController extends Controller
             $imageUpload->save();
         }
         
-        return redirect('/admin/designs/create')->with('sussces', 'Image has been uploaded');   
+        return redirect('/admin/designs/create')->with('sussces', 'Design created successfully');
     }
 
     /**
@@ -78,7 +72,8 @@ class DesignController extends Controller
      */
     public function show($id)
     {
-        return Laratables::recordsOf(ImageUpload::class);
+        $data = ImageUpload::where('id',$id)->first();
+        return view('admin.designs.show')->with('design',$data);
     }
 
     /**
@@ -89,7 +84,8 @@ class DesignController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = ImageUpload::where('id',$id)->first();   
+        return view('admin.designs.edit')->with('design',$data);
     }
 
     /**
@@ -99,9 +95,30 @@ class DesignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DesignEditRequest $request, $id)
     {
-        //
+
+        $design = ImageUpload::find($id);
+
+        if( $request->input('title') ){
+            $design->update(['title' => $request->input('title')]);
+        }
+
+        $image = $request->file('image');
+        
+        if( !empty($image) ){
+
+            $imageName = $image->getClientOriginalName();
+            $image->move(public_path('designs'),$imageName);
+
+            $design->title = $request->input('title');
+            $design->user_id = auth()->user()->id;
+            $design->filename = $imageName;
+            $design->save();
+        }
+        
+
+        return redirect('/admin/designs/'.$id.'/edit')->with('sussces', 'Design has been updated');
     }
 
     /**
@@ -112,6 +129,9 @@ class DesignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $design = ImageUpload::find($id);
+        $design->delete();
+
+        return back();
     }
 }

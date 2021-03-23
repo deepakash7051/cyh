@@ -114,6 +114,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\UserImage');
     }
 
+    public function designs(){
+        return $this->hasMany('App\Design');
+    }
+
     public static function laratablesCustomRoles($user)
     {
         return view('admin.users.roles', compact('user'))->render();

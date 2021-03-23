@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\User;
+use Validator;
+use JWTAuth;
+
 use App\UserImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Validator;
 
 class UserController extends ApiController
 {
@@ -19,14 +21,16 @@ class UserController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( \Illuminate\Http\Request $request )
     {
         $user = auth()->user();
+        
         if( !empty($user->user_image->attachment_url) ){
             $user->attachment_url = $user->user_image->attachment_url;
         }else{
             $user->attachment_url = "";
         }
+        $user->token = $request->header('Authorization');
         try{
             return $this->payload([
                 'StatusCode' => '200', 

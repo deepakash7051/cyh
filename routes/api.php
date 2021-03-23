@@ -24,8 +24,6 @@ Route::group([
     Route::post('register', 'RegisterController@register');
 	Route::post('login', 'LoginController@login');
     Route::post('forgotpassword', 'LoginController@forgotpassword');
-
-    //Route::post('login/{provider}/callback','SocialController@Callback');
 });
 
 Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\v1' ], function ($router) {
@@ -38,4 +36,5 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     //Route::post('saveimages', 'UsersController@saveimages');
     Route::apiResource('/user', 'UserController');
     Route::post('/user-update', 'UserController@update');
+    Route::apiResource('/design', 'DesignController');
 });

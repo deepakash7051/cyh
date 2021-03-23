@@ -52,6 +52,7 @@
 
 @section('scripts')
 @parent
+
 <script>
 
 

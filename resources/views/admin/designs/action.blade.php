@@ -3,7 +3,7 @@
         {{ trans('global.view') }}
     </a>
 
-    <!-- <a class="btn btn-xs btn-info" href="{{ route('admin.designs.edit', $design->id) }}">
+    <a class="btn btn-xs btn-info" href="{{ route('admin.designs.edit', $design->id) }}">
         {{ trans('global.edit') }}
     </a>
 
@@ -11,4 +11,4 @@
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-    </form> -->
+    </form>
