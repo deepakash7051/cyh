@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Validator;
+use App\Design;
+use App\Portfolio;
 use App\ImageUpload;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,13 +22,13 @@ class DesignController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $data = ImageUpload::where('user_id',$user_id)->get();
+        $data = Portfolio::all();
         return view('admin.designs.index');
     }
 
     public function list()
     {
-       return Laratables::recordsOf(ImageUpload::class);
+       return Laratables::recordsOf(Portfolio::class);
     }
     
     /**
@@ -47,21 +49,18 @@ class DesignController extends Controller
      */
     public function store(DesignRequest $request)
     {
-
-        $images = $request->file('image');
-        
-        foreach( $images as $image ){
-            $imageName = $image->getClientOriginalName();
-            $image->move(public_path('designs'),$imageName);
-
-            $imageUpload = new ImageUpload();
-            $imageUpload->title = $request->input('title');
-            $imageUpload->user_id = auth()->user()->id;
-            $imageUpload->filename = $imageName;
-            $imageUpload->save();
+        $user = auth()->user();
+        $portfolio = new Portfolio();
+        $portfolio->user_id = auth()->user()->id;
+        $portfolio->title = $request->input('title');
+        $portfolio->save();
+        if( $request->has('attachments') ){
+            foreach($request->attachments as $attachment){
+                $user->designs()->create(['portfolio_id'=>$portfolio->id,'attachment' => $attachment]);
+            }
         }
-        
-        return redirect('/admin/designs/create')->with('sussces', 'Design created successfully');
+
+        return redirect('/admin/designs')->with('sussces', 'Portfolio created successfully');
     }
 
     /**
@@ -72,8 +71,8 @@ class DesignController extends Controller
      */
     public function show($id)
     {
-        $data = ImageUpload::where('id',$id)->first();
-        return view('admin.designs.show')->with('design',$data);
+        $data = Design::where('portfolio_id',$id)->get();
+        return view('admin.designs.show')->with('designs',$data);
     }
 
     /**
@@ -84,7 +83,7 @@ class DesignController extends Controller
      */
     public function edit($id)
     {
-        $data = ImageUpload::where('id',$id)->first();   
+        $data = Portfolio::where('id',$id)->first();   
         return view('admin.designs.edit')->with('design',$data);
     }
 
@@ -97,28 +96,21 @@ class DesignController extends Controller
      */
     public function update(DesignEditRequest $request, $id)
     {
-
-        $design = ImageUpload::find($id);
+        $user = auth()->user();
+        $portfolio = Portfolio::find($id);
 
         if( $request->input('title') ){
-            $design->update(['title' => $request->input('title')]);
+            $portfolio->update(['title' => $request->input('title')]);
         }
-
-        $image = $request->file('image');
         
-        if( !empty($image) ){
-
-            $imageName = $image->getClientOriginalName();
-            $image->move(public_path('designs'),$imageName);
-
-            $design->title = $request->input('title');
-            $design->user_id = auth()->user()->id;
-            $design->filename = $imageName;
-            $design->save();
+        if( $request->has('attachments') ){
+            foreach($request->attachments as $attachment){
+                $user->designs()->create(['portfolio_id'=>$portfolio->id,'attachment' => $attachment]);
+            }
         }
         
 
-        return redirect('/admin/designs/'.$id.'/edit')->with('sussces', 'Design has been updated');
+        return redirect('/admin/designs')->with('sussces', 'Design has been updated');
     }
 
     /**
@@ -129,9 +121,20 @@ class DesignController extends Controller
      */
     public function destroy($id)
     {
-        $design = ImageUpload::find($id);
+        $portfolio = Portfolio::find($id);
+        $portfolio->delete();
+
+        $design = Design::where('portfolio_id',$id);
         $design->delete();
 
+        return back();
+    }
+
+    public function deleteDesign($id){
+        if(!empty($id)){
+            $design = Design::find($id);
+            $design->delete();
+        }
         return back();
     }
 }

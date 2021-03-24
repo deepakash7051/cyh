@@ -25,7 +25,7 @@ class DesignEditRequest extends FormRequest
     {
         return [
             'title' => ['required'],
-            'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
+            'attachments.*' => 'image:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 }

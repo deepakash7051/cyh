@@ -17,4 +17,8 @@ class ImageUpload extends Model
         return view('admin.designs.action', compact('design'))->render();
     }
 
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
 }

@@ -27,8 +27,8 @@ class DesignRequest extends FormRequest
             'title'     => [
                 'required',
             ],
-            'image' => 'required',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'attachments' => 'required',
+            'attachments.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
     }
 }

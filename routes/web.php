@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 		
 		Route::resource('designs','DesignController');
 		Route::get('designlist','DesignController@list')->name('designlist');
+		Route::get('deleteDesign/{id}','DesignController@deleteDesign')->name('deleteDesign');
     });
 });
 

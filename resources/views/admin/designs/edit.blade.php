@@ -35,10 +35,10 @@
 
             <div class="form-group mb-2">
                 <label for="image">Image</label>
-                <input type="file" id="image" name="image" class="frm-field" value="">
-                @if($errors->has('image'))
+                <input type="file" id="image" name="attachments[]" class="frm-field" value="" multiple>
+                @if($errors->has('attachments'))
                 <em class="invalid-feedback">
-                        {{ $errors->first('image') }}
+                        {{ $errors->first('attachments') }}
                     </em>
                 @endif
                 <p class="helper-block"></p>

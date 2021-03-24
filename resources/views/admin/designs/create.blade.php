@@ -9,7 +9,7 @@
 
     <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
         <h2 class="main-heading m-0">
-            {{ trans('global.create') }} Design
+            {{ trans('global.create') }} {{ trans('global.portfolio.title') }}
         </h2>
     </div>
     
@@ -28,10 +28,10 @@
 
         <div class="form-group mb-2">
             <label for="image">Image</label>
-            <input type="file" id="image" name="image[]" class="frm-field" value="" multiple>
-            @if($errors->has('image'))
+            <input type="file" id="image" name="attachments[]" class="frm-field" value="" multiple>
+            @if($errors->has('attachments'))
             <em class="invalid-feedback">
-                    {{ $errors->first('image') }}
+                    {{ $errors->first('attachments') }}
                 </em>
             @endif
             <p class="helper-block"></p>

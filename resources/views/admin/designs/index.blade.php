@@ -19,7 +19,7 @@
             </h2>
             <div>
                 <a href="{{ URL::to('admin/designs/create') }}" class="btnn btnn-s">
-                    Add Designs
+                    Add Portfolio
                 </a>
             </div>
         </div>
@@ -38,10 +38,7 @@
                             Title
                         </th>
                         <th>
-                            Image
-                        </th>
-                        <th>
-                            
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -63,8 +60,8 @@
             ajax: "{{ route('admin.designlist') }}",
             columns: [
               { name: 'id' },
-              { name: 'title' },
-              { name: 'filename' },
+              { name: 'title' }
+              ,
               { name: 'action', orderable: false, searchable: false }
             ],
             dom: 'Bfrtip',

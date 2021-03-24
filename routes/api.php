@@ -37,4 +37,5 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::apiResource('/user', 'UserController');
     Route::post('/user-update', 'UserController@update');
     Route::apiResource('/design', 'DesignController');
+    Route::apiResource('/proposal', 'ProposalController');
 });

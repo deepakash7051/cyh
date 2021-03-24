@@ -7,20 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Design extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
 {
     use \Czim\Paperclip\Model\PaperclipTrait;
-
-    protected $fillable = [  
-        'user_id',
-        'title',
-        'attachment'
-    ];
     
-    protected $hidden = [  
-        'id',
-        'user_id',
-        'created_at',
-        'updated_at',
-        'user_image'
-    ];
+    protected $guarded = [];
 
     protected $appends = ['attachment_url'];
 
@@ -33,6 +21,9 @@ class Design extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         return $this->belongsTo('App\User');
     }
 
+    public function portfolio(){
+        return $this->belongsTo('App\Portfolio','portfolio_id');
+    }
     public function getAttachmentUrlAttribute() {
         return $this->attachment->url();
     }

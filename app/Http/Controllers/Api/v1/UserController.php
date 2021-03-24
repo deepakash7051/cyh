@@ -24,13 +24,12 @@ class UserController extends ApiController
     public function index( \Illuminate\Http\Request $request )
     {
         $user = auth()->user();
-        
         if( !empty($user->user_image->attachment_url) ){
             $user->attachment_url = $user->user_image->attachment_url;
         }else{
             $user->attachment_url = "";
         }
-        $user->token = $request->header('Authorization');
+        $user->token = $request->bearerToken();
         try{
             return $this->payload([
                 'StatusCode' => '200', 
@@ -159,5 +158,13 @@ class UserController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    public function bearerToken(){
+
+    $header = $this->header('Authorization', '');
+        if (Str::startsWith($header, 'Bearer ')) {
+            return Str::substr($header, 7);
+        }
     }
 }
