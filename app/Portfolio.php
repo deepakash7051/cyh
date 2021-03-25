@@ -24,6 +24,10 @@ class Portfolio extends Model
         return $this->hasMany('App\Design','portfolio_id');
     }
 
+    public function proposal(){
+        return $this->belongsTo('App\Proposal','portfolio_id');
+    }
+
     public static function laratablesCustomAction($design)
     {
         return view('admin.designs.action', compact('design'))->render();

@@ -17,14 +17,15 @@ class Design extends Model implements \Czim\Paperclip\Contracts\AttachableInterf
         parent::__construct($attributes);
     }
 
+    public function getAttachmentUrlAttribute() {
+        return $this->attachment->url();
+    }
+
     public function user(){
         return $this->belongsTo('App\User');
     }
 
     public function portfolio(){
         return $this->belongsTo('App\Portfolio','portfolio_id');
-    }
-    public function getAttachmentUrlAttribute() {
-        return $this->attachment->url();
     }
 }

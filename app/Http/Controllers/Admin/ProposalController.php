@@ -1,27 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Admin;
 
-use JWTAuth;
-use Response;
-use Validator;
-
-use App\Design;
-use JWTFactory;
+use App\Proposal;
 use App\Portfolio;
-
-use App\ImageUpload;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PortfolioResource;
+use Freshbitsweb\Laratables\Laratables;
 
-class DesignController extends ApiController
+class ProposalController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => []]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -29,14 +17,12 @@ class DesignController extends ApiController
      */
     public function index()
     {
-        try{
-            
-            $portfolios = Portfolio::with([ 'designs'])->get();
-            
-            return $this->payload(['StatusCode' => '200', 'message' => 'Portfolio List', 'result' => array('portfolios' => $portfolios)],200);
-        }catch(Exception $e) {
-            return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
-        }
+        return view('admin.proposals.index');
+    }
+
+    public function list(){
+        //return Proposal::with(['portfolio'])->get();
+        return Laratables::recordsOf(Proposal::class);
     }
 
     /**
@@ -57,7 +43,7 @@ class DesignController extends ApiController
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
@@ -68,11 +54,7 @@ class DesignController extends ApiController
      */
     public function show($id)
     {
-        try{
-            $design = auth()->user()->designs()->where('id',$id)->first();
-        }catch(Exception $e) {
-            return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
-        }
+        //
     }
 
     /**

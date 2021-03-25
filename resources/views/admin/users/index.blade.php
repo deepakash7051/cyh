@@ -3,7 +3,7 @@
 	<div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                {{ trans('global.user.title_singular') }} {{ trans('global.list') }}
+                Users 
             </h2>
             <div>
               @can('user_create')

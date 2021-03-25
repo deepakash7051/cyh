@@ -13,6 +13,10 @@
         <a href="{{ route('admin.designs.index') }}"><i class="fas fa-images"></i> Portfolio</a>
     </li>
     
+    <li class="{{ request()->is('admin/proposals') || request()->is('admin/proposals*') ? 'active' : '' }}">
+        <a href="{{ route('admin.proposals.index') }}"><i class="fas fa-file"></i> Proposals</a>
+    </li>
+
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
             <i class="fas fas fa-sign-out-alt"></i> {{ trans('global.logout') }}

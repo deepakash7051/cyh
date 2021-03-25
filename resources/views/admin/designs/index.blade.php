@@ -15,7 +15,7 @@
 	<div class="dash-main">
         <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
             <h2 class="main-heading m-0">
-                List
+                Portfolios
             </h2>
             <div>
                 <a href="{{ URL::to('admin/designs/create') }}" class="btnn btnn-s">
@@ -66,12 +66,7 @@
             ],
             dom: 'Bfrtip',
             buttons: [
-                { extend: 'pageLength'},
-                { extend: 'copyHtml5', text: "{{ trans('global.datatables.copy') }}" },
-                { extend: 'excelHtml5', text: "{{ trans('global.datatables.excel') }}" },
-                { extend: 'csvHtml5', text: "{{ trans('global.datatables.csv') }}" },
-                { extend: 'pdfHtml5', text: "{{ trans('global.datatables.pdf') }}" },
-                { extend: 'print', text: "{{ trans('global.datatables.print') }}" }
+                { extend: 'pageLength'}
             ]
         });
 </script>

@@ -6,8 +6,9 @@ use JWTAuth;
 use Response;
 use Validator;
 
-use App\Http\Controllers\Controller;
+use App\Proposal;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProposalController extends ApiController
 {
@@ -63,16 +64,17 @@ class ProposalController extends ApiController
 
             $user = auth()->user();
 
-            $user->proposal()->create($request->all());
+            $proposal_id = $user->proposal()->create($request->all())->id;
             
-                if( $request->has('attachments') ){
-                    foreach($request->attachments as $attachment){
-                        $user->proposal_images()->create(['attachment' => $attachment]);
+                if( $request->has('attachment') ){
+                    foreach($request->attachment as $attachment){
+                        $user->proposal_images()->create(['proposal_id'=>$proposal_id,'attachment' => $attachment]);
                     }
                 }
 
-            $user->load(['designs']);
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal has been created successfully', 'result' => array('user' => $user)],200);
+            $proposal = Proposal::with([ 'proposal_images:id,proposal_id,attachment_file_name'])->where('id',$proposal_id)->get();
+            
+            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal has been created successfully', 'result' => array('proposal' => $proposal)],200);
         }catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
