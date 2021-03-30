@@ -33,18 +33,5 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         return view('admin.proposals.action', compact('proposal'))->render();
     }
 
-    public static function laratablesCustomName($user)
-    {
-        return $user->first_name. ' ' .$user->last_name;
-    }
-     
-    public static function laratablesAdditionalColumns()
-    {
-        return ['portfolio'];
-    }
-
-    public static function laratablesOrderName()
-    {
-        return 'portfolio';
-    }
+    
 }

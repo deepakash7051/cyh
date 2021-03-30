@@ -33,7 +33,7 @@ class RegisterController extends ApiController
 	        $validator = Validator::make($request->all(), [
 	            'email' => 'required|string|email|max:255',
 	            'name' => 'required',
-	            'phone' => 'required|digits:10|integer',
+	            'phone' => 'required|integer',
 	            'password'=> 'required',
 	            'role' => 'required',
                 'image' => 'image:jpeg,png,jpg,gif,svg|max:2048'
