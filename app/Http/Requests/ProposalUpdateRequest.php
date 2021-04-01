@@ -23,10 +23,32 @@ class ProposalUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'comment'=>['required'],
-            //'attachment' => 'required',
-            //'attachment.*'=>'image:jpeg,png,jpg,gif,svg|max:2048'
-        ];
+        $rule = [];
+        if( $this->has('first_propsal')  ){
+            $rule = [
+                'first_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+    
+                'first_desc'=>['required'],
+    
+                //'attachment' => 'required',
+                //'attachment.*'=>'image:jpeg,png,jpg,gif,svg|max:2048'
+            ];
+        }
+
+        if( $this->has('second_proposal')  ){
+            $rule = [
+                'second_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+                'second_desc'=>['required'],
+            ];
+        }
+
+        if( $this->has('third_propsal')  ){
+            $rule = [
+                 'third_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+                 'third_desc'=>['required']
+            ];
+        }
+
+        return $rule;
     }
 }

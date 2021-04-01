@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Comment;
 use App\Proposal;
 use App\Portfolio;
+use App\FirstProposal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Freshbitsweb\Laratables\Laratables;
+use App\Http\Requests\DesignEditRequest;
 use App\Http\Requests\ProposalEditRequest;
 use App\Http\Requests\ProposalUpdateRequest;
-use App\Http\Requests\DesignEditRequest;
-use App\Comment;
 
 class ProposalController extends Controller
 {
@@ -70,7 +71,7 @@ class ProposalController extends Controller
      */
     public function edit($id)
     {
-        $proposal = Proposal::with(['user','portfolio','proposal_images'])->where('id',$id)->first();
+        $proposal = Proposal::with(['user','portfolio','proposal_images','first_proposal','second_proposal','third_proposal'])->where('id',$id)->first();
         $comments = auth()->user()->comments()->latest()->first();
         return view('admin.proposals.edit')->with(['proposals'=>$proposal,'comments'=>$comments]);
     }
@@ -82,18 +83,37 @@ class ProposalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(ProposalUpdateRequest $request, $id)
     {
         $user = auth()->user();
-//         $comment = new Comment();
-//         $comment->user_id = auth()->user()->id;
-//         $comment->comment = $request->input('comment');
-//         $comment->proposal_id = $id;
-//         $comment->save();
-        $comment =  Comment::updateOrCreate(['user_id'=>$user->id,'comment'=>$request->input('comment'),'proposal_id'=>$id]);
+        $porposal = Proposal::find($id);
+        $plan_id = [];
+        if( $request->exists('first_propsal') ){
+            $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','first_propsal']);
+            $model = $porposal->first_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+            $plan_id = ['first_p_id'=>$model->id];
+        }
+        if( $request->exists('second_propsal') ){
+            $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','second_propsal']);
+            $model = $porposal->second_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+            $plan_id = ['second_p_id'=>$model->id];
+        }
+        if( $request->exists('third_propsal') ){
+            $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','third_propsal']);
+            $model = $porposal->third_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+            $plan_id = ['third_p_id'=>$model->id];
+        }
+        
         if( $request->has('attachment') ){
             foreach($request->attachment as $attachment){
-                $comment->comments_attachments()->create(['user_id'=>$user->id,'comment_id'=>$comment->id,'attachment' => $attachment]);
+                if(!empty($plan_id)){
+                    $data = array_merge(['user_id'=>$user->id,'attachment' => $attachment],$plan_id);
+
+                }else{
+                    $data = ['user_id'=>$user->id,'attachment' => $attachment];
+                }
+                //$porposal->proposal_images()->create( $data );
             }
         }
         
