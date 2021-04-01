@@ -38,4 +38,12 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::post('/user-update', 'UserController@update');
     Route::apiResource('/design', 'DesignController');
     Route::apiResource('/proposal', 'ProposalController');
+    //Route::apiResource('/woocommerce', 'WoocommerceController');
+    Route::group(['namespace' => 'wp' ], function ($router) {
+       // Route::apiResource('/woocommerce', 'WoocommerceController');
+    });
+});
+
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1\wp' ], function ($router) {
+    Route::apiResource('/product', 'ProductController');
 });

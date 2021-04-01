@@ -17,6 +17,10 @@
         <a href="{{ route('admin.proposals.index') }}"><i class="fas fa-file"></i> Proposals</a>
     </li>
 
+    <li class="{{ request()->is('admin/products') || request()->is('admin/products*') ? 'active' : '' }}">
+        <a href="{{ route('admin.products.index') }}" target="_blank"><i class="fas fa-file"></i> Products</a>
+    </li>
+
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
             <i class="fas fas fa-sign-out-alt"></i> {{ trans('global.logout') }}

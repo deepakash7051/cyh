@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "codexshaper/laravel-woocommerce": "^3.0",
         "cohensive/embed": "^5.5",
         "czim/laravel-paperclip": "^3.2",
         "fideloper/proxy": "^4.4",

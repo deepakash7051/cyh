@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 		Route::get('deleteDesign/{id}','DesignController@deleteDesign')->name('deleteDesign');
 		Route::resource('proposals','ProposalController');
 		Route::get('proposallist','ProposalController@list')->name('proposallist');
+		Route::resource('products','ProductController');
     });
 });
 
@@ -50,3 +51,5 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register' => false]);
+
+
