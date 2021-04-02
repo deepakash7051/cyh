@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Validator;
 use App\Comment;
 use App\Proposal;
 use App\Portfolio;
 use App\FirstProposal;
+use App\ThirdProposal;
+use App\SecondProposal;
+use App\AdminProposalFile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Freshbitsweb\Laratables\Laratables;
 use App\Http\Requests\DesignEditRequest;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProposalEditRequest;
 use App\Http\Requests\ProposalUpdateRequest;
 
@@ -71,9 +76,17 @@ class ProposalController extends Controller
      */
     public function edit($id)
     {
-        $proposal = Proposal::with(['user','portfolio','proposal_images','first_proposal','second_proposal','third_proposal'])->where('id',$id)->first();
-        $comments = auth()->user()->comments()->latest()->first();
-        return view('admin.proposals.edit')->with(['proposals'=>$proposal,'comments'=>$comments]);
+        $proposal = Proposal::with(['user','portfolio','proposal_images','first_proposal','second_proposal','third_proposal','admin_propsal_files'])->where('id',$id)->first();
+        $first_proposal = FirstProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
+        $second_proposal = SecondProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
+        $third_proposal = ThirdProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
+        return view('admin.proposals.edit')->with(
+            [
+                'proposals'=>$proposal,
+                'first_proposals'=>$first_proposal,
+                'second_proposals'=>$second_proposal,
+                'third_proposals'=>$third_proposal
+            ]);
     }
 
     /**
@@ -113,7 +126,7 @@ class ProposalController extends Controller
                 }else{
                     $data = ['user_id'=>$user->id,'attachment' => $attachment];
                 }
-                //$porposal->proposal_images()->create( $data );
+                $porposal->admin_propsal_files()->create( $data );
             }
         }
         
@@ -130,6 +143,12 @@ class ProposalController extends Controller
     {
         $proposal = Proposal::with(['portfolio','proposal_images'])->where('id',$id);
         $proposal->delete();
+        
+        return back();
+    }
+    public function deleteFile($id){
+        $file = AdminProposalFile::find($id);
+        $file->delete();
         
         return back();
     }

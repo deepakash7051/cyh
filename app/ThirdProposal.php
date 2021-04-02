@@ -24,4 +24,8 @@ class ThirdProposal extends Model
     public function proposal(){
         return $this->belongsTo('App\Proposal');
     }
+
+    public function admin_propsal_files(){
+        return $this->hasMany('App\AdminProposalFile','third_p_id');
+    }
 }

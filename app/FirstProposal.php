@@ -24,5 +24,8 @@ class FirstProposal extends Model
         return $this->belongsTo('App\Proposal');
     }
 
+    public function admin_propsal_files(){
+        return $this->hasMany('App\AdminProposalFile','first_p_id');
+    }
     
 }

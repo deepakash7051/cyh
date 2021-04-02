@@ -106,6 +106,36 @@
                                     <option value="">Completed</option>
                             </select>
                         </div> -->
+                        <label for="exampleFormControlTextarea4">Files:</label>
+                        <div class="row mb-5">
+                        @if( count($first_proposals) > 0 )
+                            @foreach( $first_proposals as $first_proposal )
+                                @if( count($first_proposal->admin_propsal_files) > 0 )
+                                    @foreach( $first_proposal->admin_propsal_files as $file )
+                                    <div class="col-sm-12 col-md-3">
+                                        @if( $file->attachment_content_type !== 'application/pdf' )
+                                        <a href="{{ $file->attachment->url() }}" target="_blank">
+                                            <img
+                                                class="img-fluid img-center"
+                                                src="{{ $file->attachment->url() }}"
+                                                /></a>
+                                            <div class="caption">
+                                                <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                            </div>
+                                            @else
+                                            <a href="{{ $file->attachment->url() }}" target="_blank">
+                                            <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
+                                            <div class="caption">
+                                                <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                            </div>
+                                        @endif
+                                    </div>
+                                    @endforeach                        
+                                @endif
+                            @endforeach    
+                        @endif          
+                        </div>
+
                          <input type="hidden" name="first_propsal">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
                          <div>
@@ -164,6 +194,37 @@
                             @endif
                             <p class="helper-block"></p>
                          </div>
+
+                         @if( count($second_proposals) > 0 )                            
+                        <label for="exampleFormControlTextarea4">Files:</label>
+                        <div class="row mb-5">
+                            @foreach( $second_proposals as $second_proposal )
+                                @if( count($second_proposal->admin_propsal_files) > 0 )
+                                    @foreach( $second_proposal->admin_propsal_files as $file )
+                                    <div class="col-sm-12 col-md-3">
+                                    @if( $file->attachment_content_type !== 'application/pdf' )
+                                    <a href="{{ $file->attachment->url() }}" target="_blank">
+                                        <img
+                                            class="img-fluid img-center"
+                                            src="{{ $file->attachment->url() }}"
+                                            /></a>
+                                            <div class="caption">
+                                                <input class="btn btn-link text-danger" id="" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                            </div>
+                                        @else
+                                            <a href="{{ $file->attachment->url() }}" target="_blank">
+                                            <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
+                                            <div class="caption">
+                                                <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                            </div>
+                                    @endif
+                                    </div>
+                                    @endforeach                        
+                                @endif
+                            @endforeach          
+                        </div>
+                        @endif 
+
                          <input type="hidden" name="second_propsal">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
                          <div>
@@ -222,6 +283,34 @@
                             @endif
                             <p class="helper-block"></p>
                          </div>
+                        
+                         @if( count($third_proposals) > 0 )                            
+                        <label for="exampleFormControlTextarea4">Files:</label>
+                        <div class="row mb-5">
+                            @foreach( $third_proposals as $third_proposal )
+                                @if( count($third_proposal->admin_propsal_files) > 0 )
+                                    @foreach( $third_proposal->admin_propsal_files as $file )
+                                    <div class="col-sm-12 col-md-3">
+                                        @if( $file->attachment_content_type !== 'application/pdf' )
+                                        <a href="{{ $file->attachment->url() }}" target="_blank">
+                                            <img class="img-fluid img-center" src="{{ $file->attachment->url() }}"/></a>
+                                            <div class="caption">
+                                                <input class="btn btn-link text-danger" id="" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                            </div>
+                                        @else
+                                        <a href="{{ $file->attachment->url() }}" target="_blank">
+                                            <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
+                                        <div class="caption">
+                                            <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                        </div>
+                                        @endif                                        
+                                    </div>
+                                    @endforeach                        
+                                @endif
+                            @endforeach          
+                        </div>
+                        @endif
+
                          <input type="hidden" name="third_propsal">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
                          <div>
@@ -241,6 +330,26 @@
     @parent
     <script>
 
+        function deleteFile(event,id) {
+            
+            let token = "{{ csrf_token() }}";
+
+            let url = "../../../admin/deleteFile/"+id;
+
+            if( typeof(id) !== 'undefined' ){
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText){
+                        location.reload();
+                    }
+                }
+                };
+                xhttp.send();    
+            }
+        }
     </script>
 @endsection
 @endsection

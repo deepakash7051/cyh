@@ -9,7 +9,8 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
     use \Czim\Paperclip\Model\PaperclipTrait;
 
     protected $fillable = [
-        'portfolio_id'
+        'portfolio_id',
+        'description'
     ];
     
     protected $hidden = [
@@ -43,6 +44,10 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
 
     public function third_proposal(){
         return $this->hasMany('App\ThirdProposal','proposal_id');
+    }
+
+    public function admin_propsal_files(){
+        return $this->hasMany('App\AdminProposalFile');
     }
     
 }
