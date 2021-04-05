@@ -15,8 +15,9 @@
     <div class="search-wrp">
         <div class="d-flex justify-content-between"></div>
     </div>
-    <!-- Proposal By User -->
-    <div class="row justify-content-center">
+
+        <!-- Proposal By User -->
+        <div class="row justify-content-center">
 		<div class="col-md-12">
 			<div class="card card-default">
 				<div class="card-header">
@@ -48,6 +49,83 @@
 					</div>
 					
 					
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Milestones -->
+    <div class="row justify-content-center">
+		<div class="col-md-12">
+			<div class="card card-default">
+				<div class="card-header">
+					<h2>Milestones</h2>
+				</div>
+				<div class="card-body">
+									
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Payment Status -->
+    <div class="row justify-content-center">
+		<div class="col-md-12">
+			<div class="card card-default">
+				<div class="card-header">
+					<h2>Payment Status</h2>
+				</div>
+				<div class="card-body">
+
+                @if( !empty($proposals->single_manual_payment) && !empty($proposals->payment_status))
+                <form action="{{ route('admin.proposals.update', [$proposals->id]) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+						@method('PUT')
+                    <div class="form-group purple-border">
+                      <label for="paymane_type">Type:</label>
+                      <input type="text" class="form-control" value="{{ $proposals->payment_status->type }}" id="paymane_type"readOnly>
+                    </div>
+
+                    <div class="form-group purple-border">
+                      <label for="paymane_amount">Amount:</label>
+                      <input type="text" class="form-control" value="{{ $proposals->single_manual_payment->amount }}" id="paymane_amount"readOnly>
+                    </div>
+					
+                    <div class="form-group">
+                        <label for="payment_status">Status</label>
+                        <select class="form-control" id="payment_status" onchange="getPaymentStatus(this)">
+                        
+                        @if( $proposals->payment_status->status == 'pending' )
+                         <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
+                         <option value="completed">Completed</option>
+                        @endif
+                        @if( $proposals->payment_status->status == 'completed' )
+                         <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
+                         <option value="Pending">Pending</option>
+                        @endif
+                        </select>
+                    </div>
+
+					<label for="exampleFormControlTextarea4">Receipt Image:</label>
+					<div class="row">
+                        <div class="col-sm-12 col-md-3">
+                            <a href="{{ $proposals->single_manual_payment->attachment->url() }}" target="_blank"><img
+                            class="img-fluid img-center"
+                            src="{{ $proposals->single_manual_payment->attachment->url() }}"
+                            /></a>
+                        </div>
+					</div>
+
+                    <div>
+                        <input class="btnn btnn-s" id="payment_status" onclick="updatePaymentStatus(event,{{ $proposals->payment_status->id }})" type="button" value="{{ trans('global.save') }}">
+                    </div>
+                </form>
+                @else
+                    <div class="text-center">
+                        Not Available
+                    </div>
+                @endif	
+                
 				</div>
 			</div>
 		</div>
@@ -335,6 +413,35 @@
             let token = "{{ csrf_token() }}";
 
             let url = "../../../admin/deleteFile/"+id;
+
+            if( typeof(id) !== 'undefined' ){
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText){
+                        location.reload();
+                    }
+                }
+                };
+                xhttp.send();    
+            }
+        }
+
+        function getPaymentStatus(selectObject){
+            var value = selectObject.value;  
+            console.log(value);
+        }
+
+        function updatePaymentStatus(event,id) {
+            
+            let token = "{{ csrf_token() }}";
+
+            var x = document.getElementById("payment_status").selectedIndex;
+            let paymentStatus = document.getElementsByTagName("option")[x].value;
+
+            let url = "../../../admin/updatePaymentStatus/"+id+"/"+paymentStatus;
 
             if( typeof(id) !== 'undefined' ){
                 var xhttp = new XMLHttpRequest();

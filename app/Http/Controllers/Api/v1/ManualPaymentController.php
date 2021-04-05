@@ -7,10 +7,12 @@ use Response;
 use Validator;
 
 use App\Proposal;
+use App\ManualPayment;
+use App\PaymentStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ProposalController extends ApiController
+class ManualPaymentController extends ApiController
 {
     public function __construct()
     {
@@ -24,9 +26,10 @@ class ProposalController extends ApiController
     public function index()
     {
         try{
-            $proposal = Proposal::with(['user','portfolio','proposal_images','payment_status:id,proposal_id,status,type'])->latest()->get();
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $proposal)],200);
-        }catch(Exception $e){
+
+            $paymentStatus = PaymentStatus::all();
+            return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('payment_status' => $paymentStatus)],200);
+        }catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
     }
@@ -51,9 +54,10 @@ class ProposalController extends ApiController
     {
         try{
             $validator = Validator::make($request->all(), [
-	            'portfolio_id' => 'required|integer',
-                'attachments.*' => 'image:jpeg,png,jpg,gif,svg|max:2048',
-	            //'description' => 'required'
+                'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+	            'proposal_id' => 'required|integer',
+                'attachment' => 'required',
+                'attachment.*' => 'image:jpeg,png,jpg,gif,svg|max:2048'
 	        ]);
 	        if ($validator->fails()) {
 	            $errors = $validator->errors()->toArray();
@@ -63,23 +67,20 @@ class ProposalController extends ApiController
 	                    $message .= $value . "\n";
 	                }
 	            }
-
 	            return $this->payload(['StatusCode' => '422', 'message' => $message, 'result' => new \stdClass],200);
 	        }
 
             $user = auth()->user();
 
-            $proposal_id = $user->proposal()->create($request->all())->id;
+            $proposal = Proposal::find($request->input('proposal_id'));
             
-                if( $request->has('attachment') ){
-                    foreach($request->attachment as $attachment){
-                        $user->proposal_images()->create(['proposal_id'=>$proposal_id,'attachment' => $attachment]);
-                    }
-                }
-
-            $proposal = Proposal::with([ 'proposal_images:id,proposal_id,attachment_file_name'])->where('id',$proposal_id)->get();
+            if( !empty( $proposal ) ){
+                    $data = $request->merge(['attachment' => $request->attachment,'user_id'=>$user->id])->all();
+                    $payment = $proposal->manual_payment()->create($data);
+                    $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
+            }
             
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal has been created successfully', 'result' => array('proposal' => $proposal)],200);
+            return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('proposal' => [])],200);
         }catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
@@ -94,9 +95,10 @@ class ProposalController extends ApiController
     public function show($id)
     {
         try{
-            $proposal = Proposal::with(['user','portfolio','proposal_images','single_manual_payment','payment_status:id,proposal_id,status,type'])->where('id',$id)->first();
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $proposal)],200);
-        }catch(Exception $e){
+
+            $paymentStatus = PaymentStatus::find($id);
+            return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('payment_status' => $paymentStatus)],200);
+        }catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
     }

@@ -154,6 +154,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\AdminProposalFile');
     }
 
+    public function manual_payment(){
+        return $this->hasMany('App\ManualPayment');
+    }
+
+    public function stripe_token(){
+        return $this->hasMany('App\StripeToken');
+    }
+
     public static function laratablesCustomRoles($user)
     {
         return view('admin.users.roles', compact('user'))->render();
@@ -174,7 +182,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $user->status == 1 ? trans('global.active') : trans('global.inactive');
     }
-
+    
     public static function update_user($input, $where){
         $query = User::where($where);
         if($query->update($input)) {    

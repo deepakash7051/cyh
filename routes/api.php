@@ -38,10 +38,9 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::post('/user-update', 'UserController@update');
     Route::apiResource('/design', 'DesignController');
     Route::apiResource('/proposal', 'ProposalController');
-    //Route::apiResource('/woocommerce', 'WoocommerceController');
-    Route::group(['namespace' => 'wp' ], function ($router) {
-       // Route::apiResource('/woocommerce', 'WoocommerceController');
-    });
+    Route::apiResource('/manual-payment','ManualPaymentController');
+    Route::apiResource('/stripe-payment','StripePaymentController');
+    Route::apiResource('/stripe-token','StripeTokenController');
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1\wp' ], function ($router) {

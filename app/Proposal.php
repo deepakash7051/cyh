@@ -47,7 +47,20 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
     }
 
     public function admin_propsal_files(){
-        return $this->hasMany('App\AdminProposalFile');
+        return $this->hasMany('App\AdminProposalFile','proposal_id');
     }
     
+    public function payment_status(){
+        return $this->hasOne('App\PaymentStatus','proposal_id')->withDefault([
+            'status' => 'pending'
+        ])->latest();
+    }
+
+    public function single_manual_payment(){
+        return $this->hasOne('App\ManualPayment','proposal_id')->latest();
+    }
+
+    public function manual_payment(){
+        return $this->hasMany('App\ManualPayment','proposal_id');
+    }
 }

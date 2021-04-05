@@ -7,6 +7,7 @@ use App\Comment;
 use App\Proposal;
 use App\Portfolio;
 use App\FirstProposal;
+use App\PaymentStatus;
 use App\ThirdProposal;
 use App\SecondProposal;
 use App\AdminProposalFile;
@@ -76,7 +77,8 @@ class ProposalController extends Controller
      */
     public function edit($id)
     {
-        $proposal = Proposal::with(['user','portfolio','proposal_images','first_proposal','second_proposal','third_proposal','admin_propsal_files'])->where('id',$id)->first();
+        $proposal = Proposal::with(['user','portfolio','proposal_images','first_proposal','second_proposal','third_proposal','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+        //return $proposal;
         $first_proposal = FirstProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
         $second_proposal = SecondProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
         $third_proposal = ThirdProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
@@ -146,10 +148,17 @@ class ProposalController extends Controller
         
         return back();
     }
+
     public function deleteFile($id){
         $file = AdminProposalFile::find($id);
         $file->delete();
         
         return back();
+    }
+
+    public function updatePaymentStatus(Request $request,$id){
+        $paymentStatus = PaymentStatus::find($id);
+        $paymentStatus->update(['status'=>$request->route('paymentStatus')]);
+        return $request->route('paymentStatus');
     }
 }
