@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class SecondProposal extends Model
 {
@@ -27,4 +28,5 @@ class SecondProposal extends Model
     public function admin_propsal_files(){
         return $this->hasMany('App\AdminProposalFile','second_p_id');
     }
+
 }

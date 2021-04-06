@@ -120,6 +120,39 @@
                         <input class="btnn btnn-s" id="payment_status" onclick="updatePaymentStatus(event,{{ $proposals->payment_status->id }})" type="button" value="{{ trans('global.save') }}">
                     </div>
                 </form>
+                @elseif( !empty($proposals->stripe_payment) && !empty($proposals->payment_status) )
+                <form action="{{ route('admin.proposals.update', [$proposals->id]) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+						@method('PUT')
+                    <div class="form-group purple-border">
+                      <label for="paymane_type">Type:</label>
+                      <input type="text" class="form-control" value="{{ $proposals->payment_status->type }}" id="paymane_type"readOnly>
+                    </div>
+
+                    <div class="form-group purple-border">
+                      <label for="paymane_amount">Amount:</label>
+                      <input type="text" class="form-control" value="{{ $proposals->stripe_payment->amount }}" id="paymane_amount"readOnly>
+                    </div>
+					
+                    <div class="form-group">
+                        <label for="payment_status">Status</label>
+                        <select class="form-control" id="payment_status" onchange="getPaymentStatus(this)" disabled>
+                        
+                        @if( $proposals->payment_status->status == 'pending' )
+                         <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
+                         <option value="completed">Completed</option>
+                        @endif
+                        @if( $proposals->payment_status->status == 'completed' )
+                         <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
+                         <option value="Pending">Pending</option>
+                        @endif
+                        </select>
+                    </div>
+
+                    <div>
+                        <input class="btnn btnn-s" id="payment_status" onclick="updatePaymentStatus(event,{{ $proposals->payment_status->id }})" type="button" value="{{ trans('global.save') }}" disabled>
+                    </div>
+                </form>
                 @else
                     <div class="text-center">
                         Not Available

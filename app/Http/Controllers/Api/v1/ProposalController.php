@@ -9,6 +9,7 @@ use Validator;
 use App\Proposal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PortfolioResource;
 
 class ProposalController extends ApiController
 {
@@ -24,8 +25,11 @@ class ProposalController extends ApiController
     public function index()
     {
         try{
-            $proposal = Proposal::with(['user','portfolio','proposal_images','payment_status:id,proposal_id,status,type'])->latest()->get();
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $proposal)],200);
+            $proposal = Proposal::with(['user','portfolio','proposal_images','payment_status:id,proposal_id,status,type','first_proposal','second_proposal','third_proposal'])->latest()->get();
+            //return $proposal;
+            $resp = PortfolioResource::collection($proposal);
+
+            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $resp)],200);
         }catch(Exception $e){
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
@@ -94,8 +98,12 @@ class ProposalController extends ApiController
     public function show($id)
     {
         try{
-            $proposal = Proposal::with(['user','portfolio','proposal_images','single_manual_payment','payment_status:id,proposal_id,status,type'])->where('id',$id)->first();
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $proposal)],200);
+            
+            $proposal = Proposal::with(['user','portfolio','proposal_images','single_manual_payment','stripe_payment','payment_status:id,proposal_id,status,type'])->where('id',$id)->first();
+
+            $resp = new PortfolioResource($proposal);
+
+            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $resp)],200);
         }catch(Exception $e){
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }

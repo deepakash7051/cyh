@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use Session;
-use Stripe;
+use App\Proposal;
+
+use Stripe\Charge;
+use Stripe\Stripe;
+use Stripe\Customer;
+use Stripe\StripeClient;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class StripePaymentController extends ApiController
 {
@@ -22,7 +26,16 @@ class StripePaymentController extends ApiController
      */
     public function index()
     {
-        //
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+          $data = $stripe->tokens->create([
+            'card' => [
+              'number' => '4242424242424242',
+              'exp_month' => 4,
+              'exp_year' => 2022,
+              'cvc' => '314',
+            ],
+          ]);
+          return $data;
     }
 
     /**
@@ -42,17 +55,40 @@ class StripePaymentController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        $payment = Stripe\Charge::create ([
-                "amount" => 100 * 100,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Test payment from itsolutionstuff.com." 
-        ]);
+    {   
+        try{
+                $user = auth()->user();
+                $token = $user->stripe_token()->first();
+                
+                $data = [
+                    "amount" => $token->amount * 100,
+                    "currency" => "inr",
+                    "source" => $token->token,
+                    "description" => ""
+                ];
 
-        return $payment;
-    }
+                Stripe::setApiKey(env('STRIPE_SECRET'));
+
+                $payment = Charge::create ($data);
+                $proposal = Proposal::find($token->proposal_id);
+                if($payment){
+                    $data = [
+                        'proposal_id' => $token->proposal_id,
+                        'transaction_id' => $payment->id,
+                        'amount' => $payment->amount,
+                        'object' => $payment->object,
+                        'balance_transaction' => $payment->balance_transaction,
+                        'status' => $payment->status,
+                        'paid'=>$payment->paid
+                    ];
+                    $sId = $user->stripe_payment()->create($data);
+                    $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'s_id'=>$sId->id,'proposal_id'=>$token->proposal_id,'type'=>'stripe','status'=>'completed']);
+                }
+                return $this->payload(['StatusCode' => '200', 'message' => 'Payment successfully made', 'result' => array('stripe' => $payment)],200);
+            } catch(Exception $e) {
+                return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
+            }
+        }
 
     /**
      * Display the specified resource.

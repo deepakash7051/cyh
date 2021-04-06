@@ -162,6 +162,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\StripeToken');
     }
 
+    public function stripe_payment(){
+        return $this->hasMany('App\StripePayment');
+    }
+
     public static function laratablesCustomRoles($user)
     {
         return view('admin.users.roles', compact('user'))->render();

@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\FirstProposal;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\PortfolioResource;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInterface
 {
@@ -12,7 +15,7 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         'portfolio_id',
         'description'
     ];
-    
+
     protected $hidden = [
         'image_id'
     ];
@@ -35,15 +38,27 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
     }
 
     public function first_proposal(){
-        return $this->hasMany('App\FirstProposal','proposal_id');
+        return $this->hasOne('App\FirstProposal','proposal_id')->latest();
     }
 
     public function second_proposal(){
-        return $this->hasMany('App\SecondProposal','proposal_id');
+        return $this->hasOne('App\SecondProposal','proposal_id')->latest();
     }
 
     public function third_proposal(){
-        return $this->hasMany('App\ThirdProposal','proposal_id');
+        return $this->hasOne('App\ThirdProposal','proposal_id')->latest();
+    }
+
+    public function first_proposals(){
+        return $this->hasMany('App\FirstProposal','proposal_id')->latest();
+    }
+
+    public function second_proposals(){
+        return $this->hasMany('App\SecondProposal','proposal_id')->latest();
+    }
+
+    public function third_proposals(){
+        return $this->hasMany('App\ThirdProposal','proposal_id')->latest();
     }
 
     public function admin_propsal_files(){
@@ -62,5 +77,9 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
 
     public function manual_payment(){
         return $this->hasMany('App\ManualPayment','proposal_id');
+    }
+
+    public function stripe_payment(){
+        return $this->hasOne('App\StripePayment','proposal_id')->latest();
     }
 }

@@ -131,8 +131,8 @@ class ProposalController extends Controller
                 $porposal->admin_propsal_files()->create( $data );
             }
         }
-        
-        return redirect()->route('admin.proposals.index')->with('sussces', 'Proposal created successfully');
+        return redirect()->back();
+        //return redirect()->route('admin.proposals.index')->with('sussces', 'Proposal created successfully');
     }
 
     /**
