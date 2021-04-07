@@ -78,7 +78,7 @@ class ProposalController extends Controller
      */
     public function edit($id)
     {
-        $proposal = Proposal::with(['user','portfolio','proposal_images','admin_proposals','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+        $proposal = Proposal::with(['user','portfolio','proposal_images','admin_proposals.admin_proposal_files','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
        // return AdminProposal::with(['admin_proposal_files'])->get();
         //return $proposal;
         return view('admin.proposals.edit')->with(
@@ -139,22 +139,21 @@ class ProposalController extends Controller
         $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method']);
         if( $request->input('proposal_type') == 'one' ){
             $model = $porposal->admin_proposals()->updateOrCreate(['proposal_id'=>$id,'proposal_type'=>'one'],$data);
-            $plan_id = ['first_p_id'=>$model->id];
+            $plan_id = ['admin_proposal_id'=>$model->id];
         }
         if( $request->input('proposal_type') == 'two' ){
             $model = $porposal->admin_proposals()->updateOrCreate(['proposal_id'=>$id,'proposal_type'=>'two'],$data);
-            $plan_id = ['second_p_id'=>$model->id];
+            $plan_id = ['admin_proposal_id'=>$model->id];
         }
         if( $request->input('proposal_type') == 'three' ){
             $model = $porposal->admin_proposals()->updateOrCreate(['proposal_id'=>$id,'proposal_type'=>'three'],$data);
-            $plan_id = ['third_p_id'=>$model->id];
+            $plan_id = ['admin_proposal_id'=>$model->id];
         }
 
         if( $request->has('attachment') ){
             foreach($request->attachment as $attachment){
                 if(!empty($plan_id)){
                     $data = array_merge(['user_id'=>$user->id,'attachment' => $attachment],$plan_id);
-                    //dd($data);
                 }else{
                     $data = ['user_id'=>$user->id,'attachment' => $attachment];
                 }
@@ -170,8 +169,7 @@ class ProposalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $proposal = Proposal::with(['portfolio','proposal_images'])->where('id',$id);
         $proposal->delete();
         
@@ -188,6 +186,7 @@ class ProposalController extends Controller
     public function updatePaymentStatus(Request $request,$id){
         $paymentStatus = PaymentStatus::find($id);
         $paymentStatus->update(['status'=>$request->route('paymentStatus')]);
+        
         return $request->route('paymentStatus');
     }
 }

@@ -37,30 +37,6 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         return view('admin.proposals.action', compact('proposal'))->render();
     }
 
-    public function first_proposal(){
-        return $this->hasOne('App\FirstProposal','proposal_id')->latest();
-    }
-
-    public function second_proposal(){
-        return $this->hasOne('App\SecondProposal','proposal_id')->latest();
-    }
-
-    public function third_proposal(){
-        return $this->hasOne('App\ThirdProposal','proposal_id')->latest();
-    }
-
-    public function first_proposals(){
-        return $this->hasMany('App\FirstProposal','proposal_id')->latest();
-    }
-
-    public function second_proposals(){
-        return $this->hasMany('App\SecondProposal','proposal_id')->latest();
-    }
-
-    public function third_proposals(){
-        return $this->hasMany('App\ThirdProposal','proposal_id')->latest();
-    }
-
     public function admin_proposals(){
         return $this->hasMany('App\AdminProposal','proposal_id');
     }

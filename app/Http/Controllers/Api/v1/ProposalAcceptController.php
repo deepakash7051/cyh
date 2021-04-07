@@ -58,25 +58,30 @@ class ProposalAcceptController extends ApiController
 	        }
 
             $user = auth()->user();
-
-            $adminProposal = AdminProposal::find( $request->input('admin_proposal_id') );
-
-            $adminProposals = AdminProposal::where([ 'user_id'=>auth()->user()->id ])->where('id', '<>', $request->input('admin_proposal_id'));
-            return $adminProposals->get();
-            $checkProposalId =  ProposalAccept::where(['user_id'=>auth()->user()->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
             
-            $checkuserId = ProposalAccept::where(['user_id'=>auth()->user()->id]);
+            $adminProposal = AdminProposal::where( 'id',$request->input('admin_proposal_id') );
+            $checkUser = ProposalAccept::where(['user_id'=>auth()->user()->id]);
             
-            if(!$checkProposalId->exists() && !$checkuserId->exists() ){
+            if( $adminProposal && $adminProposal->exists() ){
                 
-                $checkProposalId->create(['user_id'=>$user->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
-
-                if( $adminProposal && $adminProposal->exists() ){
-                    $adminProposal->update(['accept'=>true]);    
+                $proposal_id = $adminProposal->first('proposal_id');
+                $disableProposal = AdminProposal::where(['proposal_id'=>$proposal_id->proposal_id])->where('id', '<>', $request->input('admin_proposal_id'));
+                $checkProposalId =  ProposalAccept::where(['user_id'=>auth()->user()->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
+                if( $checkProposalId && !$checkProposalId->exists() && $checkUser && !$checkUser->exists()){
+                    $checkProposalId->create(['user_id'=>$user->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
+                    $adminProposal->update(['accept'=>true]);
+                    $disableProposal->update(['accept'=>false]);
+                    $message = "Proposal Accepted";
+                    
+                }else{
+                    $message = 'Proposal alraedy accepted.';
                 }
+
+            }else{
+                $message = 'Proposal does not exist.';
             }
 
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal Accepted', 'result' => array('proposal' => [])],200);
+            return $this->payload(['StatusCode' => '200', 'message' => $message, 'result' => array('proposal' => [])],200);
         }catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }

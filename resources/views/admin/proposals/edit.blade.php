@@ -6,8 +6,6 @@
 
 ?>
 
-
-
 <div class="dash-main">
     <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
         <h2 class="main-heading m-0">
@@ -220,8 +218,9 @@
                         </div> -->
                         <label for="exampleFormControlTextarea4">Files:</label>
                         <div class="row mb-5">
-                        @if( !empty( $proposals->admin_proposals[1]->admin_first_proposal_files ) )
-                            @foreach( $proposals->admin_proposals[1]->admin_first_proposal_files as $file )
+                        @if( !empty( $proposals->admin_proposals[0]->admin_proposal_files ) )
+
+                        @foreach( $proposals->admin_proposals[0]->admin_proposal_files as $file )
                                 <div class="col-sm-12 col-md-3">
                                 @if( $file->attachment_content_type !== 'application/pdf' )
                                     <a href="{{ $file->attachment->url() }}" target="_blank">
@@ -256,7 +255,7 @@
 	</div>
 
     <!-- Proposal 2 By Admin -->
-
+    
     <div class="row justify-content-center">
 		<div class="col-md-12">
 			<div class="card card-default">
@@ -302,8 +301,9 @@
 
                         <label for="exampleFormControlTextarea4">Files:</label>
                         <div class="row mb-5">
-                        @if( !empty( $proposals->admin_proposals[1]->admin_second_proposal_files ) )
-                            @foreach( $proposals->admin_proposals[1]->admin_second_proposal_files as $file )
+                        @if( !empty( $proposals->admin_proposals[1]->admin_proposal_files ) )
+
+                        @foreach( $proposals->admin_proposals[1]->admin_proposal_files as $file )
                                 <div class="col-sm-12 col-md-3">
                                 @if( $file->attachment_content_type !== 'application/pdf' )
                                     <a href="{{ $file->attachment->url() }}" target="_blank">
@@ -385,8 +385,9 @@
                         
                          <label for="exampleFormControlTextarea4">Files:</label>
                         <div class="row mb-5">
-                        @if( !empty( $proposals->admin_proposals[2]->admin_third_proposal_files ) )
-                            @foreach( $proposals->admin_proposals[2]->admin_third_proposal_files as $file )
+                        @if( !empty( $proposals->admin_proposals[2]->admin_proposal_files ) )
+
+                        @foreach( $proposals->admin_proposals[2]->admin_proposal_files as $file )
                                 <div class="col-sm-12 col-md-3">
                                 @if( $file->attachment_content_type !== 'application/pdf' )
                                     <a href="{{ $file->attachment->url() }}" target="_blank">

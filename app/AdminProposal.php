@@ -22,15 +22,7 @@ class AdminProposal extends Model
         return $this->belongsTo('App\Proposal');
     }
 
-    public function admin_first_proposal_files(){
-        return $this->hasMany('App\AdminProposalFile','first_p_id');
-    }
-
-    public function admin_second_proposal_files(){
-        return $this->hasMany('App\AdminProposalFile','second_p_id');
-    }
-
-    public function admin_third_proposal_files(){
-        return $this->hasMany('App\AdminProposalFile','third_p_id');
+    public function admin_proposal_files(){
+        return $this->hasMany('App\AdminProposalFile','admin_proposal_id');
     }
 }

@@ -18,9 +18,10 @@ class CreateAdminProposalFilesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('proposal_id');
             
-            $table->unsignedInteger('first_p_id')->nullable();
-            $table->unsignedInteger('second_p_id')->nullable();
-            $table->unsignedInteger('third_p_id')->nullable();
+            $table->unsignedInteger('admin_proposal_id')->nullable();
+            // $table->unsignedInteger('first_p_id')->nullable();
+            // $table->unsignedInteger('second_p_id')->nullable();
+            // $table->unsignedInteger('third_p_id')->nullable();
 
             $table->string('attachment_file_name')->nullable();
             $table->integer('attachment_file_size')->nullable();
