@@ -10,7 +10,8 @@ class AdminProposal extends Model
         'user_id',
         'price',
         'desc',
-        'proposal_type'
+        'proposal_type',
+        'accept'
     ];
 
     public function user(){

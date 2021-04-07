@@ -20,7 +20,9 @@ class CreateAdminProposalsTable extends Migration
             $table->string('price');
             $table->text('desc')->nullable();
             $table->string('payment_status')->nullable();
+            $table->boolean('accept')->nullable();
             $table->enum('proposal_type',['one','two','three'])->nullable();
+            
             $table->timestamps();
         });
     }

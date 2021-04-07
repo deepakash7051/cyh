@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use Validator;
+use App\AdminProposal;
 use App\ProposalAccept;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -58,13 +59,21 @@ class ProposalAcceptController extends ApiController
 
             $user = auth()->user();
 
+            $adminProposal = AdminProposal::find( $request->input('admin_proposal_id') );
+
+            $adminProposals = AdminProposal::where([ 'user_id'=>auth()->user()->id ])->where('id', '<>', $request->input('admin_proposal_id'));
+            return $adminProposals->get();
             $checkProposalId =  ProposalAccept::where(['user_id'=>auth()->user()->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
             
             $checkuserId = ProposalAccept::where(['user_id'=>auth()->user()->id]);
-            //return $request->all() ;
+            
             if(!$checkProposalId->exists() && !$checkuserId->exists() ){
                 
                 $checkProposalId->create(['user_id'=>$user->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
+
+                if( $adminProposal && $adminProposal->exists() ){
+                    $adminProposal->update(['accept'=>true]);    
+                }
             }
 
             return $this->payload(['StatusCode' => '200', 'message' => 'Proposal Accepted', 'result' => array('proposal' => [])],200);
