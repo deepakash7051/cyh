@@ -3,19 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
-class SecondProposal extends Model
+class AdminProposal extends Model
 {
     protected $fillable = [
-        '_token',
-        'proposal_id',
+        'user_id',
         'price',
         'desc',
-        'user_id'
+        'proposal_type'
     ];
-
-    protected $table = 'second_proposals';
 
     public function user(){
         return $this->belongsTo('App\User');
@@ -25,8 +21,15 @@ class SecondProposal extends Model
         return $this->belongsTo('App\Proposal');
     }
 
-    public function admin_propsal_files(){
+    public function admin_first_proposal_files(){
+        return $this->hasMany('App\AdminProposalFile','first_p_id');
+    }
+
+    public function admin_second_proposal_files(){
         return $this->hasMany('App\AdminProposalFile','second_p_id');
     }
 
+    public function admin_third_proposal_files(){
+        return $this->hasMany('App\AdminProposalFile','third_p_id');
+    }
 }

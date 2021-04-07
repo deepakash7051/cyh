@@ -150,8 +150,16 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\ThirdProposal');
     }
 
+    public function admin_propsal(){
+        return $this->hasMany('App\AdminProposal');
+    }
+
     public function admin_propsal_files(){
         return $this->hasMany('App\AdminProposalFile');
+    }
+
+    public function bank_detail(){
+        return $this->hasOne('App\BankDetail');
     }
 
     public function manual_payment(){

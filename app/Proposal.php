@@ -61,6 +61,10 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
         return $this->hasMany('App\ThirdProposal','proposal_id')->latest();
     }
 
+    public function admin_proposals(){
+        return $this->hasMany('App\AdminProposal','proposal_id');
+    }
+
     public function admin_propsal_files(){
         return $this->hasMany('App\AdminProposalFile','proposal_id');
     }

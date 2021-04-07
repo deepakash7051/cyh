@@ -11,8 +11,8 @@ class FirstProposal extends Model
         '_token',
         'user_id',
         'proposal_id',
-        'first_price',
-        'first_desc'
+        'price',
+        'desc'
     ];
 
     protected $table = 'first_proposals';

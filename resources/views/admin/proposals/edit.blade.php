@@ -6,6 +6,8 @@
 
 ?>
 
+
+
 <div class="dash-main">
     <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
         <h2 class="main-heading m-0">
@@ -165,7 +167,6 @@
 	</div>
     
     <!-- Proposal 1 By Admin -->
-    
     <div class="row justify-content-center">
 		<div class="col-md-12">
 			<div class="card card-default">
@@ -174,27 +175,27 @@
 				</div>
 				<div class="card-body">
 					<div class="form-wrap">
-					
+
                     <form action="{{ route('admin.proposals.update', [$proposals->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
 						@method('PUT')
                         
                         <div class="form-group purple-border">
                             <label for="first_price">Price:</label>
-                            <input type="text" class="form-control" name="first_price" id="first_price" value="{{ !empty($proposals->first_proposal[0]->first_price) ? $proposals->first_proposal[0]->first_price : '' }}">
-                            @if($errors->has('first_price'))
+                            <input type="text" class="form-control" name="price" id="first_price" value="{{ !empty($proposals->admin_proposals[0]) ? $proposals->admin_proposals[0]->price : '' }}">
+                            @if($errors->has('price'))
                             <em class="invalid-feedback">
-                                    {{ $errors->first('first_price') }}
+                                    {{ $errors->first('price') }}
                                 </em>
                             @endif
                         </div>
 
                         <div class="form-group purple-border">
                           <label for="first_comment">Comments:</label>
-                          <textarea class="form-control" name="first_desc" id="first_desc" rows="3">{{ !empty($proposals->first_proposal[0]->first_desc) ? $proposals->first_proposal[0]->first_desc : '' }}</textarea>
-                            @if($errors->has('first_desc'))
+                          <textarea class="form-control" name="desc" id="desc" rows="3">{{ !empty($proposals->admin_proposals[0]) ? $proposals->admin_proposals[0]->desc : '' }}</textarea>
+                            @if($errors->has('desc'))
                             <em class="invalid-feedback">
-                                    {{ $errors->first('first_desc') }}
+                                    {{ $errors->first('desc') }}
                                 </em>
                             @endif
                         </div>
@@ -219,35 +220,29 @@
                         </div> -->
                         <label for="exampleFormControlTextarea4">Files:</label>
                         <div class="row mb-5">
-                        @if( count($first_proposals) > 0 )
-                            @foreach( $first_proposals as $first_proposal )
-                                @if( count($first_proposal->admin_propsal_files) > 0 )
-                                    @foreach( $first_proposal->admin_propsal_files as $file )
-                                    <div class="col-sm-12 col-md-3">
-                                        @if( $file->attachment_content_type !== 'application/pdf' )
-                                        <a href="{{ $file->attachment->url() }}" target="_blank">
-                                            <img
-                                                class="img-fluid img-center"
-                                                src="{{ $file->attachment->url() }}"
-                                                /></a>
-                                            <div class="caption">
-                                                <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
-                                            </div>
-                                            @else
-                                            <a href="{{ $file->attachment->url() }}" target="_blank">
-                                            <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
-                                            <div class="caption">
-                                                <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
-                                            </div>
-                                        @endif
+                        @if( !empty( $proposals->admin_proposals[1]->admin_first_proposal_files ) )
+                            @foreach( $proposals->admin_proposals[1]->admin_first_proposal_files as $file )
+                                <div class="col-sm-12 col-md-3">
+                                @if( $file->attachment_content_type !== 'application/pdf' )
+                                    <a href="{{ $file->attachment->url() }}" target="_blank">
+                                        <img class="img-fluid img-center" src="{{ $file->attachment->url() }}"/>
+                                    </a>
+                                    <div class="caption">
+                                        <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
                                     </div>
-                                    @endforeach                        
+                                    @else
+                                    <a href="{{ $file->attachment->url() }}" target="_blank">
+                                    <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
+                                    <div class="caption">
+                                        <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                    </div>
                                 @endif
-                            @endforeach    
-                        @endif          
+                                </div>
+                            @endforeach
+                        @endif
                         </div>
 
-                         <input type="hidden" name="first_propsal">
+                         <input type="hidden" name="proposal_type" value="one">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
                          <div>
                             <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
@@ -274,23 +269,22 @@
                     <form action="{{ route('admin.proposals.update', [$proposals->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
 						@method('PUT')
-                        
                         <div class="form-group purple-border">
                             <label for="second_price">Price:</label>
-                            <input type="text" class="form-control" name="second_price" id="second_price" value="{{ !empty($proposals->second_proposal[0]->second_price) ? $proposals->second_proposal[0]->second_price : '' }}">
-                            @if($errors->has('second_price'))
+                            <input type="text" class="form-control" name="price" id="second_price" value="{{ !empty($proposals->admin_proposals[1]) ? $proposals->admin_proposals[1]->price : '' }}">
+                            @if($errors->has('price'))
                             <em class="invalid-feedback">
-                                    {{ $errors->first('second_price') }}
+                                    {{ $errors->first('price') }}
                                 </em>
                             @endif
                         </div>
 
                         <div class="form-group purple-border">
                           <label for="second_desc">Comments:</label>
-                          <textarea class="form-control" name="second_desc" id="second_desc" rows="3">{{ !empty($proposals->second_proposal[0]->second_desc) ? $proposals->second_proposal[0]->second_desc : '' }}</textarea>
-                            @if($errors->has('second_desc'))
+                          <textarea class="form-control" name="desc" id="second_desc" rows="3">{{ !empty($proposals->admin_proposals[1]) ? $proposals->admin_proposals[1]->desc : '' }}</textarea>
+                            @if($errors->has('desc'))
                             <em class="invalid-feedback">
-                                    {{ $errors->first('second_desc') }}
+                                    {{ $errors->first('desc') }}
                                 </em>
                             @endif
                         </div>
@@ -306,37 +300,31 @@
                             <p class="helper-block"></p>
                          </div>
 
-                         @if( count($second_proposals) > 0 )                            
                         <label for="exampleFormControlTextarea4">Files:</label>
                         <div class="row mb-5">
-                            @foreach( $second_proposals as $second_proposal )
-                                @if( count($second_proposal->admin_propsal_files) > 0 )
-                                    @foreach( $second_proposal->admin_propsal_files as $file )
-                                    <div class="col-sm-12 col-md-3">
-                                    @if( $file->attachment_content_type !== 'application/pdf' )
+                        @if( !empty( $proposals->admin_proposals[1]->admin_second_proposal_files ) )
+                            @foreach( $proposals->admin_proposals[1]->admin_second_proposal_files as $file )
+                                <div class="col-sm-12 col-md-3">
+                                @if( $file->attachment_content_type !== 'application/pdf' )
                                     <a href="{{ $file->attachment->url() }}" target="_blank">
-                                        <img
-                                            class="img-fluid img-center"
-                                            src="{{ $file->attachment->url() }}"
-                                            /></a>
-                                            <div class="caption">
-                                                <input class="btn btn-link text-danger" id="" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
-                                            </div>
-                                        @else
-                                            <a href="{{ $file->attachment->url() }}" target="_blank">
-                                            <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
-                                            <div class="caption">
-                                                <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
-                                            </div>
-                                    @endif
+                                        <img class="img-fluid img-center" src="{{ $file->attachment->url() }}"/>
+                                    </a>
+                                    <div class="caption">
+                                        <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
                                     </div>
-                                    @endforeach                        
+                                    @else
+                                    <a href="{{ $file->attachment->url() }}" target="_blank">
+                                    <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
+                                    <div class="caption">
+                                        <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                    </div>
                                 @endif
-                            @endforeach          
+                                </div>
+                            @endforeach
+                        @endif
                         </div>
-                        @endif 
 
-                         <input type="hidden" name="second_propsal">
+                         <input type="hidden" name="proposal_type" value="two">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
                          <div>
                             <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
@@ -366,20 +354,20 @@
                         
                         <div class="form-group purple-border">
                             <label for="third_price">Price:</label>
-                            <input type="text" class="form-control" name="third_price" id="third_price" value="{{ !empty($proposals->third_proposal[0]->third_price) ? $proposals->third_proposal[0]->third_price : ''}}">
-                            @if($errors->has('third_price'))
+                            <input type="text" class="form-control" name="price" id="third_price" value="{{ !empty($proposals->admin_proposals[2]) ? $proposals->admin_proposals[2]->price : '' }}">
+                            @if($errors->has('price'))
                             <em class="invalid-feedback">
-                                    {{ $errors->first('third_price') }}
+                                    {{ $errors->first('price') }}
                                 </em>
                             @endif
                         </div>
 
                         <div class="form-group purple-border">
                           <label for="third_desc">Comments:</label>
-                          <textarea class="form-control" name="third_desc" id="third_desc" rows="3">{{ !empty($proposals->third_proposal[0]->third_desc) ? $proposals->third_proposal[0]->third_desc : ''}}</textarea>
-                            @if($errors->has('third_desc'))
+                          <textarea class="form-control" name="desc" id="third_desc" rows="3">{{ !empty($proposals->admin_proposals[2]) ? $proposals->admin_proposals[2]->desc : '' }}</textarea>
+                            @if($errors->has('desc'))
                             <em class="invalid-feedback">
-                                    {{ $errors->first('third_desc') }}
+                                    {{ $errors->first('desc') }}
                                 </em>
                             @endif
                         </div>
@@ -395,34 +383,31 @@
                             <p class="helper-block"></p>
                          </div>
                         
-                         @if( count($third_proposals) > 0 )                            
-                        <label for="exampleFormControlTextarea4">Files:</label>
+                         <label for="exampleFormControlTextarea4">Files:</label>
                         <div class="row mb-5">
-                            @foreach( $third_proposals as $third_proposal )
-                                @if( count($third_proposal->admin_propsal_files) > 0 )
-                                    @foreach( $third_proposal->admin_propsal_files as $file )
-                                    <div class="col-sm-12 col-md-3">
-                                        @if( $file->attachment_content_type !== 'application/pdf' )
-                                        <a href="{{ $file->attachment->url() }}" target="_blank">
-                                            <img class="img-fluid img-center" src="{{ $file->attachment->url() }}"/></a>
-                                            <div class="caption">
-                                                <input class="btn btn-link text-danger" id="" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
-                                            </div>
-                                        @else
-                                        <a href="{{ $file->attachment->url() }}" target="_blank">
-                                            <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
-                                        <div class="caption">
-                                            <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
-                                        </div>
-                                        @endif                                        
+                        @if( !empty( $proposals->admin_proposals[2]->admin_third_proposal_files ) )
+                            @foreach( $proposals->admin_proposals[2]->admin_third_proposal_files as $file )
+                                <div class="col-sm-12 col-md-3">
+                                @if( $file->attachment_content_type !== 'application/pdf' )
+                                    <a href="{{ $file->attachment->url() }}" target="_blank">
+                                        <img class="img-fluid img-center" src="{{ $file->attachment->url() }}"/>
+                                    </a>
+                                    <div class="caption">
+                                        <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
                                     </div>
-                                    @endforeach                        
+                                    @else
+                                    <a href="{{ $file->attachment->url() }}" target="_blank">
+                                    <img src="{{ asset('images/pdf.png') }}" alt="" width="100"></a>
+                                    <div class="caption">
+                                        <input class="btn btn-link text-danger" id="delete" type="button" value="Remove" onclick="deleteFile(event,{{ $file->id }})">
+                                    </div>
                                 @endif
-                            @endforeach          
-                        </div>
+                                </div>
+                            @endforeach
                         @endif
+                        </div>
 
-                         <input type="hidden" name="third_propsal">
+                         <input type="hidden" name="proposal_type" value="three">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
                          <div>
                             <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateThirdProposalsTable extends Migration
+class CreateBankDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateThirdProposalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('third_proposals', function (Blueprint $table) {
+        Schema::create('bank_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('proposal_id');
-            $table->string('price');
-            $table->text('desc')->nullable();
-            $table->string('payment_status')->nullable();
+            $table->string('proposal_initial_amount')->nullable();
+            $table->string('bank_name',250)->nullable();
+            $table->string('beneficiary_name',250)->nullable();
+            $table->text('account_number')->nullable();;
+            $table->string('ifsc_code')->nullable();;
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateThirdProposalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('third_proposals');
+        Schema::dropIfExists('bank_details');
     }
 }

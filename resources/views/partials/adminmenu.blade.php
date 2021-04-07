@@ -21,6 +21,10 @@
         <a href="{{ route('admin.products.index') }}" target="_blank"><i class="fas fa-file"></i> Products</a>
     </li>
 
+    <li class="{{ request()->is('admin/settings') || request()->is('admin/settings*') ? 'active' : '' }}">
+        <a href="{{ route('admin.settings.index') }}" target="_blank"><i class="fas fa-cog"></i> Settings</a>
+    </li>
+
     <li>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
             <i class="fas fas fa-sign-out-alt"></i> {{ trans('global.logout') }}

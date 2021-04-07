@@ -44,8 +44,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 		Route::get('proposallist','ProposalController@list')->name('proposallist');
 		Route::get('deleteFile/{id}','ProposalController@deleteFile')->name('deleteFile');
 		Route::get('updatePaymentStatus/{id}/{paymentStatus}','ProposalController@updatePaymentStatus')->name('updatePaymentStatus');
-		
+		Route::resource('settings','SettingsController');
 		Route::resource('products','ProductController');
+		Route::resource('bank-details','BankDetailController');
     });
 });
 

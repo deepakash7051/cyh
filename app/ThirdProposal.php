@@ -10,8 +10,8 @@ class ThirdProposal extends Model
     protected $fillable = [
         '_token',
         'proposal_id',
-        'third_price',
-        'third_desc',
+        'price',
+        'desc',
         'user_id'
     ];
 

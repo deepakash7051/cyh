@@ -29,6 +29,10 @@ class AdminProposalFile extends Model implements \Czim\Paperclip\Contracts\Attac
         return $this->belongsTo('App\Proposal');
     }
 
+    public function admin_proposal(){
+        return $this->belongsTo('App\AdminProposal');
+    }
+
     public function first_proposal(){
         return $this->belongsTo('App\FirstProposal');
     }

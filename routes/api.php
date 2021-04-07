@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::apiResource('/manual-payment','ManualPaymentController');
     Route::apiResource('/stripe-payment','StripePaymentController');
     Route::apiResource('/stripe-token','StripeTokenController');
+    Route::apiResource('/bank-details','BankDetailsController');
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1\wp' ], function ($router) {

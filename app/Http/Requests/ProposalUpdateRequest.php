@@ -23,31 +23,36 @@ class ProposalUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        if( $this->has('first_propsal')  ){
-            $rule = [
-                'first_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
-                'first_desc'=>['required'],
-                'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf',
+        // if( $this->has('first_propsal')  ){
+        //     $rule = [
+        //         'price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+        //         'desc'=>['required'],
+        //         'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf',
 
-            ];
-        }
+        //     ];
+        // }
 
-        if( $this->has('second_propsal')  ){
-            $rule = [
-                'second_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
-                'second_desc'=>['required'],
-                'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf'
-            ];
-        }
+        // if( $this->has('second_propsal')  ){
+        //     $rule = [
+        //         'price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+        //         'desc'=>['required'],
+        //         'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf'
+        //     ];
+        // }
 
-        if( $this->has('third_propsal')  ){
-            $rule = [
-                 'third_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
-                 'third_desc'=>['required'],
-                 'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf'
-            ];
-        }
+        // if( $this->has('third_propsal')  ){
+        //     $rule = [
+        //          'price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+        //          'desc'=>['required'],
+        //          'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf'
+        //     ];
+        // }
+        $rule = [
+            'price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+            'desc'=>['required'],
+            'attachment.*'=>'mimes:jpeg,png,jpg,gif,svg,pdf',
 
+        ];
         return $rule;
     }
 }

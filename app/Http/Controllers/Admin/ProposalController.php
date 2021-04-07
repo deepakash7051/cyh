@@ -6,6 +6,7 @@ use Validator;
 use App\Comment;
 use App\Proposal;
 use App\Portfolio;
+use App\AdminProposal;
 use App\FirstProposal;
 use App\PaymentStatus;
 use App\ThirdProposal;
@@ -77,17 +78,12 @@ class ProposalController extends Controller
      */
     public function edit($id)
     {
-        $proposal = Proposal::with(['user','portfolio','proposal_images','first_proposal','second_proposal','third_proposal','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+        $proposal = Proposal::with(['user','portfolio','proposal_images','admin_proposals','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+       // return AdminProposal::with(['admin_proposal_files'])->get();
         //return $proposal;
-        $first_proposal = FirstProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
-        $second_proposal = SecondProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
-        $third_proposal = ThirdProposal::with(['admin_propsal_files'])->where('proposal_id',$id)->get();
         return view('admin.proposals.edit')->with(
             [
-                'proposals'=>$proposal,
-                'first_proposals'=>$first_proposal,
-                'second_proposals'=>$second_proposal,
-                'third_proposals'=>$third_proposal
+                'proposals'=>$proposal
             ]);
     }
 
@@ -99,32 +95,66 @@ class ProposalController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+    // public function update(ProposalUpdateRequest $request, $id)
+    // {
+    //     $user = auth()->user();
+    //     $porposal = Proposal::find($id);
+    //     $plan_id = [];
+    //     if( $request->exists('first_propsal') ){
+    //         $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','first_propsal']);
+    //         $model = $porposal->first_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+    //         $plan_id = ['first_p_id'=>$model->id];
+    //     }
+    //     if( $request->exists('second_propsal') ){
+    //         $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','second_propsal']);
+    //         $model = $porposal->second_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+    //         $plan_id = ['second_p_id'=>$model->id];
+    //     }
+    //     if( $request->exists('third_propsal') ){
+    //         $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','third_propsal']);
+    //         $model = $porposal->third_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+    //         $plan_id = ['third_p_id'=>$model->id];
+    //     }
+        
+    //     if( $request->has('attachment') ){
+    //         foreach($request->attachment as $attachment){
+    //             if(!empty($plan_id)){
+    //                 $data = array_merge(['user_id'=>$user->id,'attachment' => $attachment],$plan_id);
+
+    //             }else{
+    //                 $data = ['user_id'=>$user->id,'attachment' => $attachment];
+    //             }
+    //             $porposal->admin_propsal_files()->create( $data );
+    //         }
+    //     }
+    //     return redirect()->back();
+    //     //return redirect()->route('admin.proposals.index')->with('sussces', 'Proposal created successfully');
+    // }
+
     public function update(ProposalUpdateRequest $request, $id)
     {
         $user = auth()->user();
         $porposal = Proposal::find($id);
         $plan_id = [];
-        if( $request->exists('first_propsal') ){
-            $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','first_propsal']);
-            $model = $porposal->first_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+        $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method']);
+        if( $request->input('proposal_type') == 'one' ){
+            $model = $porposal->admin_proposals()->updateOrCreate(['proposal_id'=>$id,'proposal_type'=>'one'],$data);
             $plan_id = ['first_p_id'=>$model->id];
         }
-        if( $request->exists('second_propsal') ){
-            $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','second_propsal']);
-            $model = $porposal->second_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+        if( $request->input('proposal_type') == 'two' ){
+            $model = $porposal->admin_proposals()->updateOrCreate(['proposal_id'=>$id,'proposal_type'=>'two'],$data);
             $plan_id = ['second_p_id'=>$model->id];
         }
-        if( $request->exists('third_propsal') ){
-            $data = request()->merge(['user_id'=>$user->id])->except(['_token','_method','third_propsal']);
-            $model = $porposal->third_proposal()->updateOrCreate(['proposal_id'=>$id],$data);
+        if( $request->input('proposal_type') == 'three' ){
+            $model = $porposal->admin_proposals()->updateOrCreate(['proposal_id'=>$id,'proposal_type'=>'three'],$data);
             $plan_id = ['third_p_id'=>$model->id];
         }
-        
+
         if( $request->has('attachment') ){
             foreach($request->attachment as $attachment){
                 if(!empty($plan_id)){
                     $data = array_merge(['user_id'=>$user->id,'attachment' => $attachment],$plan_id);
-
+                    //dd($data);
                 }else{
                     $data = ['user_id'=>$user->id,'attachment' => $attachment];
                 }
@@ -132,7 +162,6 @@ class ProposalController extends Controller
             }
         }
         return redirect()->back();
-        //return redirect()->route('admin.proposals.index')->with('sussces', 'Proposal created successfully');
     }
 
     /**

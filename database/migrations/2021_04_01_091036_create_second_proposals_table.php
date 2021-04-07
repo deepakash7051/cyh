@@ -17,8 +17,8 @@ class CreateSecondProposalsTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('proposal_id');
-            $table->string('second_price');
-            $table->text('second_desc')->nullable();
+            $table->string('price');
+            $table->text('desc')->nullable();
             $table->string('payment_status')->nullable();
             $table->timestamps();
         });

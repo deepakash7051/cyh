@@ -25,11 +25,12 @@ class ProposalController extends ApiController
     public function index()
     {
         try{
-            $proposal = Proposal::with(['user','portfolio','proposal_images','payment_status:id,proposal_id,status,type','first_proposal','second_proposal','third_proposal'])->latest()->get();
+            $user = auth()->user();
+            $proposal = $user->proposal()->with(['user','admin_proposals','portfolio','proposal_images','payment_status:id,proposal_id,status,type'])->latest()->get();
             //return $proposal;
             $resp = PortfolioResource::collection($proposal);
 
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $resp)],200);
+            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $proposal)],200);
         }catch(Exception $e){
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
@@ -99,11 +100,11 @@ class ProposalController extends ApiController
     {
         try{
             
-            $proposal = Proposal::with(['user','portfolio','proposal_images','single_manual_payment','stripe_payment','payment_status:id,proposal_id,status,type'])->where('id',$id)->first();
-
+            $proposal = Proposal::with(['user','admin_proposals','portfolio','proposal_images','single_manual_payment','stripe_payment','payment_status:id,proposal_id,status,type'])->where('id',$id)->first();
+            //return $proposal;
             $resp = new PortfolioResource($proposal);
 
-            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $resp)],200);
+            return $this->payload(['StatusCode' => '200', 'message' => 'Proposal List', 'result' => array('proposal' => $proposal)],200);
         }catch(Exception $e){
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
         }
