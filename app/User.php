@@ -179,6 +179,10 @@ class User extends Authenticatable implements JWTSubject
         return view('admin.users.roles', compact('user'))->render();
     }
 
+    public function proposal_accept(){
+        return $this->hasMany('App\ProposalAccept');
+    }
+    
     public function hasRole( $role ) {
         $roles =  array_column($this->roles->toArray(), 'title');
         $roles = array_map('strtolower', $roles);

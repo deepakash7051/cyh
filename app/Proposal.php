@@ -86,4 +86,8 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
     public function stripe_payment(){
         return $this->hasOne('App\StripePayment','proposal_id')->latest();
     }
+
+    public function proposal_accept(){
+        return $this->hasMany('App\ProposalAccept','admin_proposal_id');
+    }
 }
