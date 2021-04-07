@@ -23,7 +23,11 @@ class BankDetailsController extends ApiController
         try{
             
             $detail = BankDetail::first();
-            
+            if(empty($detail)){
+                $detail = new \stdClass();
+            }else{
+                $detail = $detail;
+            }
             return $this->payload(['StatusCode' => '200', 'message' => 'Bank Detail', 'result' => array('bank_detail' => $detail)],200);
         }catch(Exception $e) {
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
