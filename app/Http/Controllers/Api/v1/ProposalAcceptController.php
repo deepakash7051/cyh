@@ -20,7 +20,7 @@ class ProposalAcceptController extends ApiController
      */
     public function index()
     {
-        //
+        return $this->payload(['StatusCode' => '200', 'message' => 'Proposal Accepted', 'result' => array('proposal_accept' => ProposalAccept::all())],200);
     }
 
     /**
