@@ -17,7 +17,7 @@
 
 @if( !empty($proposals->admin_proposals[0]) )
     @if($proposals->admin_proposals[0]->proposal_type !== NULL && $proposals->admin_proposals[0]->proposal_type == 'one')
-        @if( $proposals->admin_proposals[0]->proposal_type  )
+        @if( $proposals->admin_proposals[0]->accept )
             @php
                 $accepteFirstProposal = 'one'
             @endphp
