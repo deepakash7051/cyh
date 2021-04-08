@@ -67,14 +67,14 @@ class ProposalAcceptController extends ApiController
                 $proposal_id = $adminProposal->first('proposal_id');
                 $disableProposal = AdminProposal::where(['proposal_id'=>$proposal_id->proposal_id])->where('id', '<>', $request->input('admin_proposal_id'));
                 $checkProposalId =  ProposalAccept::where(['user_id'=>auth()->user()->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
-                if( $checkProposalId && !$checkProposalId->exists() && $checkUser && !$checkUser->exists()){
+                if( $checkProposalId && !$checkProposalId->exists()){ // && $checkUser && !$checkUser->exists()
                     $checkProposalId->create(['user_id'=>$user->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
                     $adminProposal->update(['accept'=>true]);
                     $disableProposal->update(['accept'=>false]);
-                    $message = "Proposal Accepted";
+                    $message = "Proposal accepted";
                     
                 }else{
-                    $message = 'Proposal alraedy accepted.';
+                    $message = 'Proposal already accepted.';
                 }
 
             }else{
@@ -129,6 +129,8 @@ class ProposalAcceptController extends ApiController
      */
     public function destroy($id)
     {
-        //
+        $acceptedProposal = ProposalAccept::find($id);
+        $acceptedProposal->delete();
+        return $this->payload(['StatusCode' => '200', 'message' => 'Proosal deleted', 'result' => array('proposal' => [])],200);
     }
 }
