@@ -85,13 +85,57 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="col-md-12">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="row">
+                    <div class="col-md-10">
+                        <h2>Milestone</h2>
+                    </div>                            
+                        <div class="col-md-2">
+                        <a href="{{ route('admin.milestones.create') }}" class="btnn btnn-s">Add Milestone</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive table-responsive-md">
+                <table class="table" id="milestone_table">
+                    <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                </table>
+                </div>
+            </div>
+        </div> -->
     </div>
 </div>
 @section('scripts')
     @parent
     <script>
-    
-    </script>
+        // $('#milestone_table').DataTable({
+        //     serverSide: true,
+        //     processing: true,
+        //     responsive: true,
+        //     ajax: "{{ route('admin.milestones.list') }}",
+        //     columns: [
+        //       { name: 'id' },
+        //       { name: 'title' },
+        //       { name: 'price' },
+        //       { name: 'type' },
+        //       { name: 'action', orderable: false, searchable: false }
+        //     ],
+        //     dom: 'Bfrtip',
+        //     buttons: [
+        //         { extend: 'pageLength'}
+        //     ]
+        // });
+</script>
 @endsection
 
 @endsection

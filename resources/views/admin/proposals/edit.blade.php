@@ -4,7 +4,60 @@
 <?php 
   $languages = config('panel.available_languages');
 
+  $accepteFirstProposal = '';
+  $declinedFirstProposal = '';
+
+  $accepteSecondProposal = '';
+  $declinedSecondProposal = '';
+
+  $accepteThirdProposal = '';
+  $declinedThirdProposal = '';
 ?>
+
+
+@if( !empty($proposals->admin_proposals[0]) )
+    @if($proposals->admin_proposals[0]->proposal_type !== NULL && $proposals->admin_proposals[0]->proposal_type == 'one')
+        @if( $proposals->admin_proposals[0]->proposal_type  )
+            @php
+                $accepteFirstProposal = 'one'
+            @endphp
+        @elseif(!$proposals->admin_proposals[0]->accept)
+            @php  
+                $declinedFirstProposal = 'one' 
+            @endphp
+        @endif
+    @endif
+@endif
+
+@if( !empty($proposals->admin_proposals[1]) ) 
+
+    @if($proposals->admin_proposals[1]->proposal_type !== NULL && $proposals->admin_proposals[1]->proposal_type == 'two')
+        @if( $proposals->admin_proposals[1]->accept  )
+            @php
+                $accepteSecondProposal = 'two'
+            @endphp
+            @elseif(!$proposals->admin_proposals[1]->accept)
+            
+            @php
+                $declinedSecondProposal = 'two' 
+            @endphp
+        @endif
+    @endif
+@endif
+
+@if( !empty($proposals->admin_proposals[2]) )
+    @if($proposals->admin_proposals[2]->proposal_type !== NULL && $proposals->admin_proposals[2]->proposal_type == 'three')
+        @if( $proposals->admin_proposals[2]->accept  )
+            @php
+                $accepteThirdProposal = 'three'
+            @endphp
+            @elseif(!$proposals->admin_proposals[2]->accept)
+            @php  
+                $declinedThirdProposal = 'three' 
+            @endphp
+        @endif
+    @endif
+@endif
 
 <div class="dash-main">
     <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
@@ -169,7 +222,16 @@
 		<div class="col-md-12">
 			<div class="card card-default">
 				<div class="card-header">
-					<h2>Proposal 1</h2>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h2>Proposal 1</h2>
+                        </div>
+                        <div class="col-md-2">
+                            @if($accepteFirstProposal == 'one')<strong class="text-success">Accepted</strong> @endif
+                            @if($declinedFirstProposal == 'one') <strong class="text-danger">Declined</strong>@endif
+                        </div>
+                    </div>
+					
 				</div>
 				<div class="card-body">
 					<div class="form-wrap">
@@ -243,9 +305,15 @@
 
                          <input type="hidden" name="proposal_type" value="one">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
-                         <div>
-                            <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                        </div>
+                         @if($accepteFirstProposal == 'one')
+                            
+                            @elseif( $declinedFirstProposal == 'one')
+
+                            @else
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>
+                         @endif
 					</form>
 				</div>
                     
@@ -260,7 +328,15 @@
 		<div class="col-md-12">
 			<div class="card card-default">
 				<div class="card-header">
-					<h2>Proposal 2</h2>
+                <div class="row">
+                        <div class="col-md-10">
+                            <h2>Proposal 2</h2>
+                        </div>
+                        <div class="col-md-2">
+                            @if($accepteSecondProposal == 'two')<strong class="text-success">Accepted</strong> @endif
+                            @if($declinedSecondProposal == 'two') <strong class="text-danger">Declined</strong>@endif
+                        </div>
+                    </div>
 				</div>
 				<div class="card-body">
 					<div class="form-wrap">
@@ -326,9 +402,16 @@
 
                          <input type="hidden" name="proposal_type" value="two">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
-                         <div>
-                            <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                        </div>
+
+                        @if($accepteSecondProposal == 'two')
+                            
+                            @elseif( $declinedSecondProposal == 'two')
+
+                            @else
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>
+                         @endif
 					</form>
 				</div>
                     
@@ -343,7 +426,15 @@
 		<div class="col-md-12">
 			<div class="card card-default">
 				<div class="card-header">
-					<h2>Proposal 3</h2>
+                <div class="row">
+                        <div class="col-md-10">
+                            <h2>Proposal 3</h2>
+                        </div>
+                        <div class="col-md-2">
+                            @if($accepteThirdProposal == 'three')<strong class="text-success">Accepted</strong> @endif
+                            @if($declinedThirdProposal == 'three') <strong class="text-danger">Declined</strong>@endif
+                        </div>
+                    </div>
 				</div>
 				<div class="card-body">
 					<div class="form-wrap">
@@ -410,9 +501,17 @@
 
                          <input type="hidden" name="proposal_type" value="three">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
-                         <div>
-                            <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                        </div>
+                         @if($accepteThirdProposal == 'three')
+                            
+                            @elseif( $declinedThirdProposal == 'three')
+
+                            @else
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>
+                         @endif
+                         
+                         
 					</form>
 				</div>
                     

@@ -47,6 +47,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 		Route::resource('settings','SettingsController');
 		Route::resource('products','ProductController');
 		Route::resource('bank-details','BankDetailController');
+		Route::resource('milestones','MilestoneController');
+		//Route::get('milestones/list','MilestoneController@list')->name('milestones.list');
+		Route::get('milestoneList','MilestoneController@list')->name('milestones.list');
+		
     });
 });
 

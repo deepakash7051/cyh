@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Milestone;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SettingsController extends Controller
 {
@@ -15,7 +16,8 @@ class SettingsController extends Controller
     public function index()
     {
         $data = auth()->user()->bank_detail()->first();
-        return view('admin.settings.index')->with(['bank_details'=>$data]);
+        $milestones = Milestone::all();
+        return view('admin.settings.index')->with(['bank_details'=>$data, 'milestones'=>$milestones]);
     }
 
     /**

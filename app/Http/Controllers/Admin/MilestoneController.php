@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Validator;
+use App\Milestone;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Freshbitsweb\Laratables\Laratables;
+use App\Http\Requests\MilestoneCreateRequest;
 
-class MilestonController extends Controller
+class MilestoneController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +18,12 @@ class MilestonController extends Controller
      */
     public function index()
     {
-        return view('admin.milestones.index');
+
+    }
+
+    public function list()
+    {
+        return Laratables::recordsOf(Milestone::class);
     }
 
     /**
@@ -24,7 +33,7 @@ class MilestonController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.milestones.create');
     }
 
     /**
@@ -33,9 +42,11 @@ class MilestonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MilestoneCreateRequest $request)
     {
-        //
+        $data = $request->merge(['user_id'=>auth()->user()->id])->except(['_token','_method']);
+        Milestone::Create($data);
+        return redirect()->back();
     }
 
     /**
