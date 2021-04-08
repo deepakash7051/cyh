@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::apiResource('/bank-details','BankDetailsController');
     Route::apiResource('/proposal-accept','ProposalAcceptController');
     Route::apiResource('/admin-proposal','AdminProposalController');
+    Route::apiResource('/milestone-payment','MilestonePaymentController');
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1\wp' ], function ($router) {

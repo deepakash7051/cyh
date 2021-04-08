@@ -7,7 +7,8 @@ use App\AdminProposal;
 use App\ProposalAccept;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Proposal;
+use App\MilestonePayment;
 class ProposalAcceptController extends ApiController
 {
     public function __construct()
@@ -71,6 +72,9 @@ class ProposalAcceptController extends ApiController
                     $checkProposalId->create(['user_id'=>$user->id,'admin_proposal_id'=>$request->input('admin_proposal_id')]);
                     $adminProposal->update(['accept'=>true]);
                     $disableProposal->update(['accept'=>false]);
+
+                    $this->milestonePayment($proposal_id,$request->all());
+
                     $message = "Proposal accepted";
                     
                 }else{
@@ -132,5 +136,49 @@ class ProposalAcceptController extends ApiController
         $acceptedProposal = ProposalAccept::find($id);
         $acceptedProposal->delete();
         return $this->payload(['StatusCode' => '200', 'message' => 'Proosal deleted', 'result' => array('proposal' => [])],200);
+    }
+
+    public function milestonePayment($proposal_id,$request){
+        $adminProposal = AdminProposal::where('id',$request['admin_proposal_id'])->first();
+        $proposal = Proposal::where('id',$proposal_id->proposal_id)->first();
+        $amount = $adminProposal->price;
+        $proposalAmount = $proposal->amount;
+        if( !empty($amount) && !empty($proposalAmount) ){
+            $balance = (int)$amount - (int)$proposalAmount;
+
+            $downPayment = $this->fourtyPercent($balance);
+            $materialsFabricationDone = $this->fourtyPercent($balance);
+            $uponInstallation = $this->tenPercent($balance);
+            $uponCompletetion = $this->tenPercent($balance);
+
+            $data = [
+                'downPayment'=>$downPayment,
+                'materialsFabricationDone'=>$materialsFabricationDone,
+                'uponInstallation'=>$uponInstallation,
+                'uponCompletetion'=>$uponCompletetion
+            ];
+
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>2])->update(['amount'=>$downPayment]);
+
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>3])->update(['amount'=>$materialsFabricationDone]);
+
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>4])->update(['amount'=>$uponInstallation]);
+
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>5])->update(['amount'=>$uponCompletetion]);
+
+            return $data;
+        }
+        
+        return $proposal;
+    }
+
+    public function fourtyPercent($proposalAmount){
+        $fourtyPercent = ((int)$proposalAmount * 40) / 100;
+        return $fourtyPercent;
+    }
+
+    public function tenPercent($proposalAmount){
+        $tenPercent = ((int)$proposalAmount * 10) / 100;
+        return $tenPercent;
     }
 }

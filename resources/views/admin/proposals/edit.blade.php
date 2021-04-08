@@ -73,9 +73,14 @@
 		<div class="col-md-12">
 			<div class="card card-default">
 				<div class="card-header">
-					<h2>@if(!empty($proposals->portfolio->title)){{ ucfirst($proposals->portfolio->title) }}@endif</h2>
-					
-					By <a href="{{ route('admin.users.show', $proposals->user->id) }}" class="card-link">{{ ucfirst($proposals->user->name) }}</a>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h2>@if(!empty($proposals->portfolio->title)){{ ucfirst($proposals->portfolio->title) }}@endif</h2>
+                        </div>
+                        <div class="col-md-2 mt-2">
+                            <strong>By <a href="{{ route('admin.users.show', $proposals->user->id) }}" class="card-link">{{ ucfirst($proposals->user->name) }}</a></strong>
+                        </div>
+                    </div>
 				</div>
 				<div class="card-body">
 					
@@ -99,8 +104,6 @@
                             @endforeach
 						@endif
 					</div>
-					
-					
 				</div>
 			</div>
 		</div>
@@ -128,20 +131,35 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                @if( count($milestones) > 0 )
-                                    @foreach($milestones as $milestone )
+                                @if( count($proposals->milestone_payment) > 0 )
+                                    @foreach($proposals->milestone_payment as $milestone )
                                     <tr>
-                                        <td>{{ $milestone->order }}</td>
-                                        <td>{{ $milestone->title }}</td>
-                                        <td>{{ $milestone->price }}</td>
-                                        <td>Unpaid</td>
+                                        <td>{{ $milestone->milestone->order }}</td>
+                                        <td>{{ $milestone->milestone->title }}</td>
+                                        <td>{{ $milestone->amount }}</td>
+                                        <td>{{ $milestone->status }}</td>
                                         <td>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected value="pending">Pending</option>
-                                            <option value="completed">Completed</option>
-                                        </select>
+                                        
+                                        @if( $milestone->status == 'paid' )
+                                            <select disabled class="form-select" aria-label="Default select example">
+                                                <option value="unpaid">UnPaid</option>
+                                                <option selected value="paid">Paid</option>
+                                            </select>
+                                                @else
+                                            <select class="form-select milestone-status" aria-label="Default select example" onchange="milestonePaymentStatus(this,'{{ $milestone->id }}')">
+                                                <option selected value="unpaid">UnPaid</option>
+                                                <option value="paid">Paid</option>
+                                            </select>
+                                        @endif
+                                        
                                         </td>
-                                        <td><button class="btn btn-info p-1">Request</button></td>
+                                        <td>
+                                        @if( $milestone->status == 'paid' )
+                                        <button class="btn btn-info p-1" disabled>Request</button>
+                                        @else
+                                        <button class="btn btn-info p-1">Request</button>
+                                        @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 @endif
@@ -608,6 +626,24 @@
                 };
                 xhttp.send();    
             }
+        }
+
+        function milestonePaymentStatus(status,id){  
+            var x = (status.value || status.options[a.selectedIndex].value);  //crossbrowser solution =)
+                var status = "paid";
+                var hr = new XMLHttpRequest();
+                var url = "../../../admin/milestonesPaymentStatus/"+id+"/"+status;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText){
+                        location.reload();
+                    }
+                }
+                };
+                xhttp.send();
         }
     </script>
 @endsection
