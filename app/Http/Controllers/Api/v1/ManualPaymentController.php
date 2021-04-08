@@ -9,6 +9,7 @@ use Validator;
 use App\Proposal;
 use App\ManualPayment;
 use App\PaymentStatus;
+use App\MilestonePayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -79,6 +80,7 @@ class ManualPaymentController extends ApiController
                     $payment = $proposal->manual_payment()->create($data);
                     $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
                     $proposal->update(['amount'=>$request->input('amount')]);
+                    //return $this->mileston_payment($request);
             }
             
             return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('proposal' => [])],200);
@@ -136,5 +138,49 @@ class ManualPaymentController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    public function mileston_payment($request){
+
+       $data = [
+            [
+                'user_id'=>auth()->user()->id,
+                'proposal_id'=>'',
+                'milestone_id'=>1,
+                'status'=>'paid',
+                'amount'=>$request->input('amount')
+            ],
+            [
+                'user_id'=>auth()->user()->id,
+                'proposal_id'=>'',
+                'milestone_id'=>2,
+                'status'=>'unpaid',
+                'amount'=>NULL
+            ],
+            [
+                'user_id'=>auth()->user()->id,
+                'proposal_id'=>'',
+                'milestone_id'=>3,
+                'status'=>'unpaid',
+                'amount'=>NULL
+            ],
+            [
+                'user_id'=>auth()->user()->id,
+                'proposal_id'=>'',
+                'milestone_id'=>4,
+                'status'=>'unpaid',
+                'amount'=>NULL
+            ],
+            [
+                'user_id'=>auth()->user()->id,
+                'proposal_id'=>'',
+                'milestone_id'=>5,
+                'status'=>'unpaid',
+                'amount'=>NULL
+            ],
+        ];
+
+        MilestonePayment::create($data);
+        return true;
     }
 }

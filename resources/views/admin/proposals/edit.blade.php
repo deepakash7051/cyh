@@ -14,7 +14,6 @@
   $declinedThirdProposal = '';
 ?>
 
-
 @if( !empty($proposals->admin_proposals[0]) )
     @if($proposals->admin_proposals[0]->proposal_type !== NULL && $proposals->admin_proposals[0]->proposal_type == 'one')
         @if( $proposals->admin_proposals[0]->accept )
@@ -115,7 +114,42 @@
 					<h2>Milestones</h2>
 				</div>
 				<div class="card-body">
-									
+                    <div class="table-responsive table-responsive-md">
+                        <table class="table" id="milestone_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                    <th scope="col">Payment Request</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                @if( count($milestones) > 0 )
+                                    @foreach($milestones as $milestone )
+                                    <tr>
+                                        <td>{{ $milestone->order }}</td>
+                                        <td>{{ $milestone->title }}</td>
+                                        <td>{{ $milestone->price }}</td>
+                                        <td>Unpaid</td>
+                                        <td>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected value="pending">Pending</option>
+                                            <option value="completed">Completed</option>
+                                        </select>
+                                        </td>
+                                        <td><button class="btn btn-info p-1">Request</button></td>
+                                    </tr>
+                                    @endforeach
+                                @endif
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 			</div>
 		</div>

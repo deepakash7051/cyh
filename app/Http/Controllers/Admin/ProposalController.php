@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Validator;
 use App\Comment;
 use App\Proposal;
+use App\Milestone;
 use App\Portfolio;
 use App\AdminProposal;
 use App\FirstProposal;
@@ -78,10 +79,12 @@ class ProposalController extends Controller
      */
     public function edit($id)
     {
-        $proposal = Proposal::with(['user','portfolio','proposal_images','admin_proposals.admin_proposal_files','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+        $proposal = Proposal::with(['user','milestone_payment.milestone','portfolio','proposal_images','admin_proposals.admin_proposal_files','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+        $milestone = Milestone::all();
         return view('admin.proposals.edit')->with(
             [
-                'proposals'=>$proposal
+                'proposals'=>$proposal,
+                'milestones'=>$milestone
             ]);
     }
 

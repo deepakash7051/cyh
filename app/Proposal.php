@@ -67,4 +67,8 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
     public function proposal_accept(){
         return $this->hasMany('App\ProposalAccept','admin_proposal_id');
     }
+
+    public function milestone_payment(){
+        return $this->hasMany('App\MilestonePayment','proposal_id');
+    }
 }

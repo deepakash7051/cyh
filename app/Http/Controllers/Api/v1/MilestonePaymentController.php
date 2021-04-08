@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api\v1;
 
-use Validator;
-use App\Milestone;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Freshbitsweb\Laratables\Laratables;
-use App\Http\Requests\MilestoneCreateRequest;
+use Illuminate\Http\Request;
 
-class MilestoneController extends Controller
+class MilestonePaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,15 +14,7 @@ class MilestoneController extends Controller
      */
     public function index()
     {
-        // $original = array( 'a', 'b', 'c', 'd', 'e' );
-        // $inserted = array( 'x' ); // not necessarily an array, see manual quote
-        // array_splice( $original, 3, 0, $inserted );
-        // return $original;
-    }
-
-    public function list()
-    {
-        return Laratables::recordsOf(Milestone::class);
+        //
     }
 
     /**
@@ -36,7 +24,7 @@ class MilestoneController extends Controller
      */
     public function create()
     {
-        return view('admin.milestones.create');
+        //
     }
 
     /**
@@ -45,11 +33,9 @@ class MilestoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MilestoneCreateRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->merge(['user_id'=>auth()->user()->id])->except(['_token','_method']);
-        Milestone::Create($data);
-        return redirect()->back();
+        //
     }
 
     /**
