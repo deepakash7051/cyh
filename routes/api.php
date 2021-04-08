@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1', 'namespace' => 'Api\
     Route::apiResource('/stripe-token','StripeTokenController');
     Route::apiResource('/bank-details','BankDetailsController');
     Route::apiResource('/proposal-accept','ProposalAcceptController');
+    Route::apiResource('/admin-proposal','AdminProposalController');
 });
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1\wp' ], function ($router) {
