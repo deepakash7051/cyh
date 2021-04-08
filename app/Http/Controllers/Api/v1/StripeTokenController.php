@@ -100,6 +100,7 @@ class StripeTokenController extends ApiController
             ];
             $sId = $user->stripe_payment()->create($data);
             $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'s_id'=>$sId->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'stripe','status'=>'completed']);
+            $proposal->update(['amount'=>$request->input('amount')]);
         }
 
         return $this->payload([

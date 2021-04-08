@@ -78,6 +78,7 @@ class ManualPaymentController extends ApiController
                     $data = $request->merge(['attachment' => $request->attachment,'user_id'=>$user->id])->all();
                     $payment = $proposal->manual_payment()->create($data);
                     $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
+                    $proposal->update(['amount'=>$request->input('amount')]);
             }
             
             return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('proposal' => [])],200);

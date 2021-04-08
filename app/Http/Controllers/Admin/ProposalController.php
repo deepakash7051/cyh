@@ -79,8 +79,6 @@ class ProposalController extends Controller
     public function edit($id)
     {
         $proposal = Proposal::with(['user','portfolio','proposal_images','admin_proposals.admin_proposal_files','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
-       // return AdminProposal::with(['admin_proposal_files'])->get();
-        //return $proposal;
         return view('admin.proposals.edit')->with(
             [
                 'proposals'=>$proposal

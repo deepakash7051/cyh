@@ -13,7 +13,8 @@ class Proposal extends Model implements \Czim\Paperclip\Contracts\AttachableInte
 
     protected $fillable = [
         'portfolio_id',
-        'description'
+        'description',
+        'amount'
     ];
 
     protected $hidden = [
