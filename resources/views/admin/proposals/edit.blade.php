@@ -266,17 +266,9 @@
                             </div>     
                             @endif
                             @else
-                            @if(
-                                !empty($proposals->admin_proposals[0]) &&
-                                !empty($proposals->admin_proposals[1]) && 
-                                !empty($proposals->admin_proposals[2]) && 
-                                $proposals->admin_proposals[0]->accept !== '1'
-                                && $proposals->admin_proposals[1]->accept !== '1' 
-                                && $proposals->admin_proposals[2]->accept !== '1' )
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>
-                                @endif
                         @endif
 					</form>
 				</div>
@@ -390,17 +382,9 @@
                             </div>     
                             @endif
                             @else
-                                @if(
-                                    !empty($proposals->admin_proposals[0]) &&
-                                    !empty($proposals->admin_proposals[1]) && 
-                                    !empty($proposals->admin_proposals[2]) && 
-                                    $proposals->admin_proposals[0]->accept !== '1'
-                                 && $proposals->admin_proposals[1]->accept !== '1' 
-                                 && $proposals->admin_proposals[2]->accept !== '1' )
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>
-                                @endif
                         @endif
 					</form>
 				</div>
@@ -514,17 +498,9 @@
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>     
                             @endif
-                            @if(
-                                !empty($proposals->admin_proposals[0]) &&
-                                !empty($proposals->admin_proposals[1]) && 
-                                !empty($proposals->admin_proposals[2]) && 
-                                $proposals->admin_proposals[0]->accept !== '1'
-                                && $proposals->admin_proposals[1]->accept !== '1' 
-                                && $proposals->admin_proposals[2]->accept !== '1' )
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>
-                                @endif
                         @endif
                          
                          
