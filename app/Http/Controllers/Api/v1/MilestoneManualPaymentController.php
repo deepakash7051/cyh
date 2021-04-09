@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Controller;
+use Validator;
+use App\ManualPayment;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class MilestoneManualPaymentController extends ApiController
 {
@@ -39,7 +41,42 @@ class MilestoneManualPaymentController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $validator = Validator::make($request->all(), [
+	            'milestone_id' => 'required|integer',
+                'attachment' => 'required',
+                'attachment.*' => 'image:jpeg,png,jpg,gif,svg|max:2048'
+	        ]);
+	        if ($validator->fails()) {
+	            $errors = $validator->errors()->toArray();
+	            $message = "";
+	            foreach($errors as $key  => $values){
+	                foreach($values as $value){
+	                    $message .= $value . "\n";
+	                }
+	            }
+	            return $this->payload(['StatusCode' => '422', 'message' => $message, 'result' => new \stdClass],200);
+	        }
+
+            $user = auth()->user();
+
+            $chekcManualPayment = ManualPayment::where(['milestone_payment_id'=>$request->input('milestone_payment_id'), 'user_id'=>$user->id]);
+          
+            $data = $request->merge(['attachment' => $request->attachment,'user_id'=>$user->id])->all();
+            return $data;
+            if($chekcManualPayment->exists()){
+                //return $chekcManualPayment->get();
+            }else{
+                $payment = $proposal->manual_payment()->create($data);
+                $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
+                $proposal->update(['amount'=>$request->input('amount')]);
+                $this->mileston_payment($request->all());
+            }
+            
+            return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('proposal' => [])],200);
+        }catch(Exception $e) {
+            return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
+        }
     }
 
     /**

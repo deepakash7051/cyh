@@ -69,7 +69,7 @@ class MilestoneStripePaymentController extends ApiController
                     $token = $request->all();
 
                     $data = [
-                        "amount" => (int)$details->amount * 100,
+                        "amount" => (float)$details->amount * 100,
                         "currency" => "inr",
                         "source" => $request->input('token'),
                         "description" => "Payment for Milestone ".$details->milestone->title." has been completed."
@@ -92,8 +92,6 @@ class MilestoneStripePaymentController extends ApiController
                         $sId = $user->stripe_payment()->create($data);
                         $milestone->update(['status'=>'paid']);
                     }
-
-                    return $data;
                 }else{
                     //return 2222222;
                 }
