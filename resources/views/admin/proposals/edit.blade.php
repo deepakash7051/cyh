@@ -142,13 +142,13 @@
                                         
                                         @if( $milestone->status == 'paid' )
                                             <select disabled class="form-select" aria-label="Default select example">
-                                                <option value="unpaid">UnPaid</option>
-                                                <option selected value="paid">Paid</option>
+                                                <option value="pending">Pending</option>
+                                                <option selected value="completed">Completed</option>
                                             </select>
                                                 @else
                                             <select class="form-select milestone-status" aria-label="Default select example" onchange="milestonePaymentStatus(this,'{{ $milestone->id }}')">
-                                                <option selected value="unpaid">UnPaid</option>
-                                                <option value="paid">Paid</option>
+                                                <option selected value="pending">Pending</option>
+                                                <option value="completed">Completed</option>
                                             </select>
                                         @endif
                                         
@@ -620,7 +620,7 @@
                 xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText){
-                        location.reload();
+                        //location.reload();
                     }
                 }
                 };
