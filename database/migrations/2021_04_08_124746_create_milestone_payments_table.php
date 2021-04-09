@@ -18,7 +18,8 @@ class CreateMilestonePaymentsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('proposal_id');
             $table->unsignedInteger('milestone_id');
-            $table->enum('status',['completed','pending']);
+            $table->enum('status',['paid','unpaid']);
+            $table->enum('task',['completed','pending']);
             $table->string('amount')->nullable();
             $table->timestamps();
         });

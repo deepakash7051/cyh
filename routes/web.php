@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 		//Route::get('milestones/list','MilestoneController@list')->name('milestones.list');
 		Route::get('milestoneList','MilestoneController@list')->name('milestones.list');
 		Route::resource('milestones-payment','MilestonePaymentController');
-		Route::get('milestonesPaymentStatus/{id}/{status}','MilestonePaymentController@milestonesPaymentStatus')->name('milestonesPaymentStatus');
+		Route::get('milestonesPaymentStatus/{id}/{task}','MilestonePaymentController@milestonesPaymentStatus')->name('milestonesPaymentStatus');
 		
     });
 });

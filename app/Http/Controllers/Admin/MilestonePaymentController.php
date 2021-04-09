@@ -86,6 +86,7 @@ class MilestonePaymentController extends Controller
 
     public function milestonesPaymentStatus(Request $request,$id){
         $milestonePayment = MilestonePayment::find($id);
-        return $milestonePayment->update(['status'=>$request->route('status')]);
+//return $request->route('task');
+        return $milestonePayment->update(['task'=>$request->route('task')]);
     }
 }
