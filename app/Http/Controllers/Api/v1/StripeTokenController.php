@@ -7,6 +7,8 @@ use App\Proposal;
 use Stripe\Charge;
 use Stripe\Stripe;
 use App\StripeToken;
+use App\StripePayment;
+use App\MilestonePayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -70,7 +72,7 @@ class StripeTokenController extends ApiController
 	                'result' => new \stdClass
 	            ], 200);
 	        }
-        
+        $payment = '';
         $token = $request->all();
         
         $user = auth()->user();
@@ -82,25 +84,40 @@ class StripeTokenController extends ApiController
             "description" => "Proposal #".$request->input('proposal_id')." has been purchased."
         ];
 
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $payment = Charge::create ($data);
-
+        $chekcManualPayment = StripePayment::where(['proposal_id'=>$request->input('proposal_id'), 'user_id'=>$user->id]);
+        
         $proposal = Proposal::find($request->input('proposal_id'));
+        
+        if(!$proposal){
+            return $this->payload([
+                'StatusCode' => '200', 
+                'message' => 'Proposal does not exist.', 
+                'result' => array('stripe' => '')
+            ], 200);
+        }
 
-        if($payment){
-            $data = [
-                'proposal_id' => $request->input('proposal_id'),
-                'transaction_id' => $payment->id,
-                'amount' => $payment->amount,
-                'object' => $payment->object,
-                'balance_transaction' => $payment->balance_transaction,
-                'status' => $payment->status,
-                'paid'=>$payment->paid
-            ];
-            $sId = $user->stripe_payment()->create($data);
-            $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'s_id'=>$sId->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'stripe','status'=>'completed']);
-            $proposal->update(['amount'=>$request->input('amount')]);
+        if($chekcManualPayment->exists()){
+            //return $chekcManualPayment->get();
+        }else{
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            $payment = Charge::create ($data);
+
+            if($payment){
+                $data = [
+                    'proposal_id' => $request->input('proposal_id'),
+                    'transaction_id' => $payment->id,
+                    'amount' => $payment->amount,
+                    'object' => $payment->object,
+                    'balance_transaction' => $payment->balance_transaction,
+                    'status' => $payment->status,
+                    'paid'=>$payment->paid
+                ];
+                $sId = $user->stripe_payment()->create($data);
+                $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'s_id'=>$sId->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'stripe','status'=>'completed']);
+                $proposal->update(['amount'=>$request->input('amount')]);
+                $this->mileston_payment($token);
+            }
         }
 
         return $this->payload([
@@ -166,5 +183,54 @@ class StripeTokenController extends ApiController
     public function destroy($id)
     {
         //
+    }
+
+    public function mileston_payment($request){
+        MilestonePayment::create( [
+            'user_id'=>auth()->user()->id,
+            'proposal_id'=>$request['proposal_id'],
+            'milestone_id'=>1,
+            'status'=>'paid',
+            'task'=>'pending',
+            'amount'=>$request['amount']
+        ]);
+
+        MilestonePayment::create( [
+            'user_id'=>auth()->user()->id,
+            'proposal_id'=>$request['proposal_id'],
+            'milestone_id'=>2,
+            'status'=>'unpaid',
+            'task'=>'pending',
+            'amount'=>NULL
+        ]);
+
+        MilestonePayment::create( [
+            'user_id'=>auth()->user()->id,
+            'proposal_id'=>$request['proposal_id'],
+            'milestone_id'=>3,
+            'status'=>'unpaid',
+            'task'=>'pending',
+            'amount'=>NULL
+        ]);
+
+        MilestonePayment::create( [
+            'user_id'=>auth()->user()->id,
+            'proposal_id'=>$request['proposal_id'],
+            'milestone_id'=>4,
+            'status'=>'unpaid',
+            'task'=>'pending',
+            'amount'=>NULL
+        ]);
+
+        MilestonePayment::create( [
+            'user_id'=>auth()->user()->id,
+            'proposal_id'=>$request['proposal_id'],
+            'milestone_id'=>5,
+            'status'=>'unpaid',
+            'task'=>'pending',
+            'amount'=>NULL
+        ]);
+
+        return true;
     }
 }
