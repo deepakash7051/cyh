@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use Validator;
 use App\ManualPayment;
+use App\MilestonePayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -60,17 +61,28 @@ class MilestoneManualPaymentController extends ApiController
 
             $user = auth()->user();
 
-            $chekcManualPayment = ManualPayment::where(['milestone_payment_id'=>$request->input('milestone_payment_id'), 'user_id'=>$user->id]);
-          
-            $data = $request->merge(['attachment' => $request->attachment,'user_id'=>$user->id])->all();
-            return $data;
-            if($chekcManualPayment->exists()){
-                //return $chekcManualPayment->get();
-            }else{
-                $payment = $proposal->manual_payment()->create($data);
-                $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
-                $proposal->update(['amount'=>$request->input('amount')]);
-                $this->mileston_payment($request->all());
+            $milestone = MilestonePayment::with(['milestone'])->where(['id'=>$request->input('milestone_id')]);
+
+            if($milestone->exists()){
+                $details = $milestone->first();
+                if( $details->status == 'unpaid' ){
+
+                    $data = [
+                        'user_id' => $user->id,
+                        'proposal_id'=>$details->proposal_id,
+                        'milestone_payment_id' => $request->input('milestone_id'),
+                        'amount'=> $details->amount,
+                        'attachment' => $request->attachment,
+                        
+                    ];
+                    $chekcManualPayment = ManualPayment::where(['milestone_payment_id'=>$request->input('milestone_id')]);
+
+                    if($chekcManualPayment->exists()){ //return 111111111;
+                        $payment = $chekcManualPayment->updateOrCreate(['milestone_payment_id'=>$request->input('milestone_id')],$data);
+                    }else{ //return 222222;
+                        $payment = $chekcManualPayment->create($data);
+                    }
+                }
             }
             
             return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('proposal' => [])],200);
