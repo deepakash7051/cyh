@@ -19,4 +19,8 @@ class MilestonePayment extends Model
     public function milestone(){
         return $this->belongsTo('App\Milestone');
     }
+
+    public function admin_proposal(){
+        return $this->belongsTo('App\AdminProposal');
+    }
 }

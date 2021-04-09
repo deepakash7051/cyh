@@ -25,4 +25,8 @@ class AdminProposal extends Model
     public function admin_proposal_files(){
         return $this->hasMany('App\AdminProposalFile','admin_proposal_id');
     }
+
+    public function milestone_payment(){
+        return $this->hasMany('App\MilestonePayment','proposal_id');
+    }
 }

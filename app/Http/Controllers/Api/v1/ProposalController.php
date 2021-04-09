@@ -26,7 +26,7 @@ class ProposalController extends ApiController
     {
         try{
             $user = auth()->user();
-            $proposal = $user->proposal()->with(['user','admin_proposals.admin_proposal_files','portfolio','proposal_images','payment_status:id,proposal_id,status,type','milestone_payment'])->latest()->get();
+            $proposal = $user->proposal()->with(['user','admin_proposals.admin_proposal_files','portfolio','proposal_images','payment_status:id,proposal_id,status,type'])->latest()->get();
             //return $proposal;
             $resp = PortfolioResource::collection($proposal);
 
@@ -100,7 +100,7 @@ class ProposalController extends ApiController
     {
         try{
             $user = auth()->user();
-            $proposal = Proposal::with(['user','admin_proposals.admin_proposal_files','portfolio','proposal_images','single_manual_payment','stripe_payment','payment_status:id,proposal_id,status,type','milestone_payment'])->where(['id'=>$id,'user_id'=>$user->id])->first();
+            $proposal = Proposal::with(['user','admin_proposals.admin_proposal_files','portfolio','proposal_images','single_manual_payment','stripe_payment','payment_status:id,proposal_id,status,type'])->where(['id'=>$id,'user_id'=>$user->id])->first();
             //return $proposal;
             $resp = new PortfolioResource($proposal);
 

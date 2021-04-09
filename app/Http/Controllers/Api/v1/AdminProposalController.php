@@ -52,7 +52,7 @@ class AdminProposalController extends ApiController
     public function show($id)
     {
         try{
-            $detail = AdminProposal::with('admin_proposal_files')->where('id',$id)->get();
+            $detail = AdminProposal::with('admin_proposal_files','milestone_payment')->where('id',$id)->get();
             return $this->payload(['StatusCode' => '200', 'message' => 'Admin Proposal Detail', 'result' => array('admin_proposal' => $detail)],200);
         }catch(Excepion $e){
             return $this->payload(['StatusCode' => '422', 'message' => $e->getMessage(), 'result' => new \stdClass],200);
