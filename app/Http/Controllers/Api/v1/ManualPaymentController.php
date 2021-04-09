@@ -74,13 +74,18 @@ class ManualPaymentController extends ApiController
             $user = auth()->user();
 
             $proposal = Proposal::find($request->input('proposal_id'));
-            
+            $chekcManualPayment = ManualPayment::where(['proposal_id'=>$request->input('proposal_id'), 'user_id'=>$user->id]);
+          
             if( !empty( $proposal ) ){
                     $data = $request->merge(['attachment' => $request->attachment,'user_id'=>$user->id])->all();
-                    $payment = $proposal->manual_payment()->create($data);
-                    $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
-                    $proposal->update(['amount'=>$request->input('amount')]);
-                    $this->mileston_payment($request->all());
+                    if($chekcManualPayment->exists()){
+                        //return $chekcManualPayment->get();
+                    }else{
+                        $payment = $proposal->manual_payment()->create($data);
+                        $proposal->payment_status()->updateOrCreate(['user_id'=>$user->id,'manual_payment_id'=>$payment->id,'proposal_id'=>$request->input('proposal_id'),'type'=>'manual','status'=>'pending']);
+                        $proposal->update(['amount'=>$request->input('amount')]);
+                        $this->mileston_payment($request->all());
+                    }
             }
             
             return $this->payload(['StatusCode' => '200', 'message' => 'Created', 'result' => array('proposal' => [])],200);
