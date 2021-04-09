@@ -84,7 +84,7 @@ class StripeTokenController extends ApiController
             "description" => "Proposal #".$request->input('proposal_id')." has been purchased."
         ];
 
-        $chekcManualPayment = StripePayment::where(['proposal_id'=>$request->input('proposal_id'), 'user_id'=>$user->id]);
+        $chekcPayment = StripePayment::where(['proposal_id'=>$request->input('proposal_id'), 'user_id'=>$user->id]);
         
         $proposal = Proposal::find($request->input('proposal_id'));
         
@@ -96,8 +96,8 @@ class StripeTokenController extends ApiController
             ], 200);
         }
 
-        if($chekcManualPayment->exists()){
-            //return $chekcManualPayment->get();
+        if($chekcPayment->exists()){
+            //return $chekcPayment->get();
         }else{
             Stripe::setApiKey(env('STRIPE_SECRET'));
 

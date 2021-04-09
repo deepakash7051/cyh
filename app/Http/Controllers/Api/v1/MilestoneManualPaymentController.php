@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use Validator;
-use App\MilestonePayment;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
-class MilestonePaymentController extends ApiController
+class MilestoneManualPaymentController extends ApiController
 {
     public function __construct()
     {
