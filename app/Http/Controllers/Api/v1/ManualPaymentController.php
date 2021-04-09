@@ -146,6 +146,7 @@ class ManualPaymentController extends ApiController
             'proposal_id'=>$request['proposal_id'],
             'milestone_id'=>1,
             'status'=>'paid',
+            'task'=>'pending',
             'amount'=>$request['amount']
         ]);
 
@@ -154,6 +155,7 @@ class ManualPaymentController extends ApiController
             'proposal_id'=>$request['proposal_id'],
             'milestone_id'=>2,
             'status'=>'unpaid',
+            'task'=>'pending',
             'amount'=>NULL
         ]);
 
@@ -162,6 +164,7 @@ class ManualPaymentController extends ApiController
             'proposal_id'=>$request['proposal_id'],
             'milestone_id'=>3,
             'status'=>'unpaid',
+            'task'=>'pending',
             'amount'=>NULL
         ]);
 
@@ -170,6 +173,7 @@ class ManualPaymentController extends ApiController
             'proposal_id'=>$request['proposal_id'],
             'milestone_id'=>4,
             'status'=>'unpaid',
+            'task'=>'pending',
             'amount'=>NULL
         ]);
 
@@ -178,6 +182,7 @@ class ManualPaymentController extends ApiController
             'proposal_id'=>$request['proposal_id'],
             'milestone_id'=>5,
             'status'=>'unpaid',
+            'task'=>'pending',
             'amount'=>NULL
         ]);
 
