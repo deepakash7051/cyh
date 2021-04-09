@@ -19,7 +19,7 @@ class AdminProposalController extends ApiController
      */
     public function index()
     {
-        
+        return $detail = AdminProposal::with('admin_proposal_files','milestone')->get();   
     }
 
     /**
