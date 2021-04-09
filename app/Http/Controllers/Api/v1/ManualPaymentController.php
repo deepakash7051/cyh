@@ -151,7 +151,7 @@ class ManualPaymentController extends ApiController
             'proposal_id'=>$request['proposal_id'],
             'milestone_id'=>1,
             'status'=>'paid',
-            'task'=>'pending',
+            'task'=>'completed',
             'amount'=>$request['amount']
         ]);
 

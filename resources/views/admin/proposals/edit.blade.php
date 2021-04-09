@@ -3,60 +3,7 @@
 
 <?php 
   $languages = config('panel.available_languages');
-
-  $accepteFirstProposal = '';
-  $declinedFirstProposal = '';
-
-  $accepteSecondProposal = '';
-  $declinedSecondProposal = '';
-
-  $accepteThirdProposal = '';
-  $declinedThirdProposal = '';
 ?>
-
-@if( !empty($proposals->admin_proposals[0]) )
-    @if($proposals->admin_proposals[0]->proposal_type !== NULL && $proposals->admin_proposals[0]->proposal_type == 'one')
-        @if( $proposals->admin_proposals[0]->accept )
-            @php
-                $accepteFirstProposal = 'one'
-            @endphp
-        @elseif(!$proposals->admin_proposals[0]->accept)
-            @php  
-                $declinedFirstProposal = 'one' 
-            @endphp
-        @endif
-    @endif
-@endif
-
-@if( !empty($proposals->admin_proposals[1]) ) 
-
-    @if($proposals->admin_proposals[1]->proposal_type !== NULL && $proposals->admin_proposals[1]->proposal_type == 'two')
-        @if( $proposals->admin_proposals[1]->accept  )
-            @php
-                $accepteSecondProposal = 'two'
-            @endphp
-            @elseif(!$proposals->admin_proposals[1]->accept)
-            
-            @php
-                $declinedSecondProposal = 'two' 
-            @endphp
-        @endif
-    @endif
-@endif
-
-@if( !empty($proposals->admin_proposals[2]) )
-    @if($proposals->admin_proposals[2]->proposal_type !== NULL && $proposals->admin_proposals[2]->proposal_type == 'three')
-        @if( $proposals->admin_proposals[2]->accept  )
-            @php
-                $accepteThirdProposal = 'three'
-            @endphp
-            @elseif(!$proposals->admin_proposals[2]->accept)
-            @php  
-                $declinedThirdProposal = 'three' 
-            @endphp
-        @endif
-    @endif
-@endif
 
 <div class="dash-main">
     <div class="d-flex align-items-center justify-content-between border-btm pb-3 mb-4">
@@ -269,6 +216,7 @@
 		</div>
 	</div>
     
+    @if( $proposals->payment_status->status == 'completed' )
     <!-- Proposal 1 By Admin -->
     <div class="row justify-content-center">
 		<div class="col-md-12">
@@ -279,8 +227,15 @@
                             <h2>Proposal 1</h2>
                         </div>
                         <div class="col-md-2">
-                            @if($accepteFirstProposal == 'one')<strong class="text-success">Accepted</strong> @endif
-                            @if($declinedFirstProposal == 'one') <strong class="text-danger">Declined</strong>@endif
+
+                        @if(!empty($proposals->admin_proposals[0]))
+                            @if($proposals->admin_proposals[0]->accept == '0')
+                            <strong class="text-danger">Declined</strong>
+                            @elseif($proposals->admin_proposals[0]->accept == '1')        
+                            <strong class="text-success">Accepted</strong>
+                            @else     
+                            @endif
+                        @endif
                         </div>
                     </div>
 					
@@ -357,15 +312,36 @@
 
                          <input type="hidden" name="proposal_type" value="one">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
-                         @if($accepteFirstProposal == 'one')
-                            
-                            @elseif( $declinedFirstProposal == 'one')
-
-                            @else
+                        
+                         @if(!empty($proposals->admin_proposals[0]))
+                            @if($proposals->admin_proposals[0]->accept == '0')
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>
-                         @endif
+                            @elseif($proposals->admin_proposals[0]->accept == '1')        
+                            <a href="{{ route('admin.proposals.milestone', [$proposals->id]) }}" class="">
+                                <div>
+                                    <input class="btnn btnn-s" id="submit" type="button" value="Milestone">
+                                </div>
+                            </a>
+                            @else
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>     
+                            @endif
+                            @else
+                            @if(
+                                !empty($proposals->admin_proposals[0]) &&
+                                !empty($proposals->admin_proposals[1]) && 
+                                !empty($proposals->admin_proposals[2]) && 
+                                $proposals->admin_proposals[0]->accept !== '1'
+                                && $proposals->admin_proposals[1]->accept !== '1' 
+                                && $proposals->admin_proposals[2]->accept !== '1' )
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>
+                                @endif
+                        @endif
 					</form>
 				</div>
                     
@@ -385,8 +361,14 @@
                             <h2>Proposal 2</h2>
                         </div>
                         <div class="col-md-2">
-                            @if($accepteSecondProposal == 'two')<strong class="text-success">Accepted</strong> @endif
-                            @if($declinedSecondProposal == 'two') <strong class="text-danger">Declined</strong>@endif
+                            @if(!empty($proposals->admin_proposals[1]))
+                                @if($proposals->admin_proposals[1]->accept == '0')
+                                <strong class="text-danger">Declined</strong>
+                                @elseif($proposals->admin_proposals[1]->accept == '1')        
+                                <strong class="text-success">Accepted</strong>
+                                @else     
+                                @endif
+                            @endif
                         </div>
                     </div>
 				</div>
@@ -455,15 +437,35 @@
                          <input type="hidden" name="proposal_type" value="two">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
 
-                        @if($accepteSecondProposal == 'two')
-                            
-                            @elseif( $declinedSecondProposal == 'two')
-
-                            @else
+                         @if(!empty($proposals->admin_proposals[1]))
+                            @if($proposals->admin_proposals[1]->accept == '0')
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>
-                         @endif
+                            @elseif($proposals->admin_proposals[1]->accept == '1')        
+                                <a href="{{ route('admin.proposals.milestone', [$proposals->id]) }}" class="">
+                                <div>
+                                    <input class="btnn btnn-s" id="submit" type="button" value="Milestone">
+                                </div>
+                                </a>
+                            @else
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>     
+                            @endif
+                            @else
+                                @if(
+                                    !empty($proposals->admin_proposals[0]) &&
+                                    !empty($proposals->admin_proposals[1]) && 
+                                    !empty($proposals->admin_proposals[2]) && 
+                                    $proposals->admin_proposals[0]->accept !== '1'
+                                 && $proposals->admin_proposals[1]->accept !== '1' 
+                                 && $proposals->admin_proposals[2]->accept !== '1' )
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>
+                                @endif
+                        @endif
 					</form>
 				</div>
                     
@@ -483,8 +485,14 @@
                             <h2>Proposal 3</h2>
                         </div>
                         <div class="col-md-2">
-                            @if($accepteThirdProposal == 'three')<strong class="text-success">Accepted</strong> @endif
-                            @if($declinedThirdProposal == 'three') <strong class="text-danger">Declined</strong>@endif
+                            @if(!empty($proposals->admin_proposals[2]))
+                                @if($proposals->admin_proposals[2]->accept == '0')
+                                <strong class="text-danger">Declined</strong>
+                                @elseif($proposals->admin_proposals[2]->accept == '1')        
+                                <strong class="text-success">Accepted</strong>
+                                @else     
+                                @endif
+                            @endif
                         </div>
                     </div>
 				</div>
@@ -553,15 +561,35 @@
 
                          <input type="hidden" name="proposal_type" value="three">
                          <input type="hidden" name="proposal_id" value="{{ $proposals->id }}">
-                         @if($accepteThirdProposal == 'three')
-                            
-                            @elseif( $declinedThirdProposal == 'three')
 
-                            @else
+                         @if(!empty($proposals->admin_proposals[2]))
+                            @if($proposals->admin_proposals[2]->accept == '0')
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>
-                         @endif
+                            @elseif($proposals->admin_proposals[2]->accept == '1')
+                            <a href="{{ route('admin.proposals.milestone', [$proposals->id]) }}" class="">
+                                <div>
+                                    <input class="btnn btnn-s" id="submit" type="button" value="Milestone">
+                                </div>
+                            </a> 
+                            @else
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>     
+                            @endif
+                            @if(
+                                !empty($proposals->admin_proposals[0]) &&
+                                !empty($proposals->admin_proposals[1]) && 
+                                !empty($proposals->admin_proposals[2]) && 
+                                $proposals->admin_proposals[0]->accept !== '1'
+                                && $proposals->admin_proposals[1]->accept !== '1' 
+                                && $proposals->admin_proposals[2]->accept !== '1' )
+                            <div>
+                                <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
+                            </div>
+                                @endif
+                        @endif
                          
                          
 					</form>
@@ -571,7 +599,7 @@
 			</div>
 		</div>
 	</div>
-
+    @endif
 </div>
 
 @section('scripts')

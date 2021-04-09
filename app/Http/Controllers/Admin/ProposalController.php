@@ -190,4 +190,10 @@ class ProposalController extends Controller
         
         return $request->route('paymentStatus');
     }
+
+    public function proposalMilestone($id){
+        $proposal = Proposal::with(['user','milestone_payment.milestone','portfolio','proposal_images','admin_proposals.admin_proposal_files','admin_propsal_files','single_manual_payment','payment_status'])->where('id',$id)->first();
+        return view('admin.milestones.index')->with('proposals',$proposal);
+        return $proposal;
+    }
 }

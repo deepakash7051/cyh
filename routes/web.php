@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 		Route::get('deleteDesign/{id}','DesignController@deleteDesign')->name('deleteDesign');
 		Route::resource('proposals','ProposalController');
 		Route::get('proposallist','ProposalController@list')->name('proposallist');
+		Route::get('proposals/milestone/{id}','ProposalController@proposalMilestone')->name('proposals.milestone');
 		Route::get('deleteFile/{id}','ProposalController@deleteFile')->name('deleteFile');
 		Route::get('updatePaymentStatus/{id}/{paymentStatus}','ProposalController@updatePaymentStatus')->name('updatePaymentStatus');
 		Route::resource('settings','SettingsController');
