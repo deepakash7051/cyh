@@ -158,13 +158,15 @@ class ProposalAcceptController extends ApiController
                 'uponCompletetion'=>$uponCompletetion
             ];
 
-            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>2])->update(['amount'=>$downPayment]);
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>1])->update(['admin_proposal_id'=>$request['admin_proposal_id']]);
 
-            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>3])->update(['amount'=>$materialsFabricationDone]);
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>2])->update(['amount'=>$downPayment,'admin_proposal_id'=>$request['admin_proposal_id']]);
 
-            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>4])->update(['amount'=>$uponInstallation]);
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>3])->update(['amount'=>$materialsFabricationDone,'admin_proposal_id'=>$request['admin_proposal_id']]);
 
-            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>5])->update(['amount'=>$uponCompletetion]);
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>4])->update(['amount'=>$uponInstallation,'admin_proposal_id'=>$request['admin_proposal_id']]);
+
+            MilestonePayment::where(['user_id'=>auth()->user()->id, 'proposal_id'=>$proposal_id->proposal_id,'milestone_id'=>5])->update(['amount'=>$uponCompletetion,'admin_proposal_id'=>$request['admin_proposal_id']]);
 
             return $data;
         }
