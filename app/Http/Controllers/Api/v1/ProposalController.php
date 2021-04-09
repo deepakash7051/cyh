@@ -26,7 +26,7 @@ class ProposalController extends ApiController
     {
         try{
             $user = auth()->user();
-            $proposal = $user->proposal()->with(['user','admin_proposals.admin_proposal_files','portfolio','proposal_images','payment_status:id,proposal_id,status,type'])->latest()->get();
+            $proposal = $user->proposal()->with(['user','admin_proposals.admin_proposal_files','portfolio','proposal_images','payment_status:id,proposal_id,status,type','milestone_payment'])->latest()->get();
             //return $proposal;
             $resp = PortfolioResource::collection($proposal);
 
