@@ -19,7 +19,7 @@ class CreatePayementStatusTable extends Migration
             $table->unsignedInteger('proposal_id');
             $table->unsignedInteger('manual_payment_id')->nullable();
             $table->unsignedInteger('s_id')->nullable();
-            $table->enum('status',['pending','completed']);
+            $table->enum('status',['pending','accepted','declined']);
             $table->enum('type',['manual','stripe']);
             $table->timestamps();
         });

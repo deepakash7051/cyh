@@ -31,6 +31,10 @@ class ManualPayment extends Model implements \Czim\Paperclip\Contracts\Attachabl
         return $this->belongsTo('App\Proposal');
     }
 
+    public function milestone_payment(){
+        return $this->belongsTo('App\MilestonePayment');
+    }
+
     public function getAttachmentUrlAttribute() {
         return $this->attachment->url();
     }

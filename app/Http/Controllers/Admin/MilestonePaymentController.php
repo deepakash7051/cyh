@@ -58,7 +58,7 @@ class MilestonePaymentController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -70,7 +70,12 @@ class MilestonePaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $m_p_id = $request->input('m_p_id');
+        $status = $request->input('m_p_status');
+        $milestoenPayment = MilestonePayment::find($m_p_id);
+        //$milestoenPayment->update(['status'=>$status]);
+        dd($request->all());exit;
+        return redirect()->back();
     }
 
     /**
@@ -84,9 +89,13 @@ class MilestonePaymentController extends Controller
         //
     }
 
+    public function milestonesTaskStatus(Request $request,$id){
+        $milestonePayment = MilestonePayment::find($id);
+        return $milestonePayment->update(['task'=>$request->route('task')]);
+    }
+
     public function milestonesPaymentStatus(Request $request,$id){
         $milestonePayment = MilestonePayment::find($id);
-//return $request->route('task');
-        return $milestonePayment->update(['task'=>$request->route('task')]);
+        return $milestonePayment->update(['status'=>$request->route('status')]);
     }
 }

@@ -62,9 +62,10 @@ class MilestoneManualPaymentController extends ApiController
             $user = auth()->user();
 
             $milestone = MilestonePayment::with(['milestone'])->where(['id'=>$request->input('milestone_id')]);
-
-            if($milestone->exists()){
+            
+            if($milestone->exists()){ 
                 $details = $milestone->first();
+               // return $details;exit;
                 if( $details->status == 'unpaid' ){
 
                     $data = [

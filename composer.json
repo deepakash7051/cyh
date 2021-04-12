@@ -22,7 +22,8 @@
         "laravel/ui": "^2.4",
         "php-ffmpeg/php-ffmpeg": "^0.17.0",
         "stripe/stripe-php": "^7.76",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "doctrine/dbal": "v2.4.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

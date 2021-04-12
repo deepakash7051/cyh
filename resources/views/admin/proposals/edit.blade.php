@@ -3,6 +3,7 @@
 
 <?php 
   $languages = config('panel.available_languages');
+  $proposalButton = 'proposal-button-show';
 ?>
 
 <div class="dash-main">
@@ -85,10 +86,17 @@
                         
                         @if( $proposals->payment_status->status == 'pending' )
                          <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
-                         <option value="completed">Completed</option>
+                         <option value="accepted">Accepted</option>
+                         <option value="declined">Declined</option>
                         @endif
-                        @if( $proposals->payment_status->status == 'completed' )
+                        @if( $proposals->payment_status->status == 'accepted' )
                          <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
+                         <option value="Pending">Pending</option>
+                         <option value="declined">Declined</option>
+                        @endif
+                        @if( $proposals->payment_status->status == 'declined' )
+                         <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
+                         <option value="accepted">Accepted</option>
                          <option value="Pending">Pending</option>
                         @endif
                         </select>
@@ -152,7 +160,7 @@
 		</div>
 	</div>
     
-    @if( $proposals->payment_status->status == 'completed' )
+    @if( $proposals->payment_status->status == 'accepted' )
     <!-- Proposal 1 By Admin -->
     <div class="row justify-content-center">
 		<div class="col-md-12">
@@ -251,9 +259,9 @@
                         
                          @if(!empty($proposals->admin_proposals[0]))
                             @if($proposals->admin_proposals[0]->accept == '0')
-                            <div>
+                            <!-- <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                            </div>
+                            </div> -->
                             @elseif($proposals->admin_proposals[0]->accept == '1')        
                             <a href="{{ route('admin.proposals.milestone', [$proposals->id]) }}" class="">
                                 <div>
@@ -367,9 +375,9 @@
 
                          @if(!empty($proposals->admin_proposals[1]))
                             @if($proposals->admin_proposals[1]->accept == '0')
-                            <div>
+                            <!-- <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                            </div>
+                            </div> -->
                             @elseif($proposals->admin_proposals[1]->accept == '1')        
                                 <a href="{{ route('admin.proposals.milestone', [$proposals->id]) }}" class="">
                                 <div>
@@ -484,9 +492,9 @@
 
                          @if(!empty($proposals->admin_proposals[2]))
                             @if($proposals->admin_proposals[2]->accept == '0')
-                            <div>
+                            <!-- <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                            </div>
+                            </div> -->
                             @elseif($proposals->admin_proposals[2]->accept == '1')
                             <a href="{{ route('admin.proposals.milestone', [$proposals->id]) }}" class="">
                                 <div>
@@ -498,9 +506,10 @@
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
                             </div>     
                             @endif
+                            @else
                             <div>
                                 <input class="btnn btnn-s" id="submit" type="submit" value="{{ trans('global.save') }}">
-                            </div>
+                            </div> 
                         @endif
                          
                          
@@ -545,14 +554,13 @@
         }
 
         function updatePaymentStatus(event,id) {
-            
             let token = "{{ csrf_token() }}";
 
             var x = document.getElementById("payment_status").selectedIndex;
             let paymentStatus = document.getElementsByTagName("option")[x].value;
 
             let url = "../../../admin/updatePaymentStatus/"+id+"/"+paymentStatus;
-
+console.log(id);
             if( typeof(id) !== 'undefined' ){
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("GET", url, true);
@@ -579,7 +587,7 @@
                 xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText){
-                        //location.reload();
+                        location.reload();
                     }
                 }
                 };

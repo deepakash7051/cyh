@@ -49,8 +49,8 @@
             ajax: "{{ route('admin.proposallist') }}",
             columns: [
               { name: 'id' },
-              { name: 'portfolio.title' },
-              { name: 'user.name' },
+              { name: 'portfolio.title', orderable: false, searchable: false },
+              { name: 'user.name', orderable: false, searchable: false },
               { name: 'action' ,orderable: false, searchable: false}
             ],
             dom: 'Bfrtip',

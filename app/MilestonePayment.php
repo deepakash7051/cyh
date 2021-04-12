@@ -23,4 +23,8 @@ class MilestonePayment extends Model
     public function admin_proposal(){
         return $this->belongsTo('App\AdminProposal');
     }
+
+    public function manual_payment(){
+        return $this->hasOne('App\ManualPayment','milestone_payment_id');
+    }
 }
