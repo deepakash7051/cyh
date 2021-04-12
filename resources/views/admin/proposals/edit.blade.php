@@ -80,27 +80,39 @@
                       <input type="text" class="form-control" value="{{ $proposals->single_manual_payment->amount }}" id="paymane_amount"readOnly>
                     </div>
 					
-                    <div class="form-group">
-                        <label for="payment_status">Status</label>
-                        <select class="form-control" id="payment_status" onchange="getPaymentStatus(this)">
+                    
                         
                         @if( $proposals->payment_status->status == 'pending' )
+                        <div class="form-group">
+                        <label for="payment_status">Status</label>
+                        <select class="form-control" id="payment_status" onchange="getPaymentStatus(this)">
                          <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
                          <option value="accepted">Accepted</option>
                          <option value="declined">Declined</option>
+                         </select>
+                    </div>
                         @endif
                         @if( $proposals->payment_status->status == 'accepted' )
+                        <div class="form-group">
+                        <label for="payment_status">Status</label>
+                        <select class="form-control" id="payment_status" onchange="getPaymentStatus(this)" disabled>
                          <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
                          <option value="Pending">Pending</option>
                          <option value="declined">Declined</option>
+                         </select>
+                    </div>
                         @endif
                         @if( $proposals->payment_status->status == 'declined' )
+                        <div class="form-group">
+                        <label for="payment_status">Status</label>
+                        <select class="form-control" id="payment_status" onchange="getPaymentStatus(this)">
                          <option  value="{{ $proposals->payment_status->status }}">{{ ucfirst($proposals->payment_status->status) }}</option>
                          <option value="accepted">Accepted</option>
                          <option value="Pending">Pending</option>
-                        @endif
-                        </select>
+                         </select>
                     </div>
+                        @endif
+                        
 
 					<label for="exampleFormControlTextarea4">Receipt Image:</label>
 					<div class="row">
