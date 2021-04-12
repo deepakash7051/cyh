@@ -62,7 +62,7 @@
 		<div class="col-md-12">
 			<div class="card card-default">
 				<div class="card-header">
-					<h2>Payment Status</h2>
+					<h2>Proposal Request Payment Status</h2>
 				</div>
 				<div class="card-body">
 
@@ -124,7 +124,7 @@
                         </div>
 					</div>
 
-                    <div>
+                    <div class="m-3">
                         <input class="btnn btnn-s" id="payment_status" onclick="updatePaymentStatus(event,{{ $proposals->payment_status->id }})" type="button" value="{{ trans('global.save') }}">
                     </div>
                 </form>
