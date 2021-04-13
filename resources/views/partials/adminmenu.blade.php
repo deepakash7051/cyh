@@ -21,10 +21,6 @@
         <a href="{{ route('admin.home') }}"><i class="fas fa-file"></i> Products</a>
     </li>
 
-    <li class="{{ request()->is('admin/products') || request()->is('admin/products*') ? 'active' : '' }}">
-        <a href="{{ route('admin.products.index') }}" target="_blank"><i class="fas fa-file"></i> Products</a>
-    </li>
-
     <li class="{{ request()->is('admin/settings') || request()->is('admin/settings*') ? 'active' : '' }}">
         <a href="{{ route('admin.settings.index') }}" target="_blank"><i class="fas fa-cog"></i> Settings</a>
     </li>
